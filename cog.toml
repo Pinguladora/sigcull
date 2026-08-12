@@ -1,0 +1,35 @@
+tag_prefix = "v"
+from_latest_tag = true
+ignore_merge_commits = true
+ignore_fixup_commits = true
+disable_changelog = false
+disable_bump_commit = false
+generate_mono_repository_global_tag = true
+generate_mono_repository_package_tags = true
+monorepo_version_separator = "/"
+branch_whitelist = ["main"]
+skip_ci = "[skip ci]"
+skip_untracked = true
+post_bump_hooks = ["git push origin {{version_tag}}"]
+
+[git_hooks]
+
+[commit_types]
+chore    = { changelog_title = "", omit_from_changelog = true }
+ci       = { changelog_title = "", omit_from_changelog = true }
+docs     = { changelog_title = "", omit_from_changelog = true }
+refactor = { changelog_title = "", omit_from_changelog = true }
+style    = { changelog_title = "", omit_from_changelog = true }
+test     = { changelog_title = "", omit_from_changelog = true }
+
+[changelog]
+path = "CHANGELOG.md"
+template = "remote"
+remote = "github.com"
+repository = "sigcull"
+owner = "Pinguladora"
+authors = [
+  { username = "Pinguladora", signature = "Pinguladora" },
+]
+
+[bump_profiles]

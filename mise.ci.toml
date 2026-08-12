@@ -1,0 +1,64 @@
+[settings]
+experimental = true
+env_cache = true
+env_cache_ttl = "9h"
+install_before = "7d"
+pin = true
+lockfile = true
+locked = false
+prefer_offline = true
+disable_default_registry = true
+disable_backends = ["asdf", "vfox", "ubi"]
+
+[tasks."ci:git-config"]
+run = """
+git config --global core.compression 0
+git config --global core.fsync -all
+"""
+description = "Optimize Git config for CI (disable compression, fsync)"
+
+[tasks."ci:fmt"]
+run = """
+files=$(gofmt -l .)
+if [ -n "$files" ]; then
+  echo "Not gofmt-clean:"
+  echo "$files"
+  exit 1
+fi
+"""
+description = "Fail if any Go file is not gofmt-clean"
+
+[tasks."ci:tidy"]
+run = """
+go mod tidy
+git diff --exit-code go.mod go.sum
+"""
+description = "Fail if go.mod or go.sum are not tidy"
+
+[tasks."ci:build"]
+run = "go build ./..."
+description = "Compile every Go package in CI"
+
+[tasks."ci:vet"]
+run = "go vet ./..."
+description = "Vet all packages"
+
+[tasks."ci:test"]
+run = "go test -race -count=1 ./..."
+description = "Run Go tests with the race detector"
+
+[tasks."ci:lint"]
+run = "golangci-lint run ./... --timeout=5m"
+description = "Lint Go code in CI"
+
+# Aggregate gate for CI.
+[tasks."ci:check"]
+description = "Full CI gate: format, tidy, build, vet, test, lint"
+depends = [
+  "ci:fmt",
+  "ci:tidy",
+  "ci:build",
+  "ci:vet",
+  "ci:test",
+  "ci:lint",
+]

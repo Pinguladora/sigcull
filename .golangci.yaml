@@ -1,0 +1,123 @@
+version: "2"
+run:
+  tests: true
+  go: "1.26"
+  concurrency: 4
+  timeout: 10m
+
+linters:
+  default: none
+  enable:
+    - asciicheck
+    - bidichk
+    - bodyclose
+    - containedctx
+    - contextcheck
+    - cyclop
+    - dogsled
+    - dupl
+    - dupword
+    - durationcheck
+    - errcheck
+    - errname
+    - exptostd
+    - fatcontext
+    - forcetypeassert
+    - funlen
+    - gochecknoinits
+    - gocritic
+    - gocognit
+    - goconst
+    - godoclint
+    - godot
+    - godox
+    - gosec
+    - govet
+    - ineffassign
+    - interfacebloat
+    - intrange
+    - lll
+    - mnd
+    - modernize
+    - musttag
+    - nilerr
+    - nilnil
+    - noctx
+    - nolintlint
+    - perfsprint
+    - prealloc
+    - predeclared
+    - recvcheck
+    - revive
+    - spancheck
+    - staticcheck
+    - tagalign
+    - thelper
+    - unconvert
+    - unparam
+    - unused
+    - usestdlibvars
+    - usetesting
+    - whitespace
+    - wrapcheck
+    - zerologlint
+  settings:
+    govet:
+      enable: [fieldalignment]
+    goconst:
+      min-len: 3
+      min-occurrences: 3
+    godox:
+      keywords: [TODO, BUG, FIXME, OPTIMIZE, HACK]
+    interfacebloat:
+      max: 5
+    nolintlint:
+      require-explanation: false
+      require-specific: true
+      allow-unused: false
+    perfsprint:
+      int-conversion: true
+      err-error: true
+      errorf: true
+      sprintf1: true
+      strconcat: true
+    revive:
+      max-open-files: 2048
+      confidence: 0.8
+      severity: warning
+      enable-all-rules: false
+      rules:
+        - name: context-as-argument
+        - name: defer
+        - name: unexported-return
+    usetesting:
+      os-mkdir-temp: true
+      os-setenv: true
+      os-temp-dir: true
+      os-create-temp: true
+  exclusions:
+    generated: lax
+    rules:
+      - linters: [goconst]
+        path: (.+)_test\.go
+      - linters: [gosec]
+        text: "G204:"
+      - linters: [nilnil, wrapcheck, funlen, gocognit, cyclop, mnd, dupl, lll]
+        path: (.+)_test\.go
+    paths: [third_party$, builtin$, examples$]
+formatters:
+  enable: [gci, gofumpt, goimports]
+  settings:
+    gci:
+      sections:
+        - standard
+        - default
+      custom-order: true
+  exclusions:
+    generated: lax
+    paths: [third_party$, builtin$, examples$]
+issues:
+  new: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  uniq-by-line: false

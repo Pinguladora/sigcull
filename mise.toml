@@ -1,0 +1,85 @@
+[settings]
+experimental = true
+env_cache = true
+env_cache_ttl = "9h"
+install_before = "7d"
+pin = true
+lockfile = true
+locked = false
+prefer_offline = true
+disable_default_registry = true
+disable_backends = ["asdf", "vfox", "ubi"]
+
+[tools]
+"github:mongodb/kingfisher" = "1.109.0"
+cocogitto = "7.0.0"
+pinact = "4.1.0"
+go = "1.26.5"
+golangci-lint = "2.12.2"
+prek = "0.4.10"
+
+[tasks."secret:scan"]
+run = "kingfisher scan . --no-validate --redact"
+description = "Scan codebase for secrets with Kingfisher"
+alias = "ss"
+
+[tasks."secret:validate"]
+run = "kingfisher scan . --redact"
+description = "Validate (and revoke) live secrets found by Kingfisher"
+alias = "sv"
+
+[tasks.bump]
+run = "cog bump --auto"
+description = "Calculate next version from conventional commits and tag"
+
+[tasks.lint]
+description = "Run all linting"
+depends = ["lint:*"]
+
+[tasks.build]
+run = "go build ./..."
+description = "Build all Go packages"
+alias = "b"
+
+[tasks.test]
+run = "go test ./..."
+description = "Run all Go tests"
+alias = "t"
+
+[tasks."lint:go"]
+run = "golangci-lint run ./... --fix"
+description = "Lint Go code with autofix"
+sources = ["**/*.go"]
+
+[tasks.fmt]
+run = "gofmt -w ."
+description = "Format all Go code"
+alias = "f"
+
+[tasks."fmt:check"]
+run = """
+files=$(gofmt -l .)
+if [ -n "$files" ]; then
+  echo "Not gofmt-clean, run 'mise run fmt':"
+  echo "$files"
+  exit 1
+fi
+"""
+description = "Fail if any Go file is not gofmt-clean"
+
+[tasks.vet]
+run = "go vet ./..."
+description = "Vet all packages"
+
+[tasks.tidy]
+run = "go mod tidy"
+description = "Tidy go.mod and go.sum"
+
+[tasks."roots:update"]
+run = "go run ./tools/fetch-trusted-root"
+description = "Refresh the vendored public-good Sigstore trusted root"
+
+# Pre-commit gate. Run before every atomic commit.
+[tasks.check]
+description = "Pre-commit gate: format, vet, build, test, lint"
+depends = ["fmt:check", "vet", "build", "test", "lint"]
