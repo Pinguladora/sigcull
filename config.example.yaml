@@ -1,0 +1,50 @@
+server:
+  addr: ":8080"
+  webhookSecretEnv: GITHUB_WEBHOOK_SECRET   # read the HMAC secret from this env var
+
+githubApp:
+  appIDEnv: GITHUB_APP_ID
+  privateKeyEnv: GITHUB_APP_PRIVATE_KEY     # PEM contents, not a path
+
+trust:
+  kind: public                                # embedded public-good root, no network
+  # kind: tuf                                 # BYO-TUF: live TUF from a custom mirror
+  # tufMirror: https://tuf.internal.example.eu
+  # tufRoot: /etc/sigcull/root.json     # TUF root.json trust anchor, obtained out of band
+  # rekor:  https://rekor.internal.example.eu # optional, only the online inclusion fallback
+  #
+  # kind: static                              # a trusted_root.json file, no network
+  # trustRoot: /etc/sigcull/trusted_root.json
+
+verify:
+  matchCommitter: false       # also require the git committer to equal the signing identity
+  showFullIdentity: false     # default masks signer emails in the Check Run (a***@example.com)
+  authorities:
+    # A commit passes if ANY authority accepts it (OR semantics), tried in order.
+    - keyless:                  # Sigstore / gitsign keyless signatures on the allowlist
+        allow:
+          - issuer: https://token.actions.githubusercontent.com
+            sanRegex: "^https://github.com/Pinguladora/.+/.github/workflows/.+@refs/heads/main$"
+          - issuer: https://accounts.google.com
+            san: pinguladora@example.com
+    - githubVerified:           # commits GitHub itself cryptographically verified
+        webFlowOnly: true       # only GitHub's own web/squash merges, not user vigilant-mode keys
+    # - gpgKey:                 # traditional OpenPGP, verified in-process against a keyring
+    #     keyringPath: /etc/sigcull/trusted-keys.asc   # armored or binary public keys
+    #     allowEmails:          # a signing key must carry one of these UID emails
+    #       - pinguladora@example.com
+    # - sshKey:                 # SSH signatures, verified against an allowed_signers file
+    #     allowedSignersPath: /etc/sigcull/allowed_signers   # OpenSSH allowed_signers
+    #     allowPrincipals:      # optional; empty means any principal named in the file
+    #       - pinguladora@example.com
+    # - x509:                   # non-Sigstore S/MIME, verified against a CA bundle
+    #     caBundlePath: /etc/sigcull/ca-bundle.pem   # PEM roots to chain to
+    #     allowEmails:          # the signer certificate must carry one of these emails
+    #       - pinguladora@example.com
+
+exempt:
+  # WARNING: skipMergeCommits exempts ANY commit with more than one parent. A
+  # pusher can craft a merge commit to bypass the check, so keep this off unless
+  # your merges are known to be safe. GitHub's own merges are better handled by
+  # the githubVerified authority above, which accepts rather than skips them.
+  skipMergeCommits: false
