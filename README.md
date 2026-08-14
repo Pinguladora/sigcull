@@ -72,6 +72,11 @@ Required environment variables:
   `githubApp.privateKeyFile` to a mounted PEM path instead of this env var, which
   avoids container platforms that mangle the newlines in a multiline env value.
 
+Optional environment variables:
+
+- `LOG_LEVEL`: `debug`, `info`, `warn`, or `error` (default `info`). Logs are
+  structured JSON on stdout.
+
 Key configuration sections:
 
 - `trust.kind`: `public`, `tuf`, or `static`. Switching between them is
