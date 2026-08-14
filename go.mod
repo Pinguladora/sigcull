@@ -6,13 +6,13 @@ require (
 	github.com/ProtonMail/go-crypto v1.4.1
 	github.com/bradleyfalzon/ghinstallation/v2 v2.19.0
 	github.com/digitorus/pkcs7 v0.0.0-20250730155240-ffadbf3f398c
-	github.com/go-git/go-billy/v5 v5.9.0
+	github.com/go-git/go-billy/v5 v5.9.1
 	github.com/go-git/go-git/v5 v5.19.2
 	github.com/google/go-github/v89 v89.0.0
-	github.com/sigstore/cosign/v3 v3.0.6
+	github.com/sigstore/cosign/v3 v3.1.2
 	github.com/sigstore/gitsign v0.16.1
 	github.com/sigstore/sigstore v1.10.8
-	github.com/sigstore/sigstore-go v1.2.1
+	github.com/sigstore/sigstore-go v1.2.2
 	go.yaml.in/yaml/v4 v4.0.0-rc.6
 	golang.org/x/crypto v0.54.0
 )
