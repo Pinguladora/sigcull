@@ -4,7 +4,10 @@ server:
 
 githubApp:
   appIDEnv: GITHUB_APP_ID
-  privateKeyEnv: GITHUB_APP_PRIVATE_KEY     # PEM contents, not a path
+  privateKeyEnv: GITHUB_APP_PRIVATE_KEY     # PEM contents in this env var
+  # privateKeyFile: /etc/sigcull/app-key.pem  # OR mount the PEM as a file; takes
+  #                                           # precedence over privateKeyEnv, and
+  #                                           # avoids env vars that mangle newlines
 
 trust:
   kind: public                                # embedded public-good root, no network
