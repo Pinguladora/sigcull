@@ -16,7 +16,7 @@ import (
 	"github.com/sigstore/sigstore-go/pkg/root"
 	"github.com/sigstore/sigstore-go/pkg/tuf"
 	"github.com/sigstore/sigstore/pkg/cryptoutils"
-	sigtuf "github.com/sigstore/sigstore/pkg/tuf"
+	sigtuf "github.com/sigstore/sigstore/pkg/tuf" //nolint:staticcheck // cosign's API still needs this
 )
 
 // defaultRekorURL is the public good Rekor, used only for the online inclusion
