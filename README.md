@@ -68,7 +68,9 @@ Required environment variables:
 
 - `GITHUB_WEBHOOK_SECRET`: the webhook HMAC secret.
 - `GITHUB_APP_ID`: the numeric App ID.
-- `GITHUB_APP_PRIVATE_KEY`: the App private key PEM contents.
+- `GITHUB_APP_PRIVATE_KEY`: the App private key PEM contents. Alternatively, set
+  `githubApp.privateKeyFile` to a mounted PEM path instead of this env var, which
+  avoids container platforms that mangle the newlines in a multiline env value.
 
 Key configuration sections:
 

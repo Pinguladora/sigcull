@@ -2,6 +2,8 @@ package config
 
 import (
 	"context"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 
@@ -12,6 +14,44 @@ import (
 // publicTrust builds against the embedded public-good root, so the keyless
 // authority constructs offline with no network.
 var publicTrust = verify.TrustParams{Kind: verify.Public}
+
+func TestLoadPrivateKeyFromFileTakesPrecedence(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "app-key.pem")
+	if err := os.WriteFile(path, []byte("PEM-FROM-FILE"), 0o600); err != nil {
+		t.Fatalf("write key: %v", err)
+	}
+	// The env var is set but must be ignored because the file wins.
+	t.Setenv("SHOULD_BE_IGNORED", "PEM-FROM-ENV")
+	g := GithubApp{PrivateKeyFile: path, PrivateKeyEnv: "SHOULD_BE_IGNORED"}
+
+	got, err := g.loadPrivateKey()
+	if err != nil {
+		t.Fatalf("loadPrivateKey: %v", err)
+	}
+	if string(got) != "PEM-FROM-FILE" {
+		t.Fatalf("got %q, want the file contents", got)
+	}
+}
+
+func TestLoadPrivateKeyFromEnv(t *testing.T) {
+	t.Setenv("TEST_APP_KEY", "PEM-FROM-ENV")
+	g := GithubApp{PrivateKeyEnv: "TEST_APP_KEY"}
+
+	got, err := g.loadPrivateKey()
+	if err != nil {
+		t.Fatalf("loadPrivateKey: %v", err)
+	}
+	if string(got) != "PEM-FROM-ENV" {
+		t.Fatalf("got %q, want the env value", got)
+	}
+}
+
+func TestLoadPrivateKeyMissingFileErrors(t *testing.T) {
+	g := GithubApp{PrivateKeyFile: filepath.Join(t.TempDir(), "absent.pem")}
+	if _, err := g.loadPrivateKey(); err == nil {
+		t.Fatal("expected an error for a missing key file")
+	}
+}
 
 func TestBuildAuthoritiesRoutesSSHAndX509(t *testing.T) {
 	// An sshKey with a missing path surfaces an sshKey-prefixed error, proving

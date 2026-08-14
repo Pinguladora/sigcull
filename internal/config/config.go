@@ -32,10 +32,37 @@ type Server struct {
 	WebhookSecretEnv string `yaml:"webhookSecretEnv"`
 }
 
-// GithubApp names the env vars carrying the App credentials.
+// GithubApp names the sources of the App credentials. The private key comes from
+// either an env var (PrivateKeyEnv) or a mounted PEM file (PrivateKeyFile). A
+// file is preferred on platforms that mangle multiline env values, and takes
+// precedence when both are set.
 type GithubApp struct {
-	AppIDEnv      string `yaml:"appIDEnv"`
-	PrivateKeyEnv string `yaml:"privateKeyEnv"`
+	AppIDEnv       string `yaml:"appIDEnv"`
+	PrivateKeyEnv  string `yaml:"privateKeyEnv"`
+	PrivateKeyFile string `yaml:"privateKeyFile"`
+}
+
+// loadPrivateKey returns the App private key PEM, preferring a mounted file over
+// the env var. Reading from a file avoids the multiline-mangling some container
+// platforms apply to env values.
+func (g GithubApp) loadPrivateKey() ([]byte, error) {
+	if g.PrivateKeyFile != "" {
+		// The path is operator config, not attacker input.
+		pem, err := os.ReadFile(g.PrivateKeyFile)
+		if err != nil {
+			return nil, fmt.Errorf("read private key file %q: %w", g.PrivateKeyFile, err)
+		}
+		if len(pem) == 0 {
+			return nil, fmt.Errorf("private key file %q is empty", g.PrivateKeyFile)
+		}
+		return pem, nil
+	}
+	key, err := requireEnv(g.PrivateKeyEnv, "githubApp.privateKeyEnv")
+	if err != nil {
+		return nil, err
+	}
+	pem := []byte(key)
+	return pem, nil
 }
 
 // Verify holds verification-behaviour settings and the signature authorities. A
@@ -174,7 +201,7 @@ func (c Config) resolve() (*Resolved, error) {
 		return nil, fmt.Errorf("app ID from %s is not a number: %w", c.GithubApp.AppIDEnv, err)
 	}
 
-	privateKey, err := requireEnv(c.GithubApp.PrivateKeyEnv, "githubApp.privateKeyEnv")
+	privateKey, err := c.GithubApp.loadPrivateKey()
 	if err != nil {
 		return nil, err
 	}
@@ -195,7 +222,7 @@ func (c Config) resolve() (*Resolved, error) {
 		Addr:           addr,
 		WebhookSecret:  []byte(secret),
 		AppID:          appID,
-		PrivateKey:     []byte(privateKey),
+		PrivateKey:     privateKey,
 		Verifier:       verify.NewComposite(authorities...),
 		Exempt:         c.Exempt,
 		MatchCommitter: c.Verify.MatchCommitter,
