@@ -1,0 +1,77 @@
+/*
+  sigcull overrides on top of the Hugo Book theme.
+  1. A neon aurora as the page background itself (viewport-fixed), so it is
+     always visible behind the frosted content columns. Contrast is preserved
+     because the text-bearing columns sit on a semi-opaque panel.
+  2. A Pagefind search box in the theme's native menu slot, opened by click or
+     Control/Command + K through a lazy-loaded modal.
+  Colors reuse the theme's own variables so light and dark both work.
+*/
+
+/*
+  Neon aurora as one continuous field behind the whole layout. Kept subtle so
+  the three columns can stay on the theme's transparent surface (they sit side
+  by side, so the neon shows behind them, not through the text). Text contrast
+  is preserved because the tint over the base color stays light.
+*/
+body {
+  background-color: var(--body-background);
+  background-image:
+    radial-gradient(60vmax 46vmax at 4% -14%, rgba(34, 211, 238, 0.22), transparent 58%),
+    radial-gradient(56vmax 46vmax at 104% -4%, rgba(168, 85, 247, 0.20), transparent 58%),
+    radial-gradient(72vmax 56vmax at 50% 118%, rgba(236, 72, 153, 0.16), transparent 62%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* Search box, in the theme's menu slot */
+.pf-search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.7rem;
+  margin: 0 0 1rem;
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  color: var(--body-font-color);
+  background: color-mix(in srgb, var(--body-background) 70%, transparent);
+  text-decoration: none;
+  font-size: var(--font-size-smaller);
+}
+.pf-search-box:hover { border-color: var(--color-link); }
+.pf-search-box svg { width: 1rem; height: 1rem; opacity: 0.7; }
+.pf-search-box .pf-label { color: var(--gray-500); }
+.pf-kbd {
+  margin-left: auto;
+  font-size: 0.72rem;
+  line-height: 1;
+  border: 1px solid var(--gray-200);
+  border-radius: 5px;
+  padding: 0.15rem 0.35rem;
+  color: var(--gray-500);
+}
+
+/* Search modal (the lazy-loaded island) */
+.pf-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: start center;
+  padding: 12vh 1rem 1rem;
+  background: rgba(3, 7, 12, 0.55);
+  backdrop-filter: blur(3px);
+}
+.pf-modal[hidden] { display: none; }
+.pf-modal-panel {
+  width: min(100%, 640px);
+  max-height: 76vh;
+  overflow: auto;
+  background: var(--body-background);
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.6);
+  padding: 0.75rem;
+}
+.pf-modal-hint { text-align: right; color: var(--gray-500); font-size: 0.72rem; padding: 0.25rem 0.4rem 0; }

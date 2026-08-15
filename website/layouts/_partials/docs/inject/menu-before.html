@@ -1,0 +1,8 @@
+{{- /* Search box in the theme's menu slot. Links to /search as a no-JS
+       fallback; the island in inject/body upgrades it to a modal and binds
+       Control/Command + K. */ -}}
+<a class="pf-search-box" href="{{ "/search/" | relLangURL }}" data-pf-open aria-keyshortcuts="Control+K Meta+K">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M10 4a6 6 0 1 0 3.7 10.7l4.3 4.3a1 1 0 0 0 1.4-1.4l-4.3-4.3A6 6 0 0 0 10 4Zm-4 6a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z"/></svg>
+  <span class="pf-label">{{ partial "docs/text/i18n" "Search" }}</span>
+  <kbd class="pf-kbd">Ctrl K</kbd>
+</a>

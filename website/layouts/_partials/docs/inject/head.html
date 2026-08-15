@@ -1,0 +1,5 @@
+{{- /* sigcull styles layered on top of the Book theme (neon, search). */ -}}
+{{- with resources.Get "css/custom.css" -}}
+  {{- $c := . | minify | fingerprint "sha256" -}}
+  <link rel="stylesheet" href="{{ $c.RelPermalink }}" integrity="{{ $c.Data.Integrity }}">
+{{- end -}}
