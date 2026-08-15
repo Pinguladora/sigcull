@@ -30,7 +30,8 @@ markup:
 taxonomies:
   tag: "tags"
 
-# Plain-text digests for LLMs, served at /llms.txt and /llms-full.txt.
+# Plain-text digests for LLMs, and a print HTML that WeasyPrint turns into a
+# tagged PDF/UA-1 document.
 outputFormats:
   llms:
     mediaType: "text/plain"
@@ -40,9 +41,15 @@ outputFormats:
     mediaType: "text/plain"
     baseName: "llms-full"
     isPlainText: true
+  print:
+    mediaType: "text/html"
+    baseName: "print"
+    isHTML: true
+    permalinkable: true
 
 outputs:
-  home: ["HTML", "RSS", "llms", "llms-full"]
+  home: ["HTML", "RSS", "llms", "llms-full", "print"]
+  page: ["HTML", "print"]
 
 params:
   BookTheme: "auto"          # light | dark | auto (theme ships its own toggle)

@@ -1,0 +1,16 @@
+{{- /* Standalone print HTML for a single doc page. WeasyPrint renders it to a
+       per-page tagged PDF/UA-1 (see the site:pdf task). No block/baseof, so the
+       theme layout does not wrap it. */ -}}
+<!doctype html>
+<html lang="{{ .Site.Language.Lang }}">
+<head>
+  <meta charset="utf-8">
+  <title>{{ .Title }} · {{ .Site.Title }}</title>
+  {{- with resources.Get "css/print.css" }}
+    <style>{{ (. | minify).Content | safeCSS }}</style>
+  {{- end }}
+</head>
+<body>
+  <article>{{ .Content }}</article>
+</body>
+</html>
