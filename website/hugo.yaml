@@ -1,0 +1,67 @@
+# sigcull website. Hugo Book theme via Hugo Modules, built with hugo-extended.
+baseURL: "https://sigcull.dev/"
+title: "sigcull"
+
+defaultContentLanguage: "en"
+defaultContentLanguageInSubdir: false
+enableRobotsTXT: true
+enableGitInfo: false
+
+# Broken internal ref/relref links fail the build.
+refLinksErrorLevel: "ERROR"
+
+module:
+  imports:
+    - path: github.com/alex-shpak/hugo-book
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true   # the Book theme relies on some inline HTML in content
+  highlight:
+    noClasses: false
+    lineNos: false
+    tabWidth: 2
+  tableOfContents:
+    startLevel: 2
+    endLevel: 3
+    ordered: false
+
+taxonomies:
+  tag: "tags"
+
+# Plain-text digests for LLMs, served at /llms.txt and /llms-full.txt.
+outputFormats:
+  llms:
+    mediaType: "text/plain"
+    baseName: "llms"
+    isPlainText: true
+  llms-full:
+    mediaType: "text/plain"
+    baseName: "llms-full"
+    isPlainText: true
+
+outputs:
+  home: ["HTML", "RSS", "llms", "llms-full"]
+
+params:
+  BookTheme: "auto"          # light | dark | auto (theme ships its own toggle)
+  BookToC: true
+  BookSection: "docs"
+  BookSearch: false          # FlexSearch off; Pagefind is wired separately
+  BookRepo: "https://github.com/Pinguladora/sigcull"
+  BookCommitPath: "commit"
+  BookServiceWorker: false
+  description: "A GitHub App that verifies the signature on every commit and turns it into a required merge gate."
+
+languages:
+  en:
+    label: "English"
+    locale: "en-US"
+    contentDir: "content/en"
+    weight: 1
+  es:
+    label: "Español"
+    locale: "es-ES"
+    contentDir: "content/es"
+    weight: 2
