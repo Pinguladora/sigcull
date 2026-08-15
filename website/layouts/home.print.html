@@ -18,11 +18,14 @@
   </section>
   {{- with site.GetPage "/docs" }}
     {{- range .RegularPagesRecursive.ByWeight }}
+      {{- /* Namespace per doc so headings stay unique in the concatenated
+             handbook. Prefix with a letter ("doc-") because ADR slugs start with
+             a digit, and an id must begin with a letter. */ -}}
       {{- $slug := .File.ContentBaseName -}}
       <article class="print-doc">
         {{ .Content
-          | replaceRE `( id=")([^"]+)(")` (printf `${1}%s-${2}${3}` $slug)
-          | replaceRE `(href="#)([^"]+)(")` (printf `${1}%s-${2}${3}` $slug)
+          | replaceRE `( id=")([^"]+)(")` (printf `${1}doc-%s-${2}${3}` $slug)
+          | replaceRE `(href="#)([^"]+)(")` (printf `${1}doc-%s-${2}${3}` $slug)
           | safeHTML }}
       </article>
     {{- end }}
