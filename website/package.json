@@ -1,0 +1,19 @@
+{
+  "name": "sigcull-website-tests",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local accessibility (WCAG 2.2) and visual-regression tests for the sigcull website. Dev-only; not part of the Hugo build.",
+  "scripts": {
+    "a11y": "playwright test",
+    "htmlvalidate": "html-validate 'public/**/*.html'"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.62.1",
+    "axe-core": "^4.13.0",
+    "html-validate": "^11.6.2",
+    "http-server": "^14.1.1",
+    "odiff-bin": "^4.5.0"
+  }
+}
