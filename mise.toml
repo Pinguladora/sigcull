@@ -9,6 +9,10 @@ locked = false
 prefer_offline = true
 disable_default_registry = true
 disable_backends = ["asdf", "vfox", "ubi"]
+# Decide task freshness by hashing source contents, not mtimes. Hugo rewrites
+# all of public on every build and a fresh checkout resets mtimes, so mtime
+# comparison would rebuild needlessly; content hashing skips when bytes are equal.
+task.source_freshness_hash_contents = true
 
 [tools]
 "github:mongodb/kingfisher" = "1.109.0"
@@ -100,12 +104,28 @@ description = "Serve the website locally with live reload"
 dir = "website"
 run = "hugo --minify --cleanDestinationDir"
 description = "Build the site HTML (cleans public)"
+# Cache keys are relative to the task `dir` (website). Rebuild when any Hugo input
+# changes, including the ADRs mounted from ../docs/adr.
+sources = [
+  "hugo.yaml",
+  "content/**/*",
+  "layouts/**/*",
+  "assets/**/*",
+  "static/**/*",
+  "../docs/adr/**/*",
+]
+# Scope to the HTML only. A broad public/**/* would overlap the PDF and Pagefind
+# outputs, and with content hashing that overlap makes this task always stale.
+outputs = ["public/**/*.html"]
 
 [tasks."site:search"]
 dir = "website"
 depends = ["site:html"]
 run = "pagefind --site public"
 description = "Generate the Pagefind search index"
+# A skipped site:html leaves the HTML untouched, so the index stays fresh too.
+sources = ["public/**/*.html"]
+outputs = ["public/pagefind/**/*"]
 
 [tasks."site:pdf"]
 dir = "website"
@@ -116,12 +136,17 @@ run = [
   'find public -type f -path "*/docs/*" -name print.html | while IFS= read -r f; do weasyprint --pdf-variant=pdf/ua-1 "$f" "${f%.html}.pdf"; done',
 ]
 description = "Render tagged PDF/UA-1 files with WeasyPrint (needs WeasyPrint)"
+# WeasyPrint is the slow step; skip it when the print HTML is unchanged.
+sources = ["public/**/print.html"]
+outputs = ["public/**/*.pdf"]
 
 [tasks."site:pdf-validate"]
 dir = "website"
 depends = ["site:pdf"]
 run = "verapdf --flavour ua1 public/sigcull-docs.pdf"
 description = "Validate the PDF against PDF/UA-1 with veraPDF"
+# No output file; sources alone lets mise skip re-validation of an unchanged PDF.
+sources = ["public/sigcull-docs.pdf"]
 
 [tasks."site:build"]
 depends = ["site:search", "site:pdf"]
