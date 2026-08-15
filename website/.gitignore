@@ -5,3 +5,13 @@
 
 # node tooling (pagefind)
 /node_modules/
+
+# Node test toolchain (dev-only a11y/visual tests)
+/test-results/
+/playwright-report/
+/blob-report/
+/.playwright/
+
+# Visual-regression working files (baselines under tests/visual/__baseline__ ARE tracked)
+/tests/visual/__actual__/
+/tests/visual/__diff__/
