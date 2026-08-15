@@ -1,0 +1,5 @@
+{{- /* Scope Pagefind indexing to the article body. The search page itself is
+       excluded (it carries the widget, not indexable content). */ -}}
+{{- if not .Params.pagefindSearch -}}
+<div data-pagefind-body>
+{{- end -}}

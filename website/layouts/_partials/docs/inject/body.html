@@ -1,0 +1,63 @@
+{{- /* Search island. The Pagefind bundle is not loaded until the user opens
+       search (click on the box, or Control/Command + K), so content pages stay
+       free of the search runtime. */ -}}
+<div id="pf-modal" class="pf-modal" hidden>
+  <div class="pf-modal-panel" role="dialog" aria-modal="true" aria-label="{{ partial "docs/text/i18n" "Search" }}">
+    <div id="pf-ui"></div>
+    <p class="pf-modal-hint">Esc</p>
+  </div>
+</div>
+<script>
+(function () {
+  var modal = document.getElementById("pf-modal");
+  var mount = document.getElementById("pf-ui");
+  var loaded = false, restore = null;
+
+  function load() {
+    if (loaded) return;
+    loaded = true;
+    var css = document.createElement("link");
+    css.rel = "stylesheet";
+    css.href = "/pagefind/pagefind-ui.css";
+    document.head.appendChild(css);
+    var s = document.createElement("script");
+    s.src = "/pagefind/pagefind-ui.js";
+    s.onload = function () {
+      new PagefindUI({ element: "#pf-ui", showSubResults: true, showImages: false, resetStyles: false });
+      var i = mount.querySelector("input");
+      if (i) i.focus();
+    };
+    document.head.appendChild(s);
+  }
+
+  function open() {
+    restore = document.activeElement;
+    modal.hidden = false;
+    document.documentElement.style.overflow = "hidden";
+    load();
+    var i = mount.querySelector("input");
+    if (i) i.focus();
+  }
+
+  function close() {
+    modal.hidden = true;
+    document.documentElement.style.overflow = "";
+    if (restore && restore.focus) restore.focus();
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if ((e.key === "k" || e.key === "K") && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault();
+      modal.hidden ? open() : close();
+    } else if (e.key === "Escape" && !modal.hidden) {
+      close();
+    }
+  });
+
+  document.querySelectorAll("[data-pf-open]").forEach(function (el) {
+    el.addEventListener("click", function (e) { e.preventDefault(); open(); });
+  });
+
+  modal.addEventListener("click", function (e) { if (e.target === modal) close(); });
+})();
+</script>
