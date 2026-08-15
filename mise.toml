@@ -19,6 +19,7 @@ golangci-lint = "2.12.2"
 prek = "0.4.11"
 hugo-extended = "0.165.0"
 "github:Pagefind/pagefind" = "1.5.2"
+"conda:WeasyPrint" = "69.0"
 
 [tasks."secret:scan"]
 run = "kingfisher scan . --no-validate --redact"
@@ -91,10 +92,37 @@ dir = "website"
 run = "hugo server"
 description = "Serve the website locally with live reload"
 
-[tasks."site:build"]
+# The full build is expressed as a dependency graph so ordering is automatic and
+# Hugo runs once. This matters because hugo --cleanDestinationDir wipes the
+# search index and the PDFs, so search and pdf must run after the single html
+# build, never triggering another one.
+[tasks."site:html"]
 dir = "website"
+run = "hugo --minify --cleanDestinationDir"
+description = "Build the site HTML (cleans public)"
+
+[tasks."site:search"]
+dir = "website"
+depends = ["site:html"]
+run = "pagefind --site public"
+description = "Generate the Pagefind search index"
+
+[tasks."site:pdf"]
+dir = "website"
+depends = ["site:html"]
 run = [
-  "hugo --minify --cleanDestinationDir",
-  "pagefind --site public",
+  "weasyprint --pdf-variant=pdf/ua-1 public/print.html public/sigcull-docs.pdf",
+  "weasyprint --pdf-variant=pdf/ua-1 public/es/print.html public/es/sigcull-docs.pdf",
+  'for f in public/docs/*/print.html public/es/docs/*/print.html; do if [ -f "$f" ]; then weasyprint --pdf-variant=pdf/ua-1 "$f" "${f%.html}.pdf"; fi; done',
 ]
-description = "Build the website and generate the Pagefind search index"
+description = "Render tagged PDF/UA-1 files with WeasyPrint (needs WeasyPrint)"
+
+[tasks."site:pdf-validate"]
+dir = "website"
+depends = ["site:pdf"]
+run = "verapdf --flavour ua1 public/sigcull-docs.pdf"
+description = "Validate the PDF against PDF/UA-1 with veraPDF"
+
+[tasks."site:build"]
+depends = ["site:search", "site:pdf"]
+description = "Full build: HTML (once), then the search index and PDFs"
