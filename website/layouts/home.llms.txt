@@ -1,0 +1,14 @@
+{{- /* Lite LLM index: title, summary, and a linked list of documentation. */ -}}
+# {{ .Site.Title }}
+
+> {{ .Site.Params.description }}
+
+## Documentation
+{{ with site.GetPage "/docs" }}
+{{- range .RegularPagesRecursive.ByWeight }}
+- [{{ .Title }}]({{ .Permalink }}){{ with .Description }}: {{ . }}{{ end }}
+{{- end }}
+{{ end }}
+
+## Source
+- Repository: https://github.com/Pinguladora/sigcull
