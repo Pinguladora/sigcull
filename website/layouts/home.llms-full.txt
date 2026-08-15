@@ -1,0 +1,16 @@
+{{- /* Full LLM digest: the complete documentation as markdown, concatenated. */ -}}
+# {{ .Site.Title }}
+
+> {{ .Site.Params.description }}
+
+Source: https://github.com/Pinguladora/sigcull
+
+{{ with site.GetPage "/docs" }}
+{{- range .RegularPagesRecursive.ByWeight }}
+---
+
+# {{ .Title }}
+
+{{ .RawContent }}
+{{ end }}
+{{- end }}
