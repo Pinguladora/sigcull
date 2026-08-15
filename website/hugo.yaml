@@ -13,6 +13,34 @@ refLinksErrorLevel: "ERROR"
 module:
   imports:
     - path: github.com/alex-shpak/hugo-book
+  # Declaring any mount replaces Hugo's default mounts, so every component the
+  # project uses is listed explicitly. Content is mounted per language with
+  # sites.matrix (the replacement for the deprecated languages[].contentDir and
+  # mounts.lang).
+  mounts:
+    - source: content/en
+      target: content
+      sites:
+        matrix:
+          languages: ["en"]
+    - source: content/es
+      target: content
+      sites:
+        matrix:
+          languages: ["es"]
+    # Architecture decision records live with the code; surface them read-only
+    # under the docs, English only, so the reasoning stays next to the docs.
+    - source: ../docs/adr
+      target: content/docs/adr
+      sites:
+        matrix:
+          languages: ["en"]
+    - source: assets
+      target: assets
+    - source: layouts
+      target: layouts
+    - source: static
+      target: static
 
 markup:
   goldmark:
@@ -65,10 +93,8 @@ languages:
   en:
     label: "English"
     locale: "en-US"
-    contentDir: "content/en"
     weight: 1
   es:
     label: "Español"
     locale: "es-ES"
-    contentDir: "content/es"
     weight: 2

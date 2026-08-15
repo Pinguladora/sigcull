@@ -1,0 +1,28 @@
+{{/*
+  Page title, overriding the theme's version. Mounted ADRs (docs/adr/*) carry no
+  front matter, so Hugo would title them from their filename ("0002 Fetch
+  Commits Not Github Api"). Use their first H1 instead, which reads correctly and
+  matches the page heading. Every other page keeps the theme's behaviour, and
+  this flows to the <title> tag and the sidebar menu, which both call this partial.
+*/}}
+{{ $title := "" }}
+
+{{ if and .IsPage .File (hasPrefix .File.Path "docs/adr/") }}
+  {{ with findRESubmatch `(?m)^#[ \t]+(.+?)[ \t]*$` .RawContent 1 }}
+    {{ $title = index (index . 0) 1 }}
+  {{ end }}
+{{ end }}
+
+{{ if not $title }}
+  {{ if .LinkTitle }}
+    {{ $title = .LinkTitle }}
+  {{ else if .Title }}
+    {{ $title = .Title }}
+  {{ else if and .IsSection .File }}
+    {{ $title = path.Base .File.Dir | humanize | title }}
+  {{ else if and .IsPage .File }}
+    {{ $title = .File.BaseFileName | humanize | title }}
+  {{ end }}
+{{ end }}
+
+{{ return $title }}

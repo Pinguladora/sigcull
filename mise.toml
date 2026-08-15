@@ -113,7 +113,7 @@ depends = ["site:html"]
 run = [
   "weasyprint --pdf-variant=pdf/ua-1 public/print.html public/sigcull-docs.pdf",
   "weasyprint --pdf-variant=pdf/ua-1 public/es/print.html public/es/sigcull-docs.pdf",
-  'for f in public/docs/*/print.html public/es/docs/*/print.html; do if [ -f "$f" ]; then weasyprint --pdf-variant=pdf/ua-1 "$f" "${f%.html}.pdf"; fi; done',
+  'find public -type f -path "*/docs/*" -name print.html | while IFS= read -r f; do weasyprint --pdf-variant=pdf/ua-1 "$f" "${f%.html}.pdf"; done',
 ]
 description = "Render tagged PDF/UA-1 files with WeasyPrint (needs WeasyPrint)"
 
