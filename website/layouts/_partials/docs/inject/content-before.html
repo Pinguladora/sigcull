@@ -1,5 +1,6 @@
 {{- /* Scope Pagefind indexing to the article body. The search page itself is
-       excluded (it carries the widget, not indexable content). */ -}}
+       excluded (it carries the widget, not indexable content). The page actions
+       are rendered inside the article, under the title, by layouts/page.html. */ -}}
 {{- if not .Params.pagefindSearch -}}
 <div data-pagefind-body>
 {{- end -}}

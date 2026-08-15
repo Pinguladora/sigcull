@@ -16,12 +16,23 @@
 */
 body {
   background-color: var(--body-background);
+  /* Glacier: glacial teal, ice blue, polar blue. Stronger in light, where a
+     cool wash on white is easily lost. */
   background-image:
-    radial-gradient(60vmax 46vmax at 4% -14%, rgba(34, 211, 238, 0.22), transparent 58%),
-    radial-gradient(56vmax 46vmax at 104% -4%, rgba(168, 85, 247, 0.20), transparent 58%),
-    radial-gradient(72vmax 56vmax at 50% 118%, rgba(236, 72, 153, 0.16), transparent 62%);
+    radial-gradient(58vmax 44vmax at 4% -14%, rgba(45, 212, 191, 0.42), transparent 56%),
+    radial-gradient(54vmax 44vmax at 104% -4%, rgba(56, 189, 248, 0.40), transparent 56%),
+    radial-gradient(70vmax 54vmax at 50% 120%, rgba(96, 165, 250, 0.32), transparent 62%);
   background-attachment: fixed;
   background-repeat: no-repeat;
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    /* On the Antarctic-night base, a softer glow with an aurora-green foot. */
+    background-image:
+      radial-gradient(58vmax 44vmax at 4% -14%, rgba(45, 212, 191, 0.30), transparent 56%),
+      radial-gradient(54vmax 44vmax at 104% -4%, rgba(56, 189, 248, 0.28), transparent 56%),
+      radial-gradient(70vmax 54vmax at 50% 120%, rgba(52, 211, 153, 0.24), transparent 62%);
+  }
 }
 
 /* Search box, in the theme's menu slot */
@@ -30,26 +41,28 @@ body {
   align-items: center;
   gap: 0.5rem;
   width: 100%;
-  padding: 0.5rem 0.7rem;
+  min-height: 2.25rem;
+  padding: 0.45rem 0.7rem;
   margin: 0 0 1rem;
-  border: 1px solid var(--gray-200);
+  border: 1px solid color-mix(in srgb, var(--body-font-color) 50%, var(--body-background));
   border-radius: 8px;
   color: var(--body-font-color);
-  background: color-mix(in srgb, var(--body-background) 70%, transparent);
+  background: var(--body-background);
   text-decoration: none;
   font-size: var(--font-size-smaller);
 }
 .pf-search-box:hover { border-color: var(--color-link); }
-.pf-search-box svg { width: 1rem; height: 1rem; opacity: 0.7; }
-.pf-search-box .pf-label { color: var(--gray-500); }
+.pf-search-box:focus-visible { outline: 3px solid var(--color-link); outline-offset: 2px; }
+.pf-search-box svg { width: 1rem; height: 1rem; }
+.pf-search-box .pf-label { color: color-mix(in srgb, var(--body-font-color) 70%, var(--body-background)); }
 .pf-kbd {
   margin-left: auto;
   font-size: 0.72rem;
   line-height: 1;
-  border: 1px solid var(--gray-200);
+  border: 1px solid color-mix(in srgb, var(--body-font-color) 40%, var(--body-background));
   border-radius: 5px;
   padding: 0.15rem 0.35rem;
-  color: var(--gray-500);
+  color: color-mix(in srgb, var(--body-font-color) 70%, var(--body-background));
 }
 
 /* Search modal (the lazy-loaded island) */
@@ -69,13 +82,139 @@ body {
   max-height: 76vh;
   overflow: auto;
   background: var(--body-background);
-  border: 1px solid var(--gray-200);
+  border: 1px solid color-mix(in srgb, var(--body-font-color) 30%, var(--body-background));
   border-radius: 12px;
   box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.6);
   padding: 0.75rem;
 }
-.pf-modal-hint { text-align: right; color: var(--gray-500); font-size: 0.72rem; padding: 0.25rem 0.4rem 0; }
+.pf-modal-hint { text-align: right; color: color-mix(in srgb, var(--body-font-color) 70%, var(--body-background)); font-size: 0.72rem; padding: 0.25rem 0.4rem 0; }
 
-/* Extra menu links (changelog) below the docs tree */
-.menu-extra { margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--gray-200); }
+/* Extra menu links (changelog, print) below the docs tree */
+.menu-extra { margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid color-mix(in srgb, var(--body-font-color) 25%, var(--body-background)); }
+
+/*
+  Per-page actions: a disclosure dropdown and an export button. Accent-outline
+  buttons: border and text on --color-link (>= 4.5:1 text, >= 3:1 border in both
+  themes), a solid background so they read crisply over the neon, inverting to a
+  filled button on hover and a clear focus ring for keyboard use.
+*/
+/* Actions sit under the page title, left aligned, sized to content */
+.page-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.25rem 0 1.5rem; }
+.page-action {
+  display: inline-flex;
+  /* The theme sets a bare `a { flex: auto }`, which would make the export
+     anchor grow to fill the row. Pin it so both controls stay content sized. */
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.1rem;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  border: 1px solid var(--color-link);
+  border-radius: 6px;
+  background: var(--body-background);
+  color: var(--color-link);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.page-action:hover { background: var(--color-link); color: var(--body-background); }
+/* The theme underlines article links on :hover. These are controls, not prose
+   links, so keep them undecorated (matches the theme's specificity, wins on
+   source order since custom.css loads after the theme). */
+.page-actions a.page-action:hover,
+.page-actions a.pa-item:hover { text-decoration: none; }
+.page-action:focus-visible { outline: 3px solid var(--color-link); outline-offset: 2px; }
+.page-action svg { width: 1rem; height: 1rem; }
+.page-actions [hidden] { display: none; }
+
+.pa-menu-wrap { position: relative; }
+.pa-caret { width: 0.7rem; height: 0.7rem; transition: transform 0.15s ease; }
+.pa-trigger[aria-expanded="true"] .pa-caret { transform: rotate(180deg); }
+.pa-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  min-width: 13rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0.35rem;
+  background: var(--body-background);
+  border: 1px solid color-mix(in srgb, var(--body-font-color) 30%, var(--body-background));
+  border-radius: 8px;
+  box-shadow: 0 14px 34px -14px rgba(0, 0, 0, 0.5);
+}
+.pa-menu[hidden] { display: none; }
+.pa-item {
+  display: block;
+  text-align: left;
+  min-height: 24px;
+  padding: 0.5rem 0.65rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--body-font-color);
+  text-decoration: none;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.pa-item:hover { background: color-mix(in srgb, var(--color-link) 14%, transparent); color: var(--color-link); }
+.pa-item:focus-visible { outline: 2px solid var(--color-link); outline-offset: -2px; color: var(--color-link); }
+
+/* Sidebar extra links (changelog, export all docs) as plain menu links */
+.menu-extra a {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 24px;
+  padding: 0.3rem 0;
+  color: var(--color-link);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.menu-extra a:hover { text-decoration: underline; }
+.menu-extra svg { width: 1rem; height: 1rem; }
+
+/*
+  Pagefind Default UI theming. Pagefind 1.5.2 ships only light values on :root
+  and no prefers-color-scheme block, so on the theme's dark surface the widget is
+  a white bar with near-black, unreadable text. Bind its variables to the theme's
+  own tokens on the widget containers (nearer ancestors than :root, so they win);
+  light and dark then follow the site with the theme's guaranteed contrast.
+*/
+#pf-ui, #pagefind-search {
+  --pagefind-ui-primary: var(--color-link);
+  --pagefind-ui-text: var(--body-font-color);
+  --pagefind-ui-background: var(--body-background);
+  --pagefind-ui-border: color-mix(in srgb, var(--body-font-color) 22%, var(--body-background));
+  --pagefind-ui-tag: color-mix(in srgb, var(--body-font-color) 10%, var(--body-background));
+  --pagefind-ui-border-width: 1px;
+}
+/* The clear ("X") control ships as a filled, rounded box. Make it a quiet text
+   button that only reveals a tint on hover, like a standard clear affordance. */
+#pf-ui .pagefind-ui__search-clear,
+#pagefind-search .pagefind-ui__search-clear {
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: color-mix(in srgb, var(--body-font-color) 60%, var(--body-background));
+}
+#pf-ui .pagefind-ui__search-clear:hover,
+#pagefind-search .pagefind-ui__search-clear:hover {
+  color: var(--color-link);
+  background: color-mix(in srgb, var(--color-link) 12%, transparent);
+}
+#pf-ui .pagefind-ui__search-clear:focus-visible,
+#pagefind-search .pagefind-ui__search-clear:focus-visible {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
+}
+
+/* Print: drop the neon and the interactive chrome so window.print is clean */
+@media print {
+  body { background: #fff !important; }
+  .page-actions, .pf-search-box, .menu-extra, .pf-modal { display: none !important; }
+}
 
