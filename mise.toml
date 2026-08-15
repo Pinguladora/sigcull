@@ -17,6 +17,8 @@ pinact = "4.1.0"
 go = "1.26.5"
 golangci-lint = "2.12.2"
 prek = "0.4.11"
+hugo-extended = "0.165.0"
+"github:Pagefind/pagefind" = "1.5.2"
 
 [tasks."secret:scan"]
 run = "kingfisher scan . --no-validate --redact"
@@ -83,3 +85,16 @@ description = "Refresh the vendored public-good Sigstore trusted root"
 [tasks.check]
 description = "Pre-commit gate: format, vet, build, test, lint"
 depends = ["fmt:check", "vet", "build", "test", "lint"]
+
+[tasks."site:serve"]
+dir = "website"
+run = "hugo server"
+description = "Serve the website locally with live reload"
+
+[tasks."site:build"]
+dir = "website"
+run = [
+  "hugo --minify --cleanDestinationDir",
+  "pagefind --site public",
+]
+description = "Build the website and generate the Pagefind search index"

@@ -45,3 +45,7 @@ config.yaml
 # exported keyrings / trust material used when testing the authorities locally
 *.asc
 allowed_signers
+
+# stray Hugo build output (the site lives in website/, which has its own gitignore)
+/public/
+.hugo_build.lock
