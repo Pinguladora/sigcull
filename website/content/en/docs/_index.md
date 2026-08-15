@@ -12,6 +12,8 @@ the result into a required Check Run, so unsigned or unauthorized commits cannot
 merge into a protected branch. It works on private repositories and against any
 Sigstore instance.
 
+![sigcull checks every commit in the range through five stages: the GitHub event, the HMAC-verified webhook, a shallow fetch, per-commit verification with gitsign and the other authorities, and a Check Run that passes or fails with annotations.](images/pipeline.png "How sigcull verifies a commit")
+
 Start with [Getting started]({{< relref "getting-started" >}}) for a first
 signed commit, then reach for:
 

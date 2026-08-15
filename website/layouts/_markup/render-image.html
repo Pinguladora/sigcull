@@ -1,0 +1,36 @@
+{{- /*
+  Image render hook. Raster images (png/jpg) are emitted as a <picture> with a
+  native WebP source at several widths and a single-format fallback <img> that
+  carries intrinsic width/height (so no layout shift). WebP is produced by
+  Hugo's own images.Process, so the build needs no external tooling. Only one
+  fallback format is listed, never both PNG and JPEG. Anything that is not a
+  resolvable raster (SVG, remote URLs) passes through as a plain <img>.
+*/ -}}
+{{- $src := .Destination -}}
+{{- $alt := .PlainText -}}
+{{- $title := .Title -}}
+{{- $img := or (.Page.Resources.GetMatch $src) (resources.Get $src) -}}
+{{- $ext := $src | path.Ext | strings.TrimPrefix "." | lower -}}
+{{- if and $img (in (slice "png" "jpg" "jpeg") $ext) -}}
+  {{- $w := $img.Width -}}
+  {{- /* Candidate widths, never upscaling past the source; the native width is
+         always the top of the set. */ -}}
+  {{- $widths := slice -}}
+  {{- range (slice 480 800 1200 1600) -}}
+    {{- if lt . $w -}}{{ $widths = $widths | append . }}{{- end -}}
+  {{- end -}}
+  {{- $widths = $widths | append $w -}}
+  {{- $srcset := slice -}}
+  {{- range $widths -}}
+    {{- $v := $img.Resize (printf "%dx webp q82 Lanczos" .) -}}
+    {{- $srcset = $srcset | append (printf "%s %dw" $v.RelPermalink $v.Width) -}}
+  {{- end -}}
+  {{- $fw := cond (gt $w 1000) 1000 $w -}}
+  {{- $fallback := $img.Resize (printf "%dx Lanczos" $fw) -}}
+  <picture>
+    <source type="image/webp" srcset="{{ delimit $srcset ", " }}" sizes="(max-width: 800px) 100vw, 800px">
+    <img src="{{ $fallback.RelPermalink }}" width="{{ $fallback.Width }}" height="{{ $fallback.Height }}" alt="{{ $alt }}"{{ with $title }} title="{{ . }}"{{ end }} loading="lazy" decoding="async">
+  </picture>
+{{- else -}}
+  <img src="{{ $src | safeURL }}" alt="{{ $alt }}"{{ with $title }} title="{{ . }}"{{ end }} loading="lazy" decoding="async">
+{{- end -}}

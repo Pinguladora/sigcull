@@ -24,7 +24,9 @@
       {{- end }}
     </div>
   </div>
-  {{- $pdfName := printf "%s.pdf" (.Title | replaceRE `\s+` "_" | replaceRE `[\\/:*?"<>|]+` "-") -}}
+  {{- /* Mounted pages (ADRs) have no front-matter title, so .Title is empty;
+         fall back to the source filename for a clean download name. */ -}}
+  {{- $pdfName := printf "%s.pdf" (or .Title .File.ContentBaseName | replaceRE `\s+` "_" | replaceRE `[\\/:*?"<>|]+` "-") -}}
   <a class="page-action" href="{{ .RelPermalink }}print.pdf" download="{{ $pdfName }}">
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v8.6l2.3-2.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.4l2.3 2.3V4a1 1 0 0 1 1-1ZM5 19a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Z"/></svg>
     Export to PDF
