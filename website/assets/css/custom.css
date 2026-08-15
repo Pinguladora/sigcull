@@ -212,9 +212,13 @@ body {
   outline-offset: 2px;
 }
 
+/* Inline code inside a link puts the link color on the code's tinted background,
+   which falls below 4.5:1 in dark mode (WCAG 1.4.3). Drop the code chrome for
+   linked code so the link color sits on the page background instead. */
+.markdown a code { background: transparent; border-color: transparent; }
+
 /* Print: drop the neon and the interactive chrome so window.print is clean */
 @media print {
   body { background: #fff !important; }
   .page-actions, .pf-search-box, .menu-extra, .pf-modal { display: none !important; }
 }
-
