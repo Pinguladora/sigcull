@@ -2,8 +2,8 @@
   "name": "sigcull-website-tests",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "description": "Local accessibility (WCAG 2.2) and visual-regression tests for the sigcull website. Dev-only; not part of the Hugo build.",
+  "type": "module",
   "scripts": {
     "a11y": "playwright test",
     "htmlvalidate": "html-validate 'public/**/*.html'"

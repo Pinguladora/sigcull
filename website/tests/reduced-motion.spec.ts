@@ -23,7 +23,10 @@ for (const route of ROUTES) {
         })
         .filter((x) => x.dur > thr);
     }, THRESHOLD_MS);
-    expect(running, `animations above ${THRESHOLD_MS}ms under reduce: ${JSON.stringify(running)}`).toEqual([]);
+    expect(
+      running,
+      `animations above ${THRESHOLD_MS}ms under reduce: ${JSON.stringify(running)}`,
+    ).toEqual([]);
   });
 }
 
@@ -31,9 +34,9 @@ test("reduced-motion: transitions collapse to ~instant", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/docs/authorities/");
   // .pa-trigger normally transitions 0.12s; under reduce it must be ~0.
-  const dur = await page.locator(".pa-trigger").evaluate(
-    (el) => getComputedStyle(el).transitionDuration,
-  );
+  const dur = await page
+    .locator(".pa-trigger")
+    .evaluate((el) => getComputedStyle(el).transitionDuration);
   // 0.01ms == 0.00001s
   expect(parseFloat(dur)).toBeLessThanOrEqual(0.001);
 });
