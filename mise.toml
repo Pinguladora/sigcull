@@ -34,6 +34,7 @@ golangci-lint = "2.12.2"
 hugo-extended = "0.165.0"
 "github:Pagefind/pagefind" = "1.5.2"
 "conda:WeasyPrint" = "69.0"
+"conda:verapdf" = "1.31.91"   # PDF/UA-1 validator
 hk = "1.55.0"
 yamllint = "1.38.0"
 "github:mongodb/kingfisher" = "1.109.0"
@@ -143,21 +144,31 @@ outputs = ["public/pagefind/**/*"]
 [tasks."site:pdf"]
 dir = "website"
 depends = ["site:html"]
+# Render each print page as PDF/A-3a, then WeasyPrint's finisher hook stamps the
+# PDF/UA-1 identifier into the same XMP, so every PDF is both archival (PDF/A-3a)
+# and accessible (PDF/UA-1). --pdf-variant carries only one claim, so the second
+# is added in tools/render-pdf.py using WeasyPrint's own pydyf (no extra dep).
+# The interpreter is the conda WeasyPrint env's python, where weasyprint imports.
 run = [
-  "weasyprint --pdf-variant=pdf/ua-1 public/print.html public/sigcull-docs.pdf",
-  "weasyprint --pdf-variant=pdf/ua-1 public/es/print.html public/es/sigcull-docs.pdf",
-  'find public -type f -path "*/docs/*" -name print.html | while IFS= read -r f; do weasyprint --pdf-variant=pdf/ua-1 "$f" "${f%.html}.pdf"; done',
+  '"$(mise where conda:WeasyPrint)/bin/python" tools/render-pdf.py public/print.html public/sigcull-docs.pdf',
+  '"$(mise where conda:WeasyPrint)/bin/python" tools/render-pdf.py public/es/print.html public/es/sigcull-docs.pdf',
+  'PY="$(mise where conda:WeasyPrint)/bin/python"; find public -type f -path "*/docs/*" -name print.html | while IFS= read -r f; do "$PY" tools/render-pdf.py "$f" "${f%.html}.pdf"; done',
 ]
-description = "Render tagged PDF/UA-1 files with WeasyPrint (needs WeasyPrint)"
-# WeasyPrint is the slow step; skip it when the print HTML is unchanged.
-sources = ["public/**/print.html"]
+description = "Render dual PDF/A-3a + PDF/UA-1 files with WeasyPrint"
+# WeasyPrint is the slow step; skip it when the print HTML or the renderer is unchanged.
+sources = ["public/**/print.html", "tools/render-pdf.py"]
 outputs = ["public/**/*.pdf"]
 
 [tasks."site:pdf-validate"]
 dir = "website"
 depends = ["site:pdf"]
-run = "verapdf --flavour ua1 public/sigcull-docs.pdf"
-description = "Validate the PDF against PDF/UA-1 with veraPDF"
+# The document declares both standards, so validate both. veraPDF exits
+# non-zero on non-compliance, failing the task if either claim is not met.
+run = [
+  "verapdf --flavour ua1 public/sigcull-docs.pdf",
+  "verapdf --flavour 3a public/sigcull-docs.pdf",
+]
+description = "Validate the PDF is both PDF/UA-1 and PDF/A-3a with veraPDF"
 # No output file, sources alone lets mise skip re-validation of an unchanged PDF.
 sources = ["public/sigcull-docs.pdf"]
 
