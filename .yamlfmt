@@ -1,0 +1,5 @@
+# Format YAML without flattening intentional structure: keep comments and single
+# blank lines (only runs of 2+ blanks collapse to one), don't reorder keys.
+formatter:
+  type: basic
+  retain_line_breaks_single: true
