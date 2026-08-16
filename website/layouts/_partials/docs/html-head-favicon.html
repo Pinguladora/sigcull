@@ -1,0 +1,6 @@
+{{- /*
+  One favicon for the whole site: the scalable, sigcull-branded SVG. Evergreen
+  browsers render SVG favicons, and this is the same icon the web app manifest
+  points to, so there is a single source of truth instead of a PNG/SVG mix.
+*/ -}}
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
