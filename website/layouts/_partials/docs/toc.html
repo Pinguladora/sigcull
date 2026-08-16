@@ -1,0 +1,7 @@
+{{- /* Book theme TOC, overridden to name the nav landmark ("On this page") and
+       drop Hugo's hardcoded id="TableOfContents". The theme renders the TOC in
+       two places (mobile header + sidebar), so that id is emitted twice
+       (invalid duplicate id); no active CSS/JS depends on it here. */ -}}
+{{ partial "docs/inject/toc-before" . }}
+{{ .TableOfContents | replaceRE `<nav id="TableOfContents">` `<nav aria-label="On this page">` | safeHTML }}
+{{ partial "docs/inject/toc-after" . }}
