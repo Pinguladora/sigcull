@@ -25,6 +25,9 @@ const { nvdaTest: test } = guidepup;
 */
 
 test.describe("NVDA announcements", () => {
+  // Assertions key off page content (aria-label values, headings, link text),
+  // which reads the same whatever NVDA's UI locale is. Role words like "main" or
+  // "link" are localized (Spanish "principal", "enlace"), so they are avoided.
   test("names the two nav landmarks distinctly and reaches main", async ({ page, nvda }) => {
     await page.goto("/docs/authorities/");
     await nvda.navigateToWebContent();
@@ -34,15 +37,17 @@ test.describe("NVDA announcements", () => {
 
     expect(log).toContain("documentation"); // main menu nav aria-label
     expect(log).toContain("on this page"); // TOC nav aria-label
-    expect(log).toContain("main"); // main landmark
+    expect(log).toContain("authorities"); // the <main> h1, so main content was reached
   });
 
   test("announces the skip link first", async ({ page, nvda }) => {
     await page.goto("/docs/authorities/");
-    await nvda.navigateToWebContent();
-    await nvda.next();
+    // The skip link is the first focusable element (first child of <body>), so
+    // the first Tab moves focus to it. Browse-mode next() lands on the brand link
+    // instead, so drive a real Tab press.
+    await nvda.press("Tab");
     const spoken = (await nvda.lastSpokenPhrase()).toLowerCase();
     await nvda.stop();
-    expect(spoken).toContain("skip to content");
+    expect(spoken).toContain("skip to content"); // DOM link text, not a role word
   });
 });
