@@ -1,4 +1,30 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>Pinguteca/renovate-config"]
+  "customManagers": [
+    {
+      "customType": "regex",
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "jdx/hk",
+      "description": "Track the hk Pkl package version pinned in hk.pkl's amends/import URLs",
+      "managerFilePatterns": [
+        "/^hk\\.pkl$/"
+      ],
+      "matchStrings": [
+        "hk@(?<currentValue>\\d+\\.\\d+\\.\\d+)#"
+      ]
+    }
+  ],
+  "extends": [
+    "github>Pinguteca/renovate-config"
+  ],
+  "packageRules": [
+    {
+      "description": "Bump the hk tool and the hk.pkl Pkl package in one PR so they stay in sync",
+      "groupName": "hk",
+      "matchDepNames": [
+        "jdx/hk",
+        "hk"
+      ]
+    }
+  ]
 }
