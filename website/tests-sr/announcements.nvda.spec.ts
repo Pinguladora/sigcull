@@ -1,4 +1,11 @@
-import { nvdaTest as test, expect } from "@guidepup/playwright";
+// @guidepup/playwright is CommonJS with no statically-detectable named exports,
+// and this project is "type": "module", so a named import of nvdaTest fails
+// under Playwright's ESM loader. Import the default and destructure it. expect
+// is not exported by guidepup; it comes from @playwright/test like the other specs.
+import guidepup from "@guidepup/playwright";
+import { expect } from "@playwright/test";
+
+const { nvdaTest: test } = guidepup;
 
 /*
   Real-NVDA screen-reader tests. Windows + a running NVDA only — @guidepup/playwright
