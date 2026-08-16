@@ -11,19 +11,32 @@ disable_default_registry = true
 disable_backends = ["asdf", "vfox", "ubi"]
 # Decide task freshness by hashing source contents, not mtimes. Hugo rewrites
 # all of public on every build and a fresh checkout resets mtimes, so mtime
-# comparison would rebuild needlessly; content hashing skips when bytes are equal.
+# comparison would rebuild needlessly, content hashing skips when bytes are equal.
 task.source_freshness_hash_contents = true
 
+[env]
+HK_MISE = 1
+
+[hooks]
+# Automatically install/update hooks when tools are installed
+postinstall = "hk install --mise"
+
 [tools]
-"github:mongodb/kingfisher" = "1.109.0"
 cocogitto = "7.0.0"
 pinact = "4.1.0"
 go = "1.26.5"
+node = "26.7.0"
+pnpm = "11.20.0"
+oxlint = "1.77.0"        # JS/TS linter for the website test toolchain
+oxfmt = "0.62.0"         # JS/TS formatter
+yamlfmt = "0.21.0"       # YAML formatter (hk check-yaml pairs it with yamllint)
 golangci-lint = "2.12.2"
-prek = "0.4.11"
 hugo-extended = "0.165.0"
 "github:Pagefind/pagefind" = "1.5.2"
 "conda:WeasyPrint" = "69.0"
+hk = "1.55.0"
+yamllint = "1.38.0"
+"github:mongodb/kingfisher" = "1.109.0"
 
 [tasks."secret:scan"]
 run = "kingfisher scan . --no-validate --redact"
@@ -32,7 +45,7 @@ alias = "ss"
 
 [tasks."secret:validate"]
 run = "kingfisher scan . --redact"
-description = "Validate (and revoke) live secrets found by Kingfisher"
+description = "Validate and revoke live secrets found by Kingfisher"
 alias = "sv"
 
 [tasks.bump]
@@ -145,9 +158,33 @@ dir = "website"
 depends = ["site:pdf"]
 run = "verapdf --flavour ua1 public/sigcull-docs.pdf"
 description = "Validate the PDF against PDF/UA-1 with veraPDF"
-# No output file; sources alone lets mise skip re-validation of an unchanged PDF.
+# No output file, sources alone lets mise skip re-validation of an unchanged PDF.
 sources = ["public/sigcull-docs.pdf"]
 
 [tasks."site:build"]
 depends = ["site:search", "site:pdf"]
 description = "Full build: HTML (once), then the search index and PDFs"
+
+# Local accessibility + visual testing (Node toolchain, not the site build)
+
+[tasks."site:htmlvalidate"]
+dir = "website"
+depends = ["site:html"]
+run = "pnpm exec html-validate 'public/**/*.html'"
+description = "Static HTML/markup validation of the built site"
+
+[tasks."site:a11y"]
+dir = "website"
+depends = ["site:search"]
+run = "pnpm exec playwright test"
+description = "axe (WCAG 2.2 AA), keyboard, and odiff visual tests against the built site"
+
+[tasks."site:verify"]
+depends = ["site:htmlvalidate", "site:a11y"]
+description = "Run every static-site check: markup, accessibility, and visual"
+
+[tasks."site:sr"]
+dir = "website"
+depends = ["site:search"]
+run = "pnpm exec playwright test --config playwright.sr.config.ts"
+description = "Real-NVDA screen-reader tests (Windows)"

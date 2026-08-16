@@ -25,7 +25,9 @@ export const ROUTES = [
 
 // Smaller set for visual regression: one of each distinct layout, both themes.
 export const VISUAL_ROUTES = ROUTES.filter((r) =>
-  ["home", "docs-landing", "docs-authorities", "adr-0001", "search", "es-docs-landing"].includes(r.name),
+  ["home", "docs-landing", "docs-authorities", "adr-0001", "search", "es-docs-landing"].includes(
+    r.name,
+  ),
 );
 
 export const THEMES = ["light", "dark"] as const;
