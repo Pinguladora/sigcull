@@ -1,0 +1,13 @@
+{{- /*
+  Render the Cocogitto-generated changelog (assets/changelog.md, produced by
+  `mise run site:changelog`). cog emits type headings as h4 under an h2 version;
+  shift them to h3 so the page keeps a valid h1 -> h2 -> h3 order for a11y, then
+  render the markdown.
+*/ -}}
+{{- with resources.Get "changelog.md" -}}
+  {{- $md := replaceRE `(?m)^#### ` "### " .Content -}}
+  {{ $md | markdownify }}
+{{- else -}}
+  {{- warnf "changelog.md not found; run `mise run site:changelog`" -}}
+  <p>The changelog has not been generated yet.</p>
+{{- end -}}
