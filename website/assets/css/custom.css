@@ -14,6 +14,22 @@
   by side, so the neon shows behind them, not through the text). Text contrast
   is preserved because the tint over the base color stays light.
 */
+/*
+  Link contrast raised to WCAG AAA (>= 7:1) in both themes. The Book theme's link
+  colors sit just under the bar: ~6.96:1 in light and ~4.6:1 in dark. These reuse
+  the theme's own variables, so every link, action, and active nav item inherits
+  the fix. Muted UI text is bumped to an 80% mix below for the same reason.
+*/
+:root {
+  --color-link: #0047a6;             /* 8.6:1 on white */
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-link: #cbe0f5;           /* 9.2:1 on the page, 7.4:1 on the code/table gray */
+    --color-visited-link: #e0cced;   /* 8.3:1 on the page */
+  }
+}
+
 body {
   background-color: var(--body-background);
   /* Glacier: glacial teal, ice blue, polar blue. Stronger in light, where a
@@ -54,7 +70,7 @@ body {
 .pf-search-box:hover { border-color: var(--color-link); }
 .pf-search-box:focus-visible { outline: 3px solid var(--color-link); outline-offset: 2px; }
 .pf-search-box svg { width: 1rem; height: 1rem; }
-.pf-search-box .pf-label { color: color-mix(in srgb, var(--body-font-color) 70%, var(--body-background)); }
+.pf-search-box .pf-label { color: color-mix(in srgb, var(--body-font-color) 80%, var(--body-background)); }
 .pf-kbd {
   margin-left: auto;
   font-size: 0.72rem;
@@ -62,7 +78,7 @@ body {
   border: 1px solid color-mix(in srgb, var(--body-font-color) 40%, var(--body-background));
   border-radius: 5px;
   padding: 0.15rem 0.35rem;
-  color: color-mix(in srgb, var(--body-font-color) 70%, var(--body-background));
+  color: color-mix(in srgb, var(--body-font-color) 80%, var(--body-background));
 }
 
 /* Search modal (the lazy-loaded island) */
@@ -87,7 +103,7 @@ body {
   box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.6);
   padding: 0.75rem;
 }
-.pf-modal-hint { text-align: right; color: color-mix(in srgb, var(--body-font-color) 70%, var(--body-background)); font-size: 0.72rem; padding: 0.25rem 0.4rem 0; }
+.pf-modal-hint { text-align: right; color: color-mix(in srgb, var(--body-font-color) 80%, var(--body-background)); font-size: 0.72rem; padding: 0.25rem 0.4rem 0; }
 
 /* Extra menu links (changelog, print) below the docs tree */
 .menu-extra { margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid color-mix(in srgb, var(--body-font-color) 25%, var(--body-background)); }
@@ -199,7 +215,7 @@ body {
   background: transparent;
   border: 0;
   border-radius: 6px;
-  color: color-mix(in srgb, var(--body-font-color) 60%, var(--body-background));
+  color: color-mix(in srgb, var(--body-font-color) 80%, var(--body-background));
 }
 #pf-ui .pagefind-ui__search-clear:hover,
 #pagefind-search .pagefind-ui__search-clear:hover {
