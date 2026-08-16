@@ -13,6 +13,11 @@ const { nvdaTest: test } = guidepup;
   (playwright.config.ts testDir is ./tests). Run on Windows with:
     mise run site:sr        (or: pnpm exec playwright test --config playwright.sr.config.ts)
 
+  NVDA and the guidepup addon must be installed once before the first run:
+    pnpm dlx @guidepup/setup setup     (configures the OS, once per machine)
+    pnpm dlx @guidepup/setup install   (installs NVDA and the addon, once per project)
+  On CI, use the guidepup/setup-action step instead.
+
   These assert what NVDA actually announces, which axe/keyboard cannot: the two
   labelled nav landmarks, the main region, and the skip link. Treat as a starting
   point — spoken-phrase strings vary by NVDA version, so adjust expectations to

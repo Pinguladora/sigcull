@@ -206,6 +206,18 @@ description = "axe (WCAG 2.2 AA), keyboard, and odiff visual tests against the b
 depends = ["site:htmlvalidate", "site:a11y"]
 description = "Run every static-site check: markup, accessibility, and visual"
 
+[tasks."site:sr-setup"]
+dir = "website"
+# One-time, Windows only. NVDA and the guidepup control addon are native assets,
+# not npm packages, so they install separately from `pnpm install`, the same way
+# Playwright browsers do. Needs @guidepup/guidepup as a direct devDependency
+# (declared in package.json), so run `pnpm install` before this.
+run = [
+  "pnpm dlx @guidepup/setup setup",
+  "pnpm dlx @guidepup/setup install",
+]
+description = "One-time NVDA and guidepup addon install for site:sr (Windows only)"
+
 [tasks."site:sr"]
 dir = "website"
 depends = ["site:search"]
