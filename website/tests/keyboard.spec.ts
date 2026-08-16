@@ -4,6 +4,17 @@ import { test, expect } from "@playwright/test";
 // and the page-actions disclosure. Both must be operable and escapable by
 // keyboard, and must return focus to their opener (2.1.1, 2.1.2, 2.4.3).
 
+test.describe("skip link", () => {
+  test("is the first focusable element and moves focus to the content", async ({ page }) => {
+    await page.goto("/docs/authorities/");
+    await page.keyboard.press("Tab");
+    const skip = page.locator(".skip-link");
+    await expect(skip).toBeFocused();
+    await skip.press("Enter");
+    await expect(page.locator("#main-content")).toBeFocused();
+  });
+});
+
 test.describe("search modal", () => {
   test("opens with Ctrl+K, traps then returns focus, closes on Escape", async ({ page }) => {
     await page.goto("/docs/authorities/");
