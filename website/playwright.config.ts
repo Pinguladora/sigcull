@@ -13,9 +13,7 @@ export default defineConfig({
     baseURL: "http://127.0.0.1:8099",
     trace: "on-first-retry",
   },
-  projects: [
-    { name: "chromium", use: { ...devices["Desktop Chrome"] } },
-  ],
+  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: {
     // Call the binary directly; going through `pnpm exec` hangs when Playwright
     // spawns it (pnpm waits on something with no TTY).

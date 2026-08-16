@@ -1,0 +1,72 @@
+amends "package://github.com/jdx/hk/releases/download/v1.55.0/hk@1.55.0#/Config.pkl"
+import "package://github.com/jdx/hk/releases/download/v1.55.0/hk@1.55.0#/Builtins.pkl"
+
+// Fast checks and fixers, run on every commit.
+local pre_commit = new Mapping<String, Step> {
+    ["check-added-large-files"] = (Builtins.check_added_large_files) { exclude = Regex(#"^\.hk/"#) }
+    ["check-case-conflict"] = (Builtins.check_case_conflict) { exclude = Regex(#"^\.hk/"#) }
+    ["check-executables-have-shebangs"] = (Builtins.check_executables_have_shebangs) { exclude = Regex(#"^\.hk/"#) }
+    ["check-yaml"] = (Builtins.yamllint) { exclude = Regex(#"^\.hk/"#) }
+    // Format YAML, but never the generated pnpm lockfile.
+    ["yamlfmt"] = (Builtins.yamlfmt) { exclude = Regex(#"(^|/)pnpm-lock\.yaml$|^\.hk/"#) }
+    ["check-json"] = (Builtins.jq) { exclude = Regex(#"(\.devcontainer|\.vscode)/.*\.json|^\.hk/"#) }
+    ["end-of-file-fixer"] = (Builtins.newlines) { exclude = Regex(#"^\.hk/"#) }
+    ["fix-byte-order-marker"] = (Builtins.byte_order_marker) { exclude = Regex(#"^\.hk/"#) }
+    ["fix-smart-quotes"] = (Builtins.fix_smart_quotes) { exclude = Regex(#"^\.hk/"#) }
+    ["mixed-line-ending"] = (Builtins.mixed_line_ending) { exclude = Regex(#"^\.hk/"#) }
+    ["trailing-whitespace"] = (Builtins.trailing_whitespace) { exclude = Regex(#"^\.hk/"#) }
+    ["kingfisher"] = (Builtins.kingfisher) { exclude = Regex(#"^\.hk/"#) }
+    // Restrict oxfmt to JS/TS. Its default glob also matches html/css/md/yaml/
+    // toml/json, which would reformat Hugo templates (breaking `{{ }}`) and
+    // hand-tuned content/config. oxlint's glob is already JS-family only.
+    ["oxfmt"] = (Builtins.oxfmt) {
+        glob = new Listing<String> {
+            "**/*.js"; "**/*.mjs"; "**/*.cjs"
+            "**/*.ts"; "**/*.mts"; "**/*.cts"
+            "**/*.jsx"; "**/*.tsx"
+        }
+        exclude = Regex(#"^\.hk/"#)
+    }
+    ["oxlint"] = (Builtins.ox_lint) { exclude = Regex(#"^\.hk/"#) }
+}
+
+// Slower checks, run before push (matches the original prek stages).
+local pre_push = new Mapping<String, Step> {
+    ["golangci-lint-config-verify"] { check = "golangci-lint config verify" }
+    ["golangci-lint"] = (Builtins.golangci_lint) { exclude = Regex(#"^\.hk/"#) }
+    ["pin-github-actions"] { check = "pinact run" }
+    ["go-mod-download"] { check = "go mod download" }
+}
+
+hooks {
+    ["commit-msg"] {
+        steps {
+            ["cocogitto-commit-msg"] = (Builtins.cocogitto_commit_msg)
+        }
+    }
+    ["pre-commit"] {
+        fix = true
+        stash = "git"
+        steps {
+            ...pre_commit
+        }
+    }
+    ["pre-push"] {
+        steps {
+            ...pre_push
+        }
+    }
+    ["check"] {
+        steps {
+            ...pre_commit
+            ...pre_push
+        }
+    }
+    ["fix"] {
+        fix = true
+        steps {
+            ...pre_commit
+            ...pre_push
+        }
+    }
+}

@@ -16,7 +16,9 @@ for (const theme of THEMES) {
       const summary = violations
         .map((v) => `  [${v.impact}] ${v.id} ×${v.nodes.length} — ${v.help}\n    ${v.helpUrl}`)
         .join("\n");
-      expect(violations, violations.length ? `\naxe violations:\n${summary}` : undefined).toEqual([]);
+      expect(violations, violations.length ? `\naxe violations:\n${summary}` : undefined).toEqual(
+        [],
+      );
     });
   }
 }
