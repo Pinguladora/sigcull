@@ -10,6 +10,8 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
+    "@guidepup/playwright": "^0.19.0",
+    "@guidepup/virtual-screen-reader": "^0.32.1",
     "@playwright/test": "^1.62.1",
     "axe-core": "^4.13.0",
     "html-validate": "^11.6.2",
