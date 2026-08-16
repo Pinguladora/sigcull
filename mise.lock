@@ -2936,6 +2936,79 @@ url = "https://github.com/golangci/golangci-lint/releases/download/v2.12.2/golan
 url_api = "https://api.github.com/repos/golangci/golangci-lint/releases/assets/413471017"
 provenance = "github-attestations"
 
+[[tools.harper-cli]]
+version = "2.7.0"
+backend = "aqua:Automattic/harper/harper-cli"
+
+[tools.harper-cli."platforms.linux-arm64"]
+checksum = "sha256:276f73d53e30604cf90a7436b565ae59eaf0e0844eed5d3fdab3c95bd41478f3"
+url = "https://github.com/Automattic/harper/releases/download/v2.7.0/harper-cli-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/Automattic/harper/releases/assets/493183486"
+
+[tools.harper-cli."platforms.linux-arm64-musl"]
+checksum = "sha256:33d7c5438535e70b5307ea636461262915902a213ba25cb50187103bbecae272"
+url = "https://github.com/Automattic/harper/releases/download/v2.7.0/harper-cli-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/Automattic/harper/releases/assets/493184376"
+
+[tools.harper-cli."platforms.linux-x64"]
+checksum = "sha256:85e142fa8f6a073a0fa5951eb26193d0d5e5b81fc879c2125474450ee60d23e8"
+url = "https://github.com/Automattic/harper/releases/download/v2.7.0/harper-cli-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/Automattic/harper/releases/assets/493183555"
+
+[tools.harper-cli."platforms.linux-x64-musl"]
+checksum = "sha256:278e055fdff10f31a410556ffcc73c34820dfbcbdfb86c78f4d4a4107bf5e064"
+url = "https://github.com/Automattic/harper/releases/download/v2.7.0/harper-cli-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/Automattic/harper/releases/assets/493184394"
+
+[tools.harper-cli."platforms.macos-arm64"]
+checksum = "sha256:218d9f2003425b334ee9c3dc2f17196761deb4fa8864b24f261cd95d61dcef3f"
+url = "https://github.com/Automattic/harper/releases/download/v2.7.0/harper-cli-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/Automattic/harper/releases/assets/493186041"
+
+[tools.harper-cli."platforms.macos-x64"]
+checksum = "sha256:41bde2125d93113445c52d4a1e9c2fb135a33faf6012e7aa103f74c683ec94b0"
+url = "https://github.com/Automattic/harper/releases/download/v2.7.0/harper-cli-x86_64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/Automattic/harper/releases/assets/493184902"
+
+[tools.harper-cli."platforms.windows-x64"]
+checksum = "sha256:6a0557d1390297850fe0a5dec610989bef7ddb1c464d19dc7bfc84a398cfc906"
+url = "https://github.com/Automattic/harper/releases/download/v2.7.0/harper-cli-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/Automattic/harper/releases/assets/493185530"
+
+[[tools.hk]]
+version = "1.55.0"
+backend = "aqua:jdx/hk"
+
+[tools.hk."platforms.linux-arm64"]
+checksum = "sha256:64c44aa0f26e995f7d9c44cc9c5116e20052bcefc821daf17ce3df265bb0b2d6"
+url = "https://github.com/jdx/hk/releases/download/v1.55.0/hk-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/hk/releases/assets/510729669"
+
+[tools.hk."platforms.linux-arm64-musl"]
+checksum = "sha256:21eccba81a4b9ac73431d876d8ed5add16a01df360f6d3d576279903254599f6"
+url = "https://github.com/jdx/hk/releases/download/v1.55.0/hk-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/hk/releases/assets/510729671"
+
+[tools.hk."platforms.linux-x64"]
+checksum = "sha256:efd6ed276ae8a26cc95fcb8c83051d9a3fd05e124d38170c0f057a716e9de94d"
+url = "https://github.com/jdx/hk/releases/download/v1.55.0/hk-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/hk/releases/assets/510729679"
+
+[tools.hk."platforms.linux-x64-musl"]
+checksum = "sha256:f00e04f536bec16bbc8c7cf8696f834d6ad80ddbcc1e653e3110d12ee4de2b42"
+url = "https://github.com/jdx/hk/releases/download/v1.55.0/hk-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/hk/releases/assets/510729680"
+
+[tools.hk."platforms.macos-arm64"]
+checksum = "sha256:a995ff68402bcf6c16ab054e4c45db592213bcd661c9b92003d4a62f2d56d4b1"
+url = "https://github.com/jdx/hk/releases/download/v1.55.0/hk-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/jdx/hk/releases/assets/510729670"
+
+[tools.hk."platforms.windows-x64"]
+checksum = "sha256:402b3c9c5f9a5b3cb8ab6229d0f6d169b122fc3db1e39fc2fa53421a1aa24fc5"
+url = "https://github.com/jdx/hk/releases/download/v1.55.0/hk-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/jdx/hk/releases/assets/510729674"
+
 [[tools.hugo]]
 version = "0.165.0"
 backend = "aqua:gohugoio/hugo"
@@ -3014,6 +3087,85 @@ checksum = "sha256:c0259eb25d11b7d1ee7cd2f86da84f17323a36a90dee0ac0f7a93b635ec83
 url = "https://github.com/gohugoio/hugo/releases/download/v0.165.0/hugo_extended_0.165.0_windows-amd64.zip"
 url_api = "https://api.github.com/repos/gohugoio/hugo/releases/assets/511697521"
 
+[[tools.node]]
+version = "26.7.0"
+backend = "core:node"
+
+[tools.node."platforms.linux-arm64"]
+checksum = "sha256:925aa6157dd37542d0d7f2e28b7bf61e7b39284411210b0498bc3788db4aef68"
+url = "https://nodejs.org/dist/v26.7.0/node-v26.7.0-linux-arm64.tar.gz"
+
+[tools.node."platforms.linux-arm64-musl"]
+checksum = "sha256:1f16cc0f6febcb1bed1d4550306806dbcfbaf5c1bc2f44f3c5c8b5d22a4cc27a"
+url = "https://unofficial-builds.nodejs.org/download/release/v26.7.0/node-v26.7.0-linux-arm64-musl.tar.gz"
+
+[tools.node."platforms.linux-x64"]
+checksum = "sha256:bd6b6c31e377bad9ad579bed72e5bc11f4c879ac9452ad51d30e646ea3d828df"
+url = "https://nodejs.org/dist/v26.7.0/node-v26.7.0-linux-x64.tar.gz"
+
+[tools.node."platforms.linux-x64-musl"]
+checksum = "sha256:5dc0180e7684ede6fc9d9e6333da45686f4b5a7820729d33c68335b283337295"
+url = "https://unofficial-builds.nodejs.org/download/release/v26.7.0/node-v26.7.0-linux-x64-musl.tar.gz"
+
+[tools.node."platforms.macos-arm64"]
+checksum = "sha256:7ee659a7768e641bbfd5360940660b8e8fd0052f77488f365562bac522fc15d4"
+url = "https://nodejs.org/dist/v26.7.0/node-v26.7.0-darwin-arm64.tar.gz"
+
+[tools.node."platforms.macos-x64"]
+checksum = "sha256:f279d1ed28ce57f7788bf23435d2ad7fdd7438904ad5c4d8a1081a7cde3d4b96"
+url = "https://nodejs.org/dist/v26.7.0/node-v26.7.0-darwin-x64.tar.gz"
+
+[tools.node."platforms.windows-x64"]
+checksum = "sha256:d3bd72755141ed32bbcd841228ee81897c8a98d50dfa7dae2179399a0a7c90f8"
+url = "https://nodejs.org/dist/v26.7.0/node-v26.7.0-win-x64.zip"
+
+[[tools."npm:sort-package-json"]]
+version = "4.0.0"
+backend = "npm:sort-package-json"
+
+[[tools.oxfmt]]
+version = "0.62.0"
+backend = "npm:oxfmt"
+
+[[tools.oxlint]]
+version = "1.77.0"
+backend = "aqua:oxc-project/oxc/oxlint"
+
+[tools.oxlint."platforms.linux-arm64"]
+checksum = "sha256:6e0f1619bb05e7412c9e854a073477aa755f55faa2083af0f672e8b88245e8bb"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.77.0/oxlint-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/500014868"
+
+[tools.oxlint."platforms.linux-arm64-musl"]
+checksum = "sha256:6e0f1619bb05e7412c9e854a073477aa755f55faa2083af0f672e8b88245e8bb"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.77.0/oxlint-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/500014868"
+
+[tools.oxlint."platforms.linux-x64"]
+checksum = "sha256:cd5b4e371d0bed76ddbeadc161d39991d6bd29be5af6c96f8c3ecd6794c2658f"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.77.0/oxlint-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/500014907"
+
+[tools.oxlint."platforms.linux-x64-musl"]
+checksum = "sha256:cd5b4e371d0bed76ddbeadc161d39991d6bd29be5af6c96f8c3ecd6794c2658f"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.77.0/oxlint-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/500014907"
+
+[tools.oxlint."platforms.macos-arm64"]
+checksum = "sha256:ef6e6bd5fcf3c20eb9f8120e559408a252c4ffa0baa4af9bff1780c45b8e2bf6"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.77.0/oxlint-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/500014841"
+
+[tools.oxlint."platforms.macos-x64"]
+checksum = "sha256:c0fe77e58f54d76afd23800ffb798506c369a48d05bb0068ccbd7f9fe3bd392f"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.77.0/oxlint-x86_64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/500014886"
+
+[tools.oxlint."platforms.windows-x64"]
+checksum = "sha256:75b927530a3689fb6c319e37666eb1755312869d38e7e254865116021e9f25c8"
+url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.77.0/oxlint-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/500014900"
+
 [[tools.pinact]]
 version = "4.1.0"
 backend = "aqua:suzuki-shunsuke/pinact"
@@ -3064,6 +3216,46 @@ provenance = "github-attestations"
 version = "v69.0"
 backend = "pipx:Kozea/WeasyPrint"
 
+[[tools.pnpm]]
+version = "11.20.0"
+backend = "aqua:pnpm/pnpm"
+
+[tools.pnpm."platforms.linux-arm64"]
+checksum = "sha256:f00fc2041bb41742b7943bf2bb24183ad20320e8384824a8031eb94edf2f57a5"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.20.0/pnpm-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/500142378"
+provenance = "github-attestations"
+
+[tools.pnpm."platforms.linux-arm64-musl"]
+checksum = "sha256:2a21235d3f0fbfbcb9e530b9a98f2c64dcee95d1d5d1c2d04428255c7b85f32c"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.20.0/pnpm-linux-arm64-musl.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/500142372"
+provenance = "github-attestations"
+
+[tools.pnpm."platforms.linux-x64"]
+checksum = "sha256:b4ad6ad2b21db2f8cd50af416c3aa148ba704c31c84893f465a770a01c2c4572"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.20.0/pnpm-linux-x64.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/500142376"
+provenance = "github-attestations"
+
+[tools.pnpm."platforms.linux-x64-musl"]
+checksum = "sha256:db046881c027f1a2d69e9a530a21a62c2bced4ba8ff437e7300426ae56951fe4"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.20.0/pnpm-linux-x64-musl.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/500142377"
+provenance = "github-attestations"
+
+[tools.pnpm."platforms.macos-arm64"]
+checksum = "sha256:4bc97fea72e5c92eec1fefc8d410c35d01e0d0d52f3160c59f38c32db58b5cd2"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.20.0/pnpm-darwin-arm64.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/500142373"
+provenance = "github-attestations"
+
+[tools.pnpm."platforms.windows-x64"]
+checksum = "sha256:ea2528bdc3d96a1ff3c35587dc48ca692b39d77f08f26df4adeaaa9eb427024e"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.20.0/pnpm-win32-x64.zip"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/500142371"
+provenance = "github-attestations"
+
 [[tools.prek]]
 version = "0.4.11"
 backend = "aqua:j178/prek"
@@ -3109,3 +3301,46 @@ checksum = "sha256:64eae0b1bafd6798cd0d0d634b2f5c2f7131944e8ca1d25b670b3f87bec56
 url = "https://github.com/j178/prek/releases/download/v0.4.11/prek-x86_64-pc-windows-msvc.zip"
 url_api = "https://api.github.com/repos/j178/prek/releases/assets/488626488"
 provenance = "github-attestations"
+
+[[tools.yamlfmt]]
+version = "0.21.0"
+backend = "aqua:google/yamlfmt"
+
+[tools.yamlfmt."platforms.linux-arm64"]
+checksum = "sha256:5b2689c963b177271330c5ce8ca7396751107e5a826be46f03d2cb9b6f0c7784"
+url = "https://github.com/google/yamlfmt/releases/download/v0.21.0/yamlfmt_0.21.0_Linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google/yamlfmt/releases/assets/336650208"
+
+[tools.yamlfmt."platforms.linux-arm64-musl"]
+checksum = "sha256:5b2689c963b177271330c5ce8ca7396751107e5a826be46f03d2cb9b6f0c7784"
+url = "https://github.com/google/yamlfmt/releases/download/v0.21.0/yamlfmt_0.21.0_Linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google/yamlfmt/releases/assets/336650208"
+
+[tools.yamlfmt."platforms.linux-x64"]
+checksum = "sha256:1f300d9257b232bb3b541d7fb1b0e6b3c121bcbab381c86cd38cb8722be8a566"
+url = "https://github.com/google/yamlfmt/releases/download/v0.21.0/yamlfmt_0.21.0_Linux_x86_64.tar.gz"
+url_api = "https://api.github.com/repos/google/yamlfmt/releases/assets/336650203"
+
+[tools.yamlfmt."platforms.linux-x64-musl"]
+checksum = "sha256:1f300d9257b232bb3b541d7fb1b0e6b3c121bcbab381c86cd38cb8722be8a566"
+url = "https://github.com/google/yamlfmt/releases/download/v0.21.0/yamlfmt_0.21.0_Linux_x86_64.tar.gz"
+url_api = "https://api.github.com/repos/google/yamlfmt/releases/assets/336650203"
+
+[tools.yamlfmt."platforms.macos-arm64"]
+checksum = "sha256:4b417ecb94339d57e4c122ecc948c1a00fe328b5853266de9806e652a92858fa"
+url = "https://github.com/google/yamlfmt/releases/download/v0.21.0/yamlfmt_0.21.0_Darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google/yamlfmt/releases/assets/336650209"
+
+[tools.yamlfmt."platforms.macos-x64"]
+checksum = "sha256:060e943bcb8583c456810eb1ff4721b4f46c4a0c1a4432449d5dc3bbfe29a22b"
+url = "https://github.com/google/yamlfmt/releases/download/v0.21.0/yamlfmt_0.21.0_Darwin_x86_64.tar.gz"
+url_api = "https://api.github.com/repos/google/yamlfmt/releases/assets/336650207"
+
+[tools.yamlfmt."platforms.windows-x64"]
+checksum = "sha256:07f80ce5d741eb4b0a9380ac78a19c7cb5bd44e2a9a47a5a04839e3ba54dd463"
+url = "https://github.com/google/yamlfmt/releases/download/v0.21.0/yamlfmt_0.21.0_Windows_x86_64.tar.gz"
+url_api = "https://api.github.com/repos/google/yamlfmt/releases/assets/336650206"
+
+[[tools.yamllint]]
+version = "1.38.0"
+backend = "pipx:yamllint"
