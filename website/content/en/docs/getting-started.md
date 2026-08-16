@@ -5,6 +5,8 @@ weight: 10
 tags: ["setup"]
 ---
 
+# Getting started
+
 sigcull runs as a GitHub App. It receives a webhook on each push and pull
 request, fetches the commits a branch introduces, verifies each one against your
 configured authorities, and reports the outcome as a Check Run.

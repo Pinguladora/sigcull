@@ -5,6 +5,8 @@ weight: 10
 tags: ["setup"]
 ---
 
+# Primeros pasos
+
 sigcull se ejecuta como una GitHub App. Recibe un webhook en cada push y cada
 pull request, obtiene los commits que introduce una rama, verifica cada uno
 contra las autoridades que hayas configurado e informa del resultado como un
