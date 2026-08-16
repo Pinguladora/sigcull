@@ -281,3 +281,22 @@ body {
   body { background: #fff !important; }
   .page-actions, .pf-search-box, .menu-extra, .pf-modal { display: none !important; }
 }
+
+/*
+  Brand logo in the sidebar. The sigcull logo is a portrait wordmark image, so
+  it replaces the theme's tiny 1.5em square icon rule: sized by height and
+  centered. The artwork is a single dark-navy color, so on the dark sidebar it
+  would nearly vanish; flatten it to white there, which keeps every shape and
+  the wax-seal check cutout intact. Follows the file's prefers-color-scheme
+  approach to dark mode.
+*/
+.book-brand a { justify-content: center; }
+.book-brand a img {
+  width: auto;
+  height: auto;
+  max-height: 12rem;
+  max-width: 100%;
+}
+@media (prefers-color-scheme: dark) {
+  .book-brand a img { filter: brightness(0) invert(1); }
+}
