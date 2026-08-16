@@ -107,6 +107,11 @@ depends = ["fmt:check", "vet", "build", "test", "lint"]
 
 [tasks."site:serve"]
 dir = "website"
+run = "hugo server --minify --disableLiveReload"
+description = "Serve the website locally"
+
+[tasks."site:serve-hr"]
+dir = "website"
 run = "hugo server"
 description = "Serve the website locally with live reload"
 
@@ -114,8 +119,15 @@ description = "Serve the website locally with live reload"
 # Hugo runs once. This matters because hugo --cleanDestinationDir wipes the
 # search index and the PDFs, so search and pdf must run after the single html
 # build, never triggering another one.
+[tasks."site:changelog"]
+# Runs from the repo root so cog reads cog.toml and the full git history. The
+# website changelog page renders this file, so it is generated, not hand-written.
+run = "cog changelog > website/assets/changelog.md"
+description = "Generate the changelog from conventional commits with Cocogitto"
+
 [tasks."site:html"]
 dir = "website"
+depends = ["site:changelog"]
 run = "hugo --minify --cleanDestinationDir"
 description = "Build the site HTML (cleans public)"
 # Cache keys are relative to the task `dir` (website). Rebuild when any Hugo input
