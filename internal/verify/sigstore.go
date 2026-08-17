@@ -19,8 +19,9 @@ import (
 	sigtuf "github.com/sigstore/sigstore/pkg/tuf" //nolint:staticcheck // cosign's API still needs this
 )
 
-// defaultRekorURL is the public good Rekor, used only for the online inclusion
-// fallback that offline-signed commits never reach.
+// defaultRekorURL names the public good Rekor. The rekor client is built against
+// it but never contacted: inclusion is verified strictly offline from the entry
+// embedded in the signature, against the log keys in the trusted root.
 const defaultRekorURL = "https://rekor.sigstore.dev"
 
 // publicGoodRootJSON is the vendored public-good Sigstore trusted root, baked
@@ -192,16 +193,24 @@ func (v *sigstoreVerifier) Verify(ctx context.Context, commit CommitData) Commit
 		return res
 	}
 
-	// gsgit.Verify validates the CMS signature and Fulcio chain, then verifies
-	// the Rekor inclusion proof offline from the embedded entry.
-	summary, err := gsgit.Verify(ctx, v.git, v.rekor, commit.Payload, commit.Signature, true)
+	// Verify the CMS signature and Fulcio certificate chain. No Rekor yet.
+	cert, err := v.git.Verify(ctx, commit.Payload, commit.Signature, true)
 	if err != nil {
 		res.Reason = ReasonUnsigned
 		return res
 	}
 
-	sans := cryptoutils.GetSubjectAlternateNames(summary.Cert)
-	issuer := (&cosign.CertExtensions{Cert: summary.Cert}).GetIssuer()
+	// Verify Rekor inclusion strictly offline, from the entry embedded in the
+	// signature. We deliberately never fall back to gitsign's online Rekor search
+	// (best-effort, rate-limited, and removed in Rekor v2), so a signature with no
+	// embedded proof is rejected and verification never depends on the network.
+	if _, err := v.rekor.VerifyInclusion(ctx, commit.Signature, cert); err != nil {
+		res.Reason = ReasonNoTransparencyProof
+		return res
+	}
+
+	sans := cryptoutils.GetSubjectAlternateNames(cert)
+	issuer := (&cosign.CertExtensions{Cert: cert}).GetIssuer()
 	if len(sans) == 0 || issuer == "" {
 		res.Reason = ReasonParseFailure
 		return res

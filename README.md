@@ -91,6 +91,14 @@ Key configuration sections:
     allowlist. A commit passes if any entry matches, where the OIDC `issuer` is
     exact and the SAN is either `san` (exact) or `sanRegex` (a Go regular
     expression, automatically anchored).
+
+    Rekor inclusion is verified **offline** from the proof embedded in the
+    signature. The deprecated, rate-limited online Rekor search is never used, so
+    signers must commit in gitsign's offline Rekor mode
+    (`git config gitsign.rekorMode offline`), which embeds that proof. gitsign's
+    default online mode uploads to Rekor but embeds nothing, so those commits are
+    rejected with a "no embedded Rekor transparency proof" reason. The optional
+    `rekor:` trust field is consequently unused.
   - `gpgKey`: traditional OpenPGP. Verified in-process against `keyringPath` (an
     armored or binary public keyring). The signing key must carry one of
     `allowEmails` as a UID email.

@@ -1,0 +1,12 @@
+tree 727846df32e7b719855e6f53ed476c416d11cfe8
+parent e1d1a01fa61e52e182ccdad7cc6ed50810b5643f
+author Pinguladora <50406923+Pinguladora@users.noreply.github.com> 1786917817 +0200
+committer Pinguladora <50406923+Pinguladora@users.noreply.github.com> 1786917817 +0200
+
+test: drop the unobservable NVDA skip-link assertion
+
+NVDA browse navigation never surfaces the off-screen fixed-position skip link
+(confirmed from the real spoken log), and press("Tab") did not reach it either.
+The skip link's keyboard behaviour is already tested deterministically in the
+Linux gate (keyboard.spec.ts), so keep only the landmark test, which is the
+suite's unique value and passes.
