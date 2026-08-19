@@ -12,11 +12,11 @@ importers:
         specifier: 4.13.0
         version: 4.13.0(playwright-core@1.62.1)
       '@guidepup/guidepup':
-        specifier: 0.33.0
-        version: 0.33.0
+        specifier: 0.33.1
+        version: 0.33.1
       '@guidepup/playwright':
-        specifier: 0.19.0
-        version: 0.19.0(@guidepup/guidepup@0.33.0)(@playwright/test@1.62.1)
+        specifier: 0.19.1
+        version: 0.19.1(@guidepup/guidepup@0.33.1)(@playwright/test@1.62.1)
       '@guidepup/virtual-screen-reader':
         specifier: 0.32.1
         version: 0.32.1
@@ -27,8 +27,8 @@ importers:
         specifier: 4.13.0
         version: 4.13.0
       html-validate:
-        specifier: 11.6.2
-        version: 11.6.2
+        specifier: 11.7.0
+        version: 11.7.0
       http-server:
         specifier: 14.1.1
         version: 14.1.1(debug@4.4.3(supports-color@7.2.0))(supports-color@7.2.0)
@@ -55,11 +55,11 @@ packages:
     resolution: {integrity: sha512-Nq8OhGWiZIZGV6hLHoyAKLLcJihP/xFeBMGJoUrxTX2psI8dCifzLhZISFb+VWS3wFMRDmCGw5R+dOySCqPLhw==}
     engines: {node: '>=6.9.0'}
 
-  '@guidepup/guidepup@0.33.0':
-    resolution: {integrity: sha512-CNFMsUtalwr9varDvevUwv8vKs3VWDshsMehlUGuEkxE4BiQ+Dlz2j0A1LSvPcdIN40oNi98sx4sXHygjdfR3g==}
+  '@guidepup/guidepup@0.33.1':
+    resolution: {integrity: sha512-G7kvFCVsllnJdE+UXROgN33aWnXQ3Cg/og6iuAl9bVAPs0PhDUDWFAZVdXbTvBYHsoH9KzDuMdUnIq7G5EhXyg==}
 
-  '@guidepup/playwright@0.19.0':
-    resolution: {integrity: sha512-Wc6BRnssvU8XHFOLNsNZsTcIjmLHCJjeeP88lNryTBmsbi+vxrhHe+YeL8p+uMNm7cCnW5dkTHMr2dbFqPDjhw==}
+  '@guidepup/playwright@0.19.1':
+    resolution: {integrity: sha512-d0FMH6LFbRbV71l2NGzv2gqV3vQbHDfTVctXsKm6d1ZahpS2/Ozq1WCEoZ7QTAR6iuNzwy03tZfvyijGH+zUDw==}
     peerDependencies:
       '@guidepup/guidepup': '>=0.33.0'
       '@playwright/test': ^1.57.0
@@ -283,8 +283,8 @@ packages:
     resolution: {integrity: sha512-oWv4T4yJ52iKrufjnyZPkrN0CH3QnrUqdB6In1g5Fe1mia8GmF36gnfNySxoZtxD5+NmYw1EElVXiBk93UeskA==}
     engines: {node: '>=12'}
 
-  html-validate@11.6.2:
-    resolution: {integrity: sha512-dlAAEeWOOdv9ya/n3pdSFTzzzGlrw+ZI43J/39zBgCSqzSg24lyqrouuBP9MEkSFAtXVZm64F35mlL7m43jCNA==}
+  html-validate@11.7.0:
+    resolution: {integrity: sha512-xsXD89NYNDneZOBwjUWGkoeBBgVdM0z74t72NRMaf0YpZRBRbDLoCpIWba3YfT3LAB2NZAM1T6MXS7Vlr8ixcw==}
     engines: {node: ^22.22.0 || >= 24.8.0}
     hasBin: true
     peerDependencies:
@@ -476,13 +476,13 @@ snapshots:
 
   '@babel/runtime@7.29.7': {}
 
-  '@guidepup/guidepup@0.33.0':
+  '@guidepup/guidepup@0.33.1':
     dependencies:
       plist: 4.0.0
 
-  '@guidepup/playwright@0.19.0(@guidepup/guidepup@0.33.0)(@playwright/test@1.62.1)':
+  '@guidepup/playwright@0.19.1(@guidepup/guidepup@0.33.1)(@playwright/test@1.62.1)':
     dependencies:
-      '@guidepup/guidepup': 0.33.0
+      '@guidepup/guidepup': 0.33.1
       '@playwright/test': 1.62.1
 
   '@guidepup/virtual-screen-reader@0.32.1':
@@ -669,7 +669,7 @@ snapshots:
     dependencies:
       whatwg-encoding: 2.0.0
 
-  html-validate@11.6.2:
+  html-validate@11.7.0:
     dependencies:
       '@html-validate/stylish': 6.0.0
       '@sidvind/better-ajv-errors': 7.0.0(ajv@8.20.0)
