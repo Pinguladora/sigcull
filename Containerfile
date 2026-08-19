@@ -1,4 +1,4 @@
-FROM reg.mini.dev/go:1.26@sha256:bcf5087705ff0f533ffcfd5eec6321b1c70f62a7a6dd26c15802734ebd8c979d AS build
+FROM reg.mini.dev/go:1.26@sha256:34f341e7bcc8181eeebcedbe4e2a0585e68aa89a01e70bd79e6d8642a8e03b6e AS build
 WORKDIR /src
 COPY go.mod go.sum ./
 
