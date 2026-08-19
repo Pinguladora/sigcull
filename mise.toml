@@ -107,100 +107,75 @@ depends = ["fmt:check", "vet", "build", "test", "lint"]
 
 [tasks."site:serve"]
 dir = "website"
-run = "hugo server --minify --disableLiveReload"
-description = "Serve the website locally"
-
-[tasks."site:serve-hr"]
-dir = "website"
-run = "hugo server"
+run = "pnpm dev"
 description = "Serve the website locally with live reload"
 
-# The full build is expressed as a dependency graph so ordering is automatic and
-# Hugo runs once. This matters because hugo --cleanDestinationDir wipes the
-# search index and the PDFs, so search and pdf must run after the single html
-# build, never triggering another one.
+[tasks."site:preview"]
+dir = "website"
+depends = ["site:build-html"]
+run = "pnpm preview"
+description = "Preview the built website"
+
 [tasks."site:changelog"]
-# Runs from the repo root so cog reads cog.toml and the full git history. The
-# website changelog page renders this file, so it is generated, not hand-written.
-run = "cog changelog > website/assets/changelog.md"
+run = "cog changelog | sed -E 's/^#### /### /' > website/src/generated/changelog.md"
 description = "Generate the changelog from conventional commits with Cocogitto"
 
-[tasks."site:html"]
+[tasks."site:build-html"]
 dir = "website"
 depends = ["site:changelog"]
-run = "hugo --minify --cleanDestinationDir"
-description = "Build the site HTML (cleans public)"
-# Cache keys are relative to the task `dir` (website). Rebuild when any Hugo input
-# changes, including the ADRs mounted from ../docs/adr.
+run = "pnpm build"
+description = "Build the website (HTML, Pagefind, llms.txt, print pages)"
 sources = [
-  "hugo.yaml",
-  "content/**/*",
-  "layouts/**/*",
-  "assets/**/*",
-  "static/**/*",
-  "../docs/adr/**/*",
+  "astro.config.mjs",
+  "src/**/*",
+  "public/**/*",
+  "package.json",
+  "pnpm-lock.yaml",
 ]
-# Scope to the HTML only. A broad public/**/* would overlap the PDF and Pagefind
-# outputs, and with content hashing that overlap makes this task always stale.
-outputs = ["public/**/*.html"]
-
-[tasks."site:search"]
-dir = "website"
-depends = ["site:html"]
-run = "pagefind --site public"
-description = "Generate the Pagefind search index"
-# A skipped site:html leaves the HTML untouched, so the index stays fresh too.
-sources = ["public/**/*.html"]
-outputs = ["public/pagefind/**/*"]
+outputs = ["dist/**/*.html"]
 
 [tasks."site:pdf"]
 dir = "website"
-depends = ["site:html"]
-# Render each print page as PDF/A-3a, then WeasyPrint's finisher hook stamps the
-# PDF/UA-1 identifier into the same XMP, so every PDF is both archival (PDF/A-3a)
-# and accessible (PDF/UA-1). --pdf-variant carries only one claim, so the second
-# is added in tools/render-pdf.py using WeasyPrint's own pydyf (no extra dep).
-# The interpreter is the conda WeasyPrint env's python, where weasyprint imports.
+depends = ["site:build-html"]
+# Render the full handbook per language as PDF/A-3a, then the finisher hook stamps
+# the PDF/UA-1 identifier into the same XMP, so each PDF is both archival and
+# accessible.
 run = [
-  '"$(mise where conda:WeasyPrint)/bin/python" tools/render-pdf.py public/print.html public/sigcull-docs.pdf',
-  '"$(mise where conda:WeasyPrint)/bin/python" tools/render-pdf.py public/es/print.html public/es/sigcull-docs.pdf',
-  'PY="$(mise where conda:WeasyPrint)/bin/python"; find public -type f -path "*/docs/*" -name print.html | while IFS= read -r f; do "$PY" tools/render-pdf.py "$f" "${f%.html}.pdf"; done',
+  '"$(mise where conda:WeasyPrint)/bin/python" tools/render-pdf.py dist/print/index.html dist/sigcull-docs.pdf',
+  '"$(mise where conda:WeasyPrint)/bin/python" tools/render-pdf.py dist/es/print/index.html dist/es/sigcull-docs.pdf',
 ]
-description = "Render dual PDF/A-3a + PDF/UA-1 files with WeasyPrint"
-# WeasyPrint is the slow step; skip it when the print HTML or the renderer is unchanged.
-sources = ["public/**/print.html", "tools/render-pdf.py"]
-outputs = ["public/**/*.pdf"]
+description = "Render dual PDF/A-3a + PDF/UA-1 handbooks with WeasyPrint"
+sources = ["dist/**/print/index.html", "tools/render-pdf.py"]
+outputs = ["dist/**/*.pdf"]
 
 [tasks."site:pdf-validate"]
 dir = "website"
 depends = ["site:pdf"]
-# The document declares both standards, so validate both. veraPDF exits
-# non-zero on non-compliance, failing the task if either claim is not met.
+# veraPDF exits non-zero on non-compliance, failing the task if either claim is not met.
 run = [
-  "verapdf --flavour ua1 public/sigcull-docs.pdf",
-  "verapdf --flavour 3a public/sigcull-docs.pdf",
+  "verapdf --flavour ua1 dist/sigcull-docs.pdf",
+  "verapdf --flavour 3a dist/sigcull-docs.pdf",
+  "verapdf --flavour ua1 dist/es/sigcull-docs.pdf",
+  "verapdf --flavour 3a dist/es/sigcull-docs.pdf",
 ]
-description = "Validate the PDF is both PDF/UA-1 and PDF/A-3a with veraPDF"
-# No output file, sources alone lets mise skip re-validation of an unchanged PDF.
-sources = ["public/sigcull-docs.pdf"]
+description = "Validate the PDFs are both PDF/UA-1 and PDF/A-3a with veraPDF"
+sources = ["dist/sigcull-docs.pdf", "dist/es/sigcull-docs.pdf"]
 
 [tasks."site:build"]
-depends = ["site:search", "site:pdf"]
-description = "Full build: HTML (once), then the search index and PDFs"
-
-# Local accessibility + visual testing (Node toolchain, not the site build)
+depends = ["site:build-html", "site:pdf"]
+description = "Full build: site (once), then the PDFs"
 
 [tasks."site:htmlvalidate"]
 dir = "website"
-depends = ["site:html"]
-run = "pnpm exec html-validate 'public/**/*.html'"
-description = "Static HTML/markup validation of the built site"
+depends = ["site:build-html"]
+run = "pnpm exec html-validate 'dist/**/*.html'"
+description = "Static HTML/markup validation of the built website"
 
 [tasks."site:a11y"]
 dir = "website"
-depends = ["site:search"]
+depends = ["site:build-html"]
 run = "pnpm exec playwright test"
-description = "axe (WCAG 2.2 AA), keyboard, and odiff visual tests against the built site"
+description = "axe (WCAG 2.2 AA), keyboard, and odiff visual tests against the built website"
 
 [tasks."site:verify"]
 depends = ["site:htmlvalidate", "site:a11y"]
@@ -208,18 +183,34 @@ description = "Run every static-site check: markup, accessibility, and visual"
 
 [tasks."site:sr-setup"]
 dir = "website"
-# One-time, Windows only. NVDA and the guidepup control addon are native assets,
-# not npm packages, so they install separately from `pnpm install`, the same way
-# Playwright browsers do. Needs @guidepup/guidepup as a direct devDependency
-# (declared in package.json), so run `pnpm install` before this.
-run = [
+# Windows only. NVDA and the guidepup control addon are native assets,
+# not npm packages, so they install separately from `pnpm install`. Needs
+# @guidepup/guidepup as a direct devDependency, so run `pnpm install` first.
+run_windows = [
   "pnpm dlx @guidepup/setup setup",
   "pnpm dlx @guidepup/setup install",
 ]
-description = "One-time NVDA and guidepup addon install for site:sr (Windows only)"
+description = "One-time NVDA and guidepup addon install for site:sr"
 
 [tasks."site:sr"]
 dir = "website"
-depends = ["site:search"]
+depends = ["site:build-html"]
 run = "pnpm exec playwright test --config playwright.sr.config.ts"
-description = "Real-NVDA screen-reader tests (Windows)"
+description = "Real-NVDA screen-reader tests for the website (Windows)"
+
+[tasks."site:unlighthouse"]
+dir = "website"
+depends = ["site:build-html"]
+# Crawl every page of the built site and run Lighthouse on each (performance,
+# a11y, best-practices, SEO).
+run = '''
+# Free the port in case a previous run left one behind.
+fuser -k 8099/tcp 2>/dev/null || true
+sleep 1
+node_modules/.bin/http-server dist -p 8099 -a 127.0.0.1 -c-1 --silent &
+SRV=$!
+trap 'kill $SRV 2>/dev/null' EXIT
+sleep 2
+pnpm dlx unlighthouse-ci --site http://127.0.0.1:8099 --no-cache
+'''
+description = "Full-site Lighthouse audit of every page with Unlighthouse"

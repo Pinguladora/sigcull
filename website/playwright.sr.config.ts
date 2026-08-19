@@ -2,7 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 // Real-NVDA screen-reader suite (Windows only). Separate from playwright.config.ts
 // so the Linux gate never loads @guidepup/playwright (it throws at import when no
-// real screen reader is available). Run on Windows: `mise run site:sr`.
+// real screen reader is available). Run on Windows: `mise run site-astro:sr`.
 export default defineConfig({
   testDir: "./tests-sr",
   fullyParallel: false,
@@ -16,8 +16,8 @@ export default defineConfig({
     headless: false, // a screen reader needs a real, focused browser window
   },
   webServer: {
-    // Serves the built site. Adjust for your Windows shell if needed.
-    command: "pnpm exec http-server public -p 8099 -a 127.0.0.1 -c-1 --silent",
+    // Serves the built dist/. Adjust for your Windows shell if needed.
+    command: "pnpm exec http-server dist -p 8099 -a 127.0.0.1 -c-1 --silent",
     url: "http://127.0.0.1:8099/",
     reuseExistingServer: true,
     timeout: 30_000,

@@ -1,0 +1,36 @@
+---
+title: sigcull
+description: Una GitHub App que verifica la firma de cada commit y la convierte en una comprobación obligatoria para poder fusionar, con cualquier método de firma, en cualquier instancia de Sigstore, incluidos los repositorios privados.
+template: splash
+hero:
+  tagline: Verifica la firma de cada commit y conviértela en una comprobación obligatoria para fusionar. Cualquier método de firma, cualquier instancia de Sigstore, repositorios privados incluidos.
+  actions:
+    - text: Empezar
+      link: /es/getting-started/
+      icon: right-arrow
+    - text: Ver en GitHub
+      link: https://github.com/Pinguladora/sigcull
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+  <Card title="Cualquier método de firma" icon="approve-check">
+    gitsign sin claves, GPG, SSH, X.509 o verificado por GitHub. Un commit pasa
+    si cualquier autoridad configurada lo acepta.
+  </Card>
+  <Card title="Cualquier instancia de Sigstore" icon="setting">
+    La instancia public good, un montaje con tu propio TUF, o un Fulcio y Rekor
+    privados. Cambiar entre ellos es solo configuración.
+  </Card>
+  <Card title="Repositorios privados" icon="seti:lock">
+    Funciona donde la verificación de commits de GitHub no llega, e informa
+    mediante un Check Run estándar que puedes exigir en una regla.
+  </Card>
+  <Card title="Falla en cerrado" icon="error">
+    Cualquier ambigüedad es un fallo. La verificación se ejecuta íntegramente en
+    proceso, sin subprocesos y sin depender de la API de verificación de GitHub.
+  </Card>
+</CardGrid>

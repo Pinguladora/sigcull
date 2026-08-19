@@ -1,0 +1,58 @@
+---
+/*
+  Standalone print document (English): every doc page and ADR concatenated, no
+  site chrome. WeasyPrint renders this to a PDF that is both PDF/A-3a and
+  PDF/UA-1 (see the site:pdf task). The section overview is left out on purpose,
+  so the one optimized image never needs URL resolution in WeasyPrint.
+*/
+import { getCollection, render } from 'astro:content';
+import printCss from '../styles/print.css?raw';
+
+const ORDER = [
+  'getting-started',
+  'authorities',
+  'configuration',
+  'trust-sources',
+  'deployment',
+  'security-model',
+];
+
+const all = await getCollection('docs');
+const main = ORDER.map((slug) => all.find((e) => e.id === slug)).filter(Boolean);
+const adr = all
+  .filter((e) => /^adr\/\d/.test(e.id))
+  .sort((a, b) => a.id.localeCompare(b.id));
+const docs = await Promise.all(
+  [...main, ...adr].map(async (e) => ({
+    title: e.data.title,
+    Content: (await render(e)).Content,
+  })),
+);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>sigcull documentation</title>
+    <style is:inline set:html={printCss}></style>
+  </head>
+  <body>
+    <button type="button" class="print-cta" onclick="window.print()">Save as PDF</button>
+    <section class="print-cover">
+      <h1>sigcull</h1>
+      <p>
+        A GitHub App that verifies the signature on every commit and turns it
+        into a required merge gate.
+      </p>
+    </section>
+    {
+      docs.map(({ title, Content }) => (
+        <article class="print-doc">
+          <h1>{title}</h1>
+          <Content />
+        </article>
+      ))
+    }
+  </body>
+</html>

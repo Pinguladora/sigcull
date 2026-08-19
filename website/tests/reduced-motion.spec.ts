@@ -3,9 +3,9 @@ import { ROUTES } from "./pages";
 
 // Enforcement, not a lint: under prefers-reduced-motion: reduce, no animation may
 // run above the ~instant threshold. document.getAnimations() catches CSS
-// animations, transitions, and Web Animations API in one call. Spinners convey
-// loading state (4.1.3) and are hidden unless a search is running, so none are
-// active on load; a rogue continuous animation that ignores the guard would fail.
+// animations, transitions, and Web Animations API in one call. The glacier aurora
+// is a static gradient, not an animation, so nothing should be active on load; a
+// rogue continuous animation that ignores the guard would fail here.
 const THRESHOLD_MS = 0.02; // just above the 0.01ms the reduce block sets
 
 for (const route of ROUTES) {
@@ -32,10 +32,11 @@ for (const route of ROUTES) {
 
 test("reduced-motion: transitions collapse to ~instant", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/docs/authorities/");
-  // .pa-trigger normally transitions 0.12s; under reduce it must be ~0.
+  await page.goto("/authorities/");
+  // The skip link slides in with a transform transition; under reduce the custom
+  // CSS must collapse it to ~0.
   const dur = await page
-    .locator(".pa-trigger")
+    .locator(".sl-skip-link")
     .evaluate((el) => getComputedStyle(el).transitionDuration);
   // 0.01ms == 0.00001s
   expect(parseFloat(dur)).toBeLessThanOrEqual(0.001);

@@ -1,0 +1,79 @@
+---
+// Adds a reading-progress line to the right-hand "On this page" TOC (as some
+// Starlight sites do). It wraps Starlight's default TOC so the current-heading
+// logic stays intact. The pure-CSS scroll-timeline approach is mangled by the
+// CSS minifier (it folds animation-timeline into the animation shorthand, which
+// is invalid for anonymous scroll() timelines), so the fill is driven by a
+// passive, rAF-throttled scroll listener writing one transform — no layout
+// thrash, cheap on budget devices, and skipped entirely under reduced-motion.
+import Default from '@astrojs/starlight/components/TableOfContents.astro';
+---
+
+<div class="toc-progress-host">
+  <span class="toc-progress" aria-hidden="true"><span class="toc-progress-fill"></span></span>
+  <Default {...Astro.props}><slot /></Default>
+</div>
+
+<script>
+  (() => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const fill = document.querySelector<HTMLElement>('.toc-progress-fill');
+    if (!fill) return;
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const d = document.documentElement;
+      const max = d.scrollHeight - d.clientHeight;
+      // Fill by actual scroll only, and 0 when the page does not scroll. This
+      // matches the CSS default (scaleY(0)), so nothing changes on load: the
+      // deferred script never pops the fill from empty to full (no blink).
+      const p = max > 2 ? Math.min(1, Math.max(0, d.scrollTop / max)) : 0;
+      fill.style.transform = `scaleY(${p})`;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll, { passive: true });
+    // Re-check when the content height changes (fonts loading, images, etc.).
+    new ResizeObserver(onScroll).observe(document.body);
+    update();
+  })();
+</script>
+
+<style>
+  .toc-progress-host {
+    position: relative;
+  }
+  .toc-progress {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .toc-progress-host {
+      padding-left: 0.85rem;
+    }
+    .toc-progress {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0.35rem;
+      bottom: 0.35rem;
+      width: 2px;
+      border-radius: 2px;
+      background: var(--sl-color-gray-5);
+      overflow: hidden;
+    }
+    .toc-progress-fill {
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 100%;
+      background: var(--sl-color-text-accent);
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+  }
+</style>
