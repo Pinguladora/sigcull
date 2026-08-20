@@ -23,7 +23,7 @@ postinstall = "hk install --mise"
 
 [tools]
 cocogitto = "7.0.0"
-pinact = "4.1.0"
+pinact = "4.1.1"
 go = "1.26.5"
 node = "26.7.0"
 pnpm = "11.22.0"
