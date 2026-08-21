@@ -12,7 +12,7 @@ require (
 	github.com/sigstore/cosign/v3 v3.1.2
 	github.com/sigstore/gitsign v0.17.1
 	github.com/sigstore/sigstore v1.10.9-0.20260728171319-05a1d9750eaf
-	github.com/sigstore/sigstore-go v1.2.2
+	github.com/sigstore/sigstore-go v1.3.0
 	go.yaml.in/yaml/v4 v4.0.0-rc.6
 	golang.org/x/crypto v0.54.0
 )
@@ -78,19 +78,19 @@ require (
 	github.com/go-openapi/jsonpointer v1.0.0 // indirect
 	github.com/go-openapi/jsonreference v1.0.0 // indirect
 	github.com/go-openapi/loads v0.25.0 // indirect
-	github.com/go-openapi/runtime v0.32.6 // indirect
+	github.com/go-openapi/runtime v0.33.0 // indirect
 	github.com/go-openapi/runtime/server-middleware v0.30.0 // indirect
 	github.com/go-openapi/spec v0.22.9 // indirect
 	github.com/go-openapi/strfmt v0.27.0 // indirect
 	github.com/go-openapi/swag v0.26.1 // indirect
-	github.com/go-openapi/swag/cmdutils v0.26.1 // indirect
+	github.com/go-openapi/swag/cmdutils v0.27.0 // indirect
 	github.com/go-openapi/swag/conv v0.27.3 // indirect
 	github.com/go-openapi/swag/fileutils v0.27.3 // indirect
 	github.com/go-openapi/swag/jsonname v0.26.1 // indirect
 	github.com/go-openapi/swag/jsonutils v0.27.3 // indirect
 	github.com/go-openapi/swag/loading v0.27.3 // indirect
 	github.com/go-openapi/swag/mangling v0.27.3 // indirect
-	github.com/go-openapi/swag/netutils v0.26.1 // indirect
+	github.com/go-openapi/swag/netutils v0.27.0 // indirect
 	github.com/go-openapi/swag/pools v0.27.3 // indirect
 	github.com/go-openapi/swag/stringutils v0.27.3 // indirect
 	github.com/go-openapi/swag/typeutils v0.27.3 // indirect
@@ -157,7 +157,7 @@ require (
 	github.com/sigstore/sigstore/pkg/signature/kms/azure v1.10.8 // indirect
 	github.com/sigstore/sigstore/pkg/signature/kms/gcp v1.10.8 // indirect
 	github.com/sigstore/sigstore/pkg/signature/kms/hashivault v1.10.8 // indirect
-	github.com/sigstore/timestamp-authority/v2 v2.1.2 // indirect
+	github.com/sigstore/timestamp-authority/v2 v2.1.3 // indirect
 	github.com/sirupsen/logrus v1.9.4 // indirect
 	github.com/skeema/knownhosts v1.3.2 // indirect
 	github.com/spf13/cobra v1.10.2 // indirect
@@ -166,8 +166,8 @@ require (
 	github.com/theupdateframework/go-tuf v0.7.0 // indirect
 	github.com/theupdateframework/go-tuf/v2 v2.4.2 // indirect
 	github.com/tink-crypto/tink-go-awskms/v3 v3.0.0 // indirect
-	github.com/tink-crypto/tink-go-gcpkms/v2 v2.2.0 // indirect
-	github.com/tink-crypto/tink-go/v2 v2.6.0 // indirect
+	github.com/tink-crypto/tink-go-gcpkms/v2 v2.3.0 // indirect
+	github.com/tink-crypto/tink-go/v2 v2.7.0 // indirect
 	github.com/transparency-dev/formats v0.1.1 // indirect
 	github.com/transparency-dev/merkle v0.0.2 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
@@ -184,7 +184,7 @@ require (
 	go.uber.org/zap v1.28.0 // indirect
 	go.yaml.in/yaml/v2 v2.4.4 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
-	golang.org/x/mod v0.37.0 // indirect
+	golang.org/x/mod v0.38.0 // indirect
 	golang.org/x/net v0.57.0 // indirect
 	golang.org/x/oauth2 v0.36.0 // indirect
 	golang.org/x/sync v0.22.0 // indirect
@@ -196,7 +196,7 @@ require (
 	google.golang.org/genproto v0.0.0-20260406210006-6f92a3bedf2d // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20260526163538-3dc84a4a5aaa // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260610212136-7ab31c22f7ad // indirect
-	google.golang.org/grpc v1.82.0 // indirect
+	google.golang.org/grpc v1.82.1 // indirect
 	google.golang.org/protobuf v1.36.12-0.20260120151049-f2248ac996af // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gotest.tools/v3 v3.5.2 // indirect
