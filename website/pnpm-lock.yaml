@@ -27,8 +27,8 @@ importers:
         specifier: 4.13.0
         version: 4.13.0
       html-validate:
-        specifier: 11.8.0
-        version: 11.8.0
+        specifier: 11.9.0
+        version: 11.9.0
       http-server:
         specifier: 14.1.1
         version: 14.1.1(debug@4.4.3(supports-color@7.2.0))(supports-color@7.2.0)
@@ -134,6 +134,7 @@ packages:
   '@xmldom/xmldom@0.9.11':
     resolution: {integrity: sha512-tW8bcK3hsG0/uqSnNz6TK4BkcuZSezoU7DlnYssILmZDktPnSHHuDJJFM0AJv+13gz2r0iGdrj6qqKeUnxXEDg==}
     engines: {node: '>=14.6'}
+    deprecated: this version has critical issues, please update to the latest version
 
   ajv@8.20.0:
     resolution: {integrity: sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA==}
@@ -283,8 +284,8 @@ packages:
     resolution: {integrity: sha512-oWv4T4yJ52iKrufjnyZPkrN0CH3QnrUqdB6In1g5Fe1mia8GmF36gnfNySxoZtxD5+NmYw1EElVXiBk93UeskA==}
     engines: {node: '>=12'}
 
-  html-validate@11.8.0:
-    resolution: {integrity: sha512-ml7R8CVRRGXPMSFNAgJlrJGeZ7T5SC4J80J/a0ThzcfT3JqymTluxaljhGKTH0ER90l0Hi1eJQT5M4dKPxJM+A==}
+  html-validate@11.9.0:
+    resolution: {integrity: sha512-1Cb59pOtvIUSkV+os+YNqYyhueSYrErkABIAWObjSNv5V84TlRLLOSQrCc9y8A93zqtMcOCxZ/MdFqo63nx14w==}
     engines: {node: ^22.22.0 || >= 24.8.0}
     hasBin: true
     peerDependencies:
@@ -672,7 +673,7 @@ snapshots:
     dependencies:
       whatwg-encoding: 2.0.0
 
-  html-validate@11.8.0:
+  html-validate@11.9.0:
     dependencies:
       '@html-validate/stylish': 6.0.0
       '@sidvind/better-ajv-errors': 7.0.0(ajv@8.20.0)
