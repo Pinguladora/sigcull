@@ -1,9 +1,9 @@
 ---
 title: sigcull
-description: A GitHub App that verifies the signature on every commit and turns it into a required merge gate, for any signing method, on any Sigstore instance, including private repositories.
+description: A GitHub App that verifies the signature on every commit and turns it into a required check to merge, for any signing method, on any Sigstore instance, valid for private repositories.
 template: splash
 hero:
-  tagline: Verify the signature on every commit and turn it into a required merge gate. Any signing method, any Sigstore instance, private repositories included.
+  tagline: Verify the signature on every commit. Any signing method, any Sigstore instance, private repositories included.
   actions:
     - text: Get started
       link: /getting-started/
@@ -23,14 +23,14 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
   </Card>
   <Card title="Any Sigstore instance" icon="setting">
     The public good instance, a bring-your-own-TUF setup, or a private Fulcio and
-    Rekor. Switching between them is configuration only.
+    Rekor.
   </Card>
   <Card title="Private repositories" icon="seti:lock">
-    Works where GitHub's own commit verification does not, and reports through a
-    standard Check Run you can require in a ruleset.
+    Works on private repositories, and reports through a standard Check Run you can
+    require in a rule.
   </Card>
   <Card title="Fail closed" icon="error">
-    Any ambiguity is a failure. Verification runs fully in-process, with no
-    subprocess and no reliance on GitHub's GPG-oriented verification API.
+    Any ambiguity is a failure. Verification runs fully in memory, storing nothing
+    on disk.
   </Card>
 </CardGrid>

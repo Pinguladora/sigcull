@@ -4,9 +4,9 @@ description: Run sigcull as a container and make it a required status check.
 ---
 
 sigcull is a single stateless binary. It needs no database, no disk, and no
-subprocess, so it ships as a small distroless image and scales horizontally.
+subprocess, so it ships as a small, secure distroless image.
 
-## Run
+## As a binary
 
 Provide the secrets as environment variables and point the App at your config.
 
@@ -17,7 +17,7 @@ export GITHUB_APP_PRIVATE_KEY="$(cat app.private-key.pem)"
 go run ./cmd/sigcull -config config.yaml
 ```
 
-## Container
+## As a container
 
 ```sh
 docker build -f Containerfile -t sigcull .
@@ -40,5 +40,5 @@ serverless, so background verification always completes.
 ## Make it required
 
 Add `sigcull` as a required status check in a repository ruleset or branch
-protection rule. Pull requests then cannot merge unless every non-exempt commit
-satisfies the policy.
+protection rule. From then on, merging a pull request requires all its commits to
+satisfy the policy.

@@ -4,7 +4,7 @@ description: Public good, bring-your-own TUF, or a static offline root.
 ---
 
 `trust.kind` decides where the Sigstore roots of trust come from. All three run
-fully in process, with no subprocess.
+fully in memory, storing nothing on disk.
 
 ## public
 

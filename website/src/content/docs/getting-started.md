@@ -30,5 +30,5 @@ verify:
 ## Make it required
 
 Add `sigcull` as a required status check in a repository ruleset or branch
-protection rule. From then on, a pull request cannot merge unless every
-non-exempt commit satisfies the policy.
+protection rule. From then on, merging a pull request requires all its commits to
+satisfy the policy.
