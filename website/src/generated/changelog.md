@@ -1,5 +1,6 @@
-## Unreleased ([8842edc..36fa92a](https://github.com/Pinguladora/sigcull/compare/8842edc..36fa92a))
+## Unreleased ([8842edc..15b8a4c](https://github.com/Pinguladora/sigcull/compare/8842edc..15b8a4c))
 ### Features
+- (**website**) replace the Hugo docs site with Astro Starlight - ([15b8a4c](https://github.com/Pinguladora/sigcull/commit/15b8a4cfc51e49c8280ab4a4b5d7318f5356bec6)) - [@Pinguladora](https://github.com/Pinguladora)
 - (**website**) honor prefers-reduced-motion and add a skip link - ([09d978a](https://github.com/Pinguladora/sigcull/commit/09d978a39c4fada99b4c5326b80b31c2580287f3)) - [@Pinguladora](https://github.com/Pinguladora)
 - (**website**) Spanish translations of the docs - ([0b40ae4](https://github.com/Pinguladora/sigcull/commit/0b40ae4fa3b12ac86fd5b7c305f912dff812f0b6)) - [@Pinguladora](https://github.com/Pinguladora)
 - (**website**) responsive image hook and ADR decision records - ([6d08849](https://github.com/Pinguladora/sigcull/commit/6d0884974e731801b5286f80a28bb7c504232f5a)) - [@Pinguladora](https://github.com/Pinguladora)

@@ -4,12 +4,12 @@ description: La instancia public good, tu propio TUF o una raíz estática sin c
 ---
 
 `trust.kind` decide de dónde vienen las raíces de confianza de Sigstore. Las tres
-se ejecutan por completo en proceso, sin subprocesos.
+se ejecutan por completo en memoria, sin almacenar nada en disco.
 
 ## public
 
-La instancia public good de Sigstore. sigcull incorpora un `trusted_root.json`
-empaquetado dentro del binario, así que esta fuente no necesita red al arrancar.
+La instancia *public good* de Sigstore. sigcull incorpora un `trusted_root.json`
+empaquetado dentro del binario, sin necesidad de descargarlo.
 
 ```yaml
 trust:
@@ -29,8 +29,8 @@ trust:
 
 ## tuf
 
-Tu propio TUF. sigcull construye un cliente TUF en librería, en vivo, contra un
-mirror propio, usando un `root.json` fuera de banda como ancla de confianza.
+Tu propio TUF. sigcull construye un cliente TUF integrado en el binario, contra un
+*mirror* propio, usando un `root.json` como referencia.
 
 ```yaml
 trust:
@@ -40,8 +40,8 @@ trust:
 ```
 
 :::note
-La lista de identidades permitidas es agnóstica al issuer. El conjunto de
-issuers desde los que puedes producir firmas es el que confíe el Fulcio de
-destino, así que una instancia privada puede emitir identidades que la
-instancia public good nunca aceptaría.
+La lista de identidades permitidas es agnóstica al emisor. El conjunto de emisores
+desde los que puedes producir firmas es el que confíe el Fulcio de destino, así que
+una instancia privada puede emitir identidades que la instancia pública nunca
+aceptaría.
 :::
