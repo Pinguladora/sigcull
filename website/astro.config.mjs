@@ -74,7 +74,19 @@ export default defineConfig({
         baseUrl: "https://github.com/Pinguladora/sigcull/edit/main/website/",
       },
       customCss: ["./src/styles/custom.css"],
-      expressiveCode: { plugins: [codeBlockKeyboardScroll()] },
+      expressiveCode: {
+        plugins: [codeBlockKeyboardScroll()],
+        // Starlight localizes each code block's UI text (the terminal-window
+        // label, the copy button) per block through getBlockLocale, but in this
+        // Astro/Starlight pairing its detection resolves every block to the
+        // default language, so Spanish pages showed English labels. Derive the
+        // locale straight from the source path (src/content/docs/es/... is es) so
+        // each block picks up the right translation Starlight already registers.
+        getBlockLocale: ({ file }) => {
+          const match = file.path.replace(/\\/g, "/").match(/\/content\/docs\/([^/]+)\//);
+          return match && match[1] === "es" ? "es" : "en";
+        },
+      },
       sidebar: [
         { slug: "overview" },
         { slug: "getting-started" },
