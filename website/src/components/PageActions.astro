@@ -1,0 +1,100 @@
+---
+import { isArticlePage } from '../lib/doc-pages';
+// Page-actions under each doc title: a primary "Copy Markdown" button plus an
+// "Open in…" dropdown (View Markdown, ChatGPT, Claude, Download PDF). The dropdown
+// is a native <details>/<summary> disclosure, keyboard-operable out of the box,
+// enhanced to close on outside-click / Escape. Skipped on the splash and changelog
+// pages, which have no clean .md/.pdf (see isArticlePage). Labels follow the language.
+const { entry, lang } = Astro.locals.starlightRoute;
+const id = entry.id;
+const show = isArticlePage(entry);
+
+const isEs = lang === 'es';
+const mdPath = `/${id}.md`;
+const pdfPath = `/${id}.pdf`;
+const mdUrl = Astro.site ? new URL(mdPath, Astro.site).href : mdPath;
+const prompt = `${isEs ? 'Lee' : 'Read'} ${mdUrl}`;
+const chatgptHref = `https://chatgpt.com/?hints=search&q=${encodeURIComponent(prompt)}`;
+const claudeHref = `https://claude.ai/new?q=${encodeURIComponent(prompt)}`;
+
+const t = isEs
+  ? {
+      copy: 'Copiar Markdown', copied: '¡Copiado!', open: 'Abrir en…',
+      view: 'Ver como Markdown', chatgpt: 'Abrir en ChatGPT', claude: 'Abrir en Claude',
+      pdf: 'Descargar PDF', aria: 'Acciones de la página',
+    }
+  : {
+      copy: 'Copy Markdown', copied: 'Copied!', open: 'Open in…',
+      view: 'View as Markdown', chatgpt: 'Open in ChatGPT', claude: 'Open in Claude',
+      pdf: 'Download PDF', aria: 'Page actions',
+    };
+---
+
+{
+  show && (
+    <div class="page-actions" role="group" aria-label={t.aria} data-md={mdPath} data-copied={t.copied}>
+      <button type="button" class="pa-btn pa-primary" data-copy>
+        <span>{t.copy}</span>
+      </button>
+      <details class="pa-menu-wrap">
+        <summary class="pa-btn pa-summary">
+          <span>{t.open}</span>
+          <span class="pa-caret" aria-hidden="true">▾</span>
+        </summary>
+        <div class="pa-menu">
+          <a class="pa-item" href={chatgptHref} target="_blank" rel="noopener">
+            <span>{t.chatgpt}</span>
+            <span class="pa-ext" aria-hidden="true">↗</span>
+          </a>
+          <a class="pa-item" href={claudeHref} target="_blank" rel="noopener">
+            <span>{t.claude}</span>
+            <span class="pa-ext" aria-hidden="true">↗</span>
+          </a>
+          <a class="pa-item" href={mdPath}>
+            <span>{t.view}</span>
+          </a>
+          <a class="pa-item" href={pdfPath} download>
+            <span>{t.pdf}</span>
+          </a>
+        </div>
+      </details>
+    </div>
+  )
+}
+
+<script>
+  document.querySelectorAll('.page-actions').forEach((bar) => {
+    const md = bar.getAttribute('data-md');
+    const copied = bar.getAttribute('data-copied') || 'Copied!';
+    const copyBtn = bar.querySelector<HTMLButtonElement>('[data-copy]');
+    const label = copyBtn?.querySelector('span');
+
+    copyBtn?.addEventListener('click', async () => {
+      if (!md || !label) return;
+      try {
+        const text = await (await fetch(md)).text();
+        await navigator.clipboard.writeText(text);
+        const prev = label.textContent;
+        label.textContent = copied;
+        setTimeout(() => {
+          label.textContent = prev;
+        }, 1500);
+      } catch {
+        /* clipboard unavailable */
+      }
+    });
+
+    const menu = bar.querySelector<HTMLDetailsElement>('.pa-menu-wrap');
+    if (menu) {
+      document.addEventListener('click', (e) => {
+        if (menu.open && !menu.contains(e.target as Node)) menu.open = false;
+      });
+      menu.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menu.open) {
+          menu.open = false;
+          menu.querySelector<HTMLElement>('summary')?.focus();
+        }
+      });
+    }
+  });
+</script>

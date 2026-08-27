@@ -110,6 +110,111 @@ header.header,
 }
 
 /*
+  Page-actions under the doc title: a primary "Copy Markdown" button and an
+  "Open in…" dropdown (a native <details> disclosure). Solid, bordered controls so
+  they read as buttons, not tags, over the denim field.
+*/
+.page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.9rem 0 0;
+}
+.pa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.2;
+  border-radius: 8px;
+  border: 1px solid var(--sl-color-gray-5);
+  background: var(--sl-color-bg);
+  color: var(--sl-color-text);
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease, color 0.12s ease;
+}
+.pa-btn:hover {
+  border-color: var(--sl-color-text-accent);
+  color: var(--sl-color-text-accent);
+}
+.pa-btn:focus-visible {
+  outline: 2px solid var(--sl-color-text-accent);
+  outline-offset: 2px;
+}
+
+/* Primary: filled accent so it clearly reads as the main action. --sl-color-bg
+   as the text color inverts with the theme, keeping contrast on the accent fill. */
+.pa-primary {
+  background: var(--sl-color-text-accent);
+  border-color: var(--sl-color-text-accent);
+  color: var(--sl-color-bg);
+  font-weight: 600;
+}
+.pa-primary:hover {
+  color: var(--sl-color-bg);
+  filter: brightness(1.05);
+}
+
+/* "Open in…" dropdown (native <details>/<summary>). */
+.pa-menu-wrap {
+  position: relative;
+}
+.pa-summary {
+  list-style: none;
+}
+.pa-summary::-webkit-details-marker {
+  display: none;
+}
+.pa-caret {
+  font-size: 0.8em;
+  transition: transform 0.15s ease;
+}
+.pa-menu-wrap[open] .pa-caret {
+  transform: rotate(180deg);
+}
+.pa-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  min-width: 14rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0.35rem;
+  background: var(--sl-color-bg);
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 10px;
+  box-shadow: 0 14px 34px -14px rgba(0, 0, 0, 0.5);
+}
+.pa-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--sl-color-text);
+  text-decoration: none;
+}
+.pa-item:hover {
+  background: var(--sl-color-gray-6);
+  color: var(--sl-color-text-accent);
+}
+.pa-item:focus-visible {
+  outline: 2px solid var(--sl-color-text-accent);
+  outline-offset: -2px;
+  color: var(--sl-color-text-accent);
+}
+.pa-ext {
+  font-size: 0.9em;
+  opacity: 0.7;
+}
+
+/*
   Respect prefers-reduced-motion. Reduce, not remove: collapse transitions and
   animations to ~instant (0.01ms, never 0, so JS awaiting transitionend still
   fires) and disable smooth scrolling. Anything with a "spinner" class keeps
@@ -126,10 +231,11 @@ header.header,
   }
 }
 
-/* Print: drop the aura and grain so window.print output is clean. */
+/* Print: drop the aura, grain, and page-actions so window.print output is clean. */
 @media print {
   body::before,
-  body::after {
+  body::after,
+  .page-actions {
     display: none;
   }
 }

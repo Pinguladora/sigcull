@@ -1,0 +1,34 @@
+---
+// Per-page standalone print document, one per doc, at /print/<slug>/. WeasyPrint
+// renders each to a per-page PDF/A-3a + PDF/UA-1 file (see the site:pdf task),
+// which the page's Download-PDF action links to. The two MDX pages are skipped.
+import { getCollection, render } from 'astro:content';
+import printCss from '../../styles/print.css?raw';
+import { isArticlePage } from '../../lib/doc-pages';
+
+export async function getStaticPaths() {
+  const docs = await getCollection('docs');
+  return docs
+    .filter(isArticlePage)
+    .map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const lang = entry.id.startsWith('es/') ? 'es' : 'en';
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <title>{entry.data.title} · sigcull</title>
+    <style is:inline set:html={printCss}></style>
+  </head>
+  <body>
+    <article>
+      <h1>{entry.data.title}</h1>
+      <Content />
+    </article>
+  </body>
+</html>

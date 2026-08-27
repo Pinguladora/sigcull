@@ -112,9 +112,12 @@ description = "Serve the website locally with live reload"
 
 [tasks."site:preview"]
 dir = "website"
-depends = ["site:build-html"]
-run = "pnpm preview"
-description = "Preview the built website"
+# Builds the full site AND the PDFs, then serves dist/ with a static server, so
+# the per-page PDF downloads work here (unlike site:serve, which is `astro dev`
+# and only serves source, never the dist/ build artifacts). Ctrl-C to stop.
+depends = ["site:build"]
+run = "node_modules/.bin/http-server dist -p 4321 -a 127.0.0.1 -c-1"
+description = "Build (site + PDFs) and serve dist/ locally, PDFs included"
 
 [tasks."site:changelog"]
 run = "cog changelog | sed -E 's/^#### /### /' > website/src/generated/changelog.md"
@@ -140,12 +143,20 @@ depends = ["site:build-html"]
 # Render the full handbook per language as PDF/A-3a, then the finisher hook stamps
 # the PDF/UA-1 identifier into the same XMP, so each PDF is both archival and
 # accessible.
-run = [
-  '"$(mise where conda:WeasyPrint)/bin/python" tools/render-pdf.py dist/print/index.html dist/sigcull-docs.pdf',
-  '"$(mise where conda:WeasyPrint)/bin/python" tools/render-pdf.py dist/es/print/index.html dist/es/sigcull-docs.pdf',
-]
-description = "Render dual PDF/A-3a + PDF/UA-1 handbooks with WeasyPrint"
-sources = ["dist/**/print/index.html", "tools/render-pdf.py"]
+run = '''
+PY="$(mise where conda:WeasyPrint)/bin/python"
+export PY
+# Full-language handbooks (backgrounded).
+"$PY" tools/render-pdf.py dist/print/index.html dist/sigcull-docs.pdf &
+"$PY" tools/render-pdf.py dist/es/print/index.html dist/es/sigcull-docs.pdf &
+# One PDF per page at dist/<slug>.pdf (the Download-PDF action target), with
+# limited concurrency so a large doc set does not spawn too many WeasyPrint runs.
+find dist/print -mindepth 2 -name index.html -print0 \
+  | xargs -0 -P 4 -I {} bash -c 'f="$1"; s="${f#dist/print/}"; s="${s%/index.html}"; "$PY" tools/render-pdf.py "$f" "dist/${s}.pdf"' _ {}
+wait
+'''
+description = "Render PDF/A-3a + PDF/UA-1 handbooks and per-page PDFs with WeasyPrint"
+sources = ["dist/print/**/*.html", "dist/es/print/*.html", "tools/render-pdf.py"]
 outputs = ["dist/**/*.pdf"]
 
 [tasks."site:pdf-validate"]

@@ -62,6 +62,7 @@ export default defineConfig({
         SiteTitle: "./src/components/SiteTitle.astro",
         Head: "./src/components/Head.astro",
         TableOfContents: "./src/components/TableOfContents.astro",
+        PageTitle: "./src/components/PageTitle.astro",
       },
       defaultLocale: "root",
       locales: {
