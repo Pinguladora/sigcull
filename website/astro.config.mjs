@@ -63,6 +63,10 @@ export default defineConfig({
         Head: "./src/components/Head.astro",
         TableOfContents: "./src/components/TableOfContents.astro",
         PageTitle: "./src/components/PageTitle.astro",
+        // Vendored copy of Starlight's Search that loads Pagefind on first intent
+        // (hover/focus/open) instead of eagerly on idle, so visitors who never
+        // search download nothing.
+        Search: "./src/components/Search.astro",
       },
       defaultLocale: "root",
       locales: {
