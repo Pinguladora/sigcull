@@ -1,0 +1,70 @@
+name: Deploy site
+
+# Builds the Astro site AND the PDFs in CI (Netlify can't run WeasyPrint), then
+# publishes the finished dist/ to Netlify. Deliberately mise-free: it installs
+# only what the build needs (Node, pnpm, WeasyPrint), so the dev toolchain
+# (oxlint/yamllint/conda/…) never has to resolve here. The changelog is committed,
+# so no Cocogitto is needed.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "website/**"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-site
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.20.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+          cache-dependency-path: website/pnpm-lock.yaml
+
+      # WeasyPrint (system libs + a venv), used by tools/render-pdf.py.
+      - name: Install WeasyPrint
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libpango-1.0-0 libpangocairo-1.0-0 libpangoft2-1.0-0 \
+            libgdk-pixbuf-2.0-0 libffi-dev libjpeg-dev \
+            fonts-dejavu fonts-liberation
+          python3 -m venv /tmp/wp
+          /tmp/wp/bin/pip install --upgrade pip weasyprint
+
+      - name: Install dependencies
+        working-directory: website
+        run: pnpm install --frozen-lockfile
+
+      - name: Build site
+        working-directory: website
+        run: pnpm build
+
+      - name: Render PDFs (handbooks + per-page, parallel)
+        working-directory: website
+        run: |
+          PY=/tmp/wp/bin/python
+          export PY
+          "$PY" tools/render-pdf.py dist/print/index.html dist/sigcull-docs.pdf &
+          "$PY" tools/render-pdf.py dist/es/print/index.html dist/es/sigcull-docs.pdf &
+          find dist/print -mindepth 2 -name index.html -print0 \
+            | xargs -0 -P 4 -I {} bash -c 'f="$1"; s="${f#dist/print/}"; s="${s%/index.html}"; "$PY" tools/render-pdf.py "$f" "dist/${s}.pdf"' _ {}
+          wait
+
+      - name: Deploy to Netlify
+        run: npx --yes netlify-cli@latest deploy --dir=website/dist --prod --message "deploy ${{ github.sha }}"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
