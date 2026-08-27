@@ -14,3 +14,5 @@ tests/visual/__actual__/
 tests/visual/__diff__/
 # unlighthouse report output
 .unlighthouse/
+# Python bytecode cache from the PDF tooling
+tools/__pycache__/

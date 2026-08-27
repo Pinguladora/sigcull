@@ -50,15 +50,19 @@ ol {
 
 a {
   color: #0a5b63;
-  text-decoration: none;
+  /* Underline links, never color alone, so link text is distinguishable without
+     relying on color (WCAG 1.4.1 Use of Color). */
+  text-decoration: underline;
 }
 
 pre,
-code {
+code,
+.ec-flat {
   font-family: 'DejaVu Sans Mono', 'Courier New', monospace;
   font-size: 9.5pt;
 }
-pre {
+pre,
+.ec-flat {
   background: #f5f5f5;
   border: 1px solid #ddd;
   padding: 8pt;
@@ -68,6 +72,39 @@ pre {
 :not(pre) > code {
   background: #f5f5f5;
   padding: 0 2pt;
+}
+
+/*
+  Flattened code block (see tools/render-pdf.py). Rendered as a <p> so the PDF
+  tags it as a real /P structural element instead of the /NonStruct a <pre> gets,
+  with white-space: pre-wrap restoring the preformatted layout.
+*/
+.ec-flat {
+  margin: 1em 0;
+}
+
+/*
+  Expressive Code wraps every fenced block in a <figure class="frame"> with a copy
+  button and an aria-live region, and colors each token through CSS custom
+  properties that only resolve once Expressive Code's stylesheet is present. That
+  stylesheet is linked with a site-absolute /_astro/… URL WeasyPrint cannot fetch
+  from disk, so in the PDF the tokens fall back to the body ink (fine) but the copy
+  <button> renders as a bare gray UA control (the stray gray block) and enters the
+  tag tree with no accessible name. Drop the web-only chrome, remove the figure's
+  default 40px indent, and pin code to one high-contrast ink so no residual token
+  color can fall below the WCAG AA ratio.
+*/
+.expressive-code .copy,
+.expressive-code figcaption:empty {
+  display: none;
+}
+.expressive-code figure.frame {
+  margin: 0;
+}
+.expressive-code pre code,
+.expressive-code pre code span {
+  color: #1a1a1a !important;
+  background: transparent !important;
 }
 
 blockquote {
@@ -85,7 +122,9 @@ table {
 }
 th,
 td {
-  border: 1px solid #ccc;
+  /* #767676 clears the 3:1 non-text contrast ratio (WCAG 1.4.11) against white,
+     so the gridlines that delineate cells stay perceivable. */
+  border: 1px solid #767676;
   padding: 4pt 6pt;
   text-align: left;
 }
