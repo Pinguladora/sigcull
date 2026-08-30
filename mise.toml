@@ -123,9 +123,16 @@ description = "Build (site + PDFs) and serve dist/ locally, PDFs included"
 run = "cog changelog | sed -E 's/^#### /### /' > website/src/generated/changelog.md"
 description = "Generate the changelog from conventional commits with Cocogitto"
 
+[tasks."site:install"]
+dir = "website"
+run = "pnpm install --frozen-lockfile"
+description = "Install the website's Node dependencies"
+sources = ["package.json", "pnpm-lock.yaml"]
+outputs = ["node_modules/.modules.yaml"]
+
 [tasks."site:build-html"]
 dir = "website"
-depends = ["site:changelog"]
+depends = ["site:install", "site:changelog"]
 run = "pnpm build"
 description = "Build the website (HTML, Pagefind, llms.txt, print pages)"
 sources = [

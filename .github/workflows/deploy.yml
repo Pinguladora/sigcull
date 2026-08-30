@@ -1,70 +1,47 @@
 name: Deploy site
 
-# Builds the Astro site AND the PDFs in CI (Netlify can't run WeasyPrint), then
-# publishes the finished dist/ to Netlify. Deliberately mise-free: it installs
-# only what the build needs (Node, pnpm, WeasyPrint), so the dev toolchain
-# (oxlint/yamllint/conda/…) never has to resolve here. The changelog is committed,
-# so no Cocogitto is needed.
+# The site and its PDFs are built and deployed entirely through mise tasks
+# (see mise.ci.toml), so the pipeline is portable across CI systems: any runner
+# installs mise and runs `mise run site:deploy`. CI-only tooling (the Netlify
+# CLI) lives in mise.ci.toml, activated by MISE_ENV=ci.
 on:
   push:
-    branches: [main]
+    branches: [main, experiment/starlight]
     paths:
       - "website/**"
+      - "mise.toml"
+      - "mise.ci.toml"
+      - ".miserc.toml"
+      - "netlify.toml"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
 
+# Per-ref so a new push cancels only the in-flight deploy for the same branch,
+# not deploys of other branches.
 concurrency:
-  group: deploy-site
+  group: deploy-site-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build-deploy:
+  deploy:
     runs-on: ubuntu-latest
+    env:
+      MISE_ENV: ci
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      # Production deploy only from main; every other branch gets a preview
+      # deploy (a draft URL) so the pipeline can be tested without touching prod.
+      NETLIFY_DEPLOY_PROD: ${{ github.ref == 'refs/heads/main' }}
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
-          version: 11.20.0
+          fetch-depth: 0 # cog changelog (site:changelog) needs full git history
 
-      - uses: actions/setup-node@v4
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
         with:
-          node-version: "22"
-          cache: pnpm
-          cache-dependency-path: website/pnpm-lock.yaml
+          # Provision only the tools this deploy needs (pnpm first: the npm
+          # backend shells out to it to fetch the Netlify CLI). The build and
+          # deploy logic all live in the mise task graph.
+          install_args: "pnpm node cocogitto conda:WeasyPrint npm:netlify-cli"
 
-      # WeasyPrint (system libs + a venv), used by tools/render-pdf.py.
-      - name: Install WeasyPrint
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            libpango-1.0-0 libpangocairo-1.0-0 libpangoft2-1.0-0 \
-            libgdk-pixbuf-2.0-0 libffi-dev libjpeg-dev \
-            fonts-dejavu fonts-liberation
-          python3 -m venv /tmp/wp
-          /tmp/wp/bin/pip install --upgrade pip weasyprint
-
-      - name: Install dependencies
-        working-directory: website
-        run: pnpm install --frozen-lockfile
-
-      - name: Build site
-        working-directory: website
-        run: pnpm build
-
-      - name: Render PDFs (handbooks + per-page, parallel)
-        working-directory: website
-        run: |
-          PY=/tmp/wp/bin/python
-          export PY
-          "$PY" tools/render-pdf.py dist/print/index.html dist/sigcull-docs.pdf &
-          "$PY" tools/render-pdf.py dist/es/print/index.html dist/es/sigcull-docs.pdf &
-          find dist/print -mindepth 2 -name index.html -print0 \
-            | xargs -0 -P 4 -I {} bash -c 'f="$1"; s="${f#dist/print/}"; s="${s%/index.html}"; "$PY" tools/render-pdf.py "$f" "dist/${s}.pdf"' _ {}
-          wait
-
-      - name: Deploy to Netlify
-        run: npx --yes netlify-cli@latest deploy --dir=website/dist --prod --message "deploy ${{ github.sha }}"
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      - run: mise run site:deploy

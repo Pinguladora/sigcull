@@ -9,6 +9,13 @@ locked = false
 prefer_offline = true
 disable_default_registry = true
 disable_backends = ["asdf", "vfox", "ubi"]
+# Fetch npm-backend tools (the Netlify CLI) with pnpm, the project's package
+# manager. pnpm comes from mise.toml, so it is installed before the CLI.
+npm.package_manager = "pnpm"
+
+# CI-only tools, layered onto mise.toml's toolchain when MISE_ENV=ci.
+[tools]
+"npm:netlify-cli" = "27.4.1"
 
 [tasks."ci:git-config"]
 run = """
@@ -62,3 +69,24 @@ depends = [
   "ci:test",
   "ci:lint",
 ]
+
+# Build the site and its PDFs, then publish dist to Netlify. Netlify itself does
+# not build (see netlify.toml), because WeasyPrint cannot run in its build image,
+# so this task is the single deploy path. NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID
+# come from the environment (CI secrets); --dir is website/dist, which site:build
+# fills with the HTML and the WeasyPrint-rendered PDFs.
+[tasks."site:deploy"]
+dir = "website"
+depends = ["site:build"]
+# Publish to production only when NETLIFY_DEPLOY_PROD=true (the main branch in
+# CI). Any other branch gets a preview deploy (a unique draft URL), so the whole
+# pipeline can be exercised without touching production.
+run = '''
+msg="$(git rev-parse --short HEAD)"
+if [ "$NETLIFY_DEPLOY_PROD" = "true" ]; then
+  netlify deploy --dir=dist --prod --message "$msg"
+else
+  netlify deploy --dir=dist --message "$msg"
+fi
+'''
+description = "Build the site and PDFs, then deploy dist to Netlify (--prod when NETLIFY_DEPLOY_PROD=true)"
