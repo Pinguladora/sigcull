@@ -1,4 +1,4 @@
-FROM reg.mini.dev/go:1.26@sha256:bcf5087705ff0f533ffcfd5eec6321b1c70f62a7a6dd26c15802734ebd8c979d AS build
+FROM registry.access.redhat.com/hi/go:latest@sha256:a605c12fbeffffe1ebed9a58ca77c6d575e303be9726bbd689a45d212f0465bc AS build
 WORKDIR /src
 COPY go.mod go.sum ./
 
@@ -22,7 +22,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
     -ldflags="-s -w -buildid= -extldflags='-static'" \
     -o /out/sigcull ./cmd/sigcull
 
-FROM gcr.io/distroless/static-debian13:nonroot@sha256:f7f8f729987ad0fdf6b05eeeae94b26e6a0f613bdf46feea7fc40f7bd72953e6 AS final
+FROM registry.access.redhat.com/hi/static:latest@sha256:f4d5109b57cf7eab0a7adc566f2d78f80fa0c5ec9ccab698c9fb8eb448db6071 AS final
 COPY --from=build /out/sigcull /usr/local/bin/sigcull
 
 # config.yaml and the secret env vars are provided at run time.
