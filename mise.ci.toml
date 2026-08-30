@@ -83,10 +83,13 @@ depends = ["site:build"]
 # pipeline can be exercised without touching production.
 run = '''
 msg="$(git rev-parse --short HEAD)"
+# --no-build: deploy the dist that site:build already produced (HTML + the
+# WeasyPrint PDFs). Without it, netlify-cli runs its own Astro build, which wipes
+# dist and drops the PDFs (they come from a separate mise task, not astro build).
 if [ "$NETLIFY_DEPLOY_PROD" = "true" ]; then
-  netlify deploy --dir=dist --prod --message "$msg"
+  netlify deploy --dir=dist --no-build --prod --message "$msg"
 else
-  netlify deploy --dir=dist --message "$msg"
+  netlify deploy --dir=dist --no-build --message "$msg"
 fi
 '''
 description = "Build the site and PDFs, then deploy dist to Netlify (--prod when NETLIFY_DEPLOY_PROD=true)"
