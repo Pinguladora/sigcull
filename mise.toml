@@ -9,35 +9,22 @@ locked = false
 prefer_offline = true
 disable_default_registry = true
 disable_backends = ["asdf", "vfox", "ubi"]
-# Decide task freshness by hashing source contents, not mtimes. Hugo rewrites
-# all of public on every build and a fresh checkout resets mtimes, so mtime
-# comparison would rebuild needlessly, content hashing skips when bytes are equal.
+# Decide task freshness by hashing source contents, not mtimes. A fresh checkout
+# resets mtimes, so mtime comparison would rebuild needlessly, while content
+# hashing skips when the bytes are equal.
 task.source_freshness_hash_contents = true
 
-[env]
-HK_MISE = 1
-
-[hooks]
-# Automatically install/update hooks when tools are installed
-postinstall = "hk install --mise"
-
 [tools]
+# Tools shared by local dev and CI. Local-only tooling (linters, formatters, git
+# hooks, PDF validation) lives in mise.dev.toml, loaded via .miserc's `dev` env,
+# so CI never pulls it. go and golangci-lint stay here because both local Go work
+# and the Go release CI need them.
 cocogitto = "7.0.0"
-pinact = "4.1.0"
 go = "1.26.5"
 node = "26.7.0"
 pnpm = "11.21.0"
-oxlint = "1.77.0"        # JS/TS linter for the website test toolchain
-oxfmt = "0.63.0"         # JS/TS formatter
-yamlfmt = "0.21.0"       # YAML formatter (hk check-yaml pairs it with yamllint)
 golangci-lint = "2.12.2"
-hugo-extended = "0.165.0"
-"github:Pagefind/pagefind" = "1.5.2"
 "conda:WeasyPrint" = "69.0"
-"conda:verapdf" = "1.31.91"   # PDF/UA-1 validator
-hk = "1.55.0"
-yamllint = "1.38.0"
-"github:mongodb/kingfisher" = "1.109.0"
 
 [tasks."secret:scan"]
 run = "kingfisher scan . --no-validate --redact"

@@ -1,0 +1,22 @@
+# Local development tooling, layered on top of mise.toml when the `dev` env is
+# active. .miserc.toml sets `env = ["dev"]`, so this loads by default for local
+# work but never in CI (CI sets MISE_ENV=ci). Everything here is lint/format/hook
+# or validation tooling the build and deploy never need.
+
+[env]
+HK_MISE = 1
+
+[hooks]
+# Install/update the git hooks when tools are installed. Lives here (not in
+# mise.toml) so it does not run in CI, where hk is not installed.
+postinstall = "hk install --mise"
+
+[tools]
+hk = "1.55.0"
+pinact = "4.1.0"
+oxlint = "1.77.0"                  # JS/TS linter for the website test toolchain
+oxfmt = "0.63.0"                   # JS/TS formatter
+yamlfmt = "0.21.0"                 # YAML formatter (hk pairs it with yamllint)
+yamllint = "1.38.0"
+"github:mongodb/kingfisher" = "1.109.0"   # secret scanner (hk + secret:* tasks)
+"conda:verapdf" = "1.31.91"        # PDF/UA-1 validator (site:pdf-validate)
