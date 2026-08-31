@@ -12,7 +12,6 @@ on:
       - "mise.toml"
       - "mise.ci.toml"
       - ".miserc.toml"
-      - "netlify.toml"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
 
@@ -26,6 +25,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
+      # ci activates mise.ci.toml (netlify-cli, site:deploy) on top of mise.toml.
+      # The dev toolchain lives in mise.dev.toml, which ci does not load, so this
+      # installs only what the deploy needs.
       MISE_ENV: ci
       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
       NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
@@ -38,10 +40,5 @@ jobs:
           fetch-depth: 0 # cog changelog (site:changelog) needs full git history
 
       - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
-        with:
-          # Provision only the tools this deploy needs (pnpm first: the npm
-          # backend shells out to it to fetch the Netlify CLI). The build and
-          # deploy logic all live in the mise task graph.
-          install_args: "pnpm node cocogitto conda:WeasyPrint npm:netlify-cli"
 
       - run: mise run site:deploy
