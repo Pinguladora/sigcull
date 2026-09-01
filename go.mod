@@ -14,7 +14,7 @@ require (
 	github.com/sigstore/sigstore v1.10.9-0.20260728171319-05a1d9750eaf
 	github.com/sigstore/sigstore-go v1.3.0
 	go.yaml.in/yaml/v4 v4.0.0-rc.6
-	golang.org/x/crypto v0.54.0
+	golang.org/x/crypto v0.55.0
 )
 
 require (
@@ -190,7 +190,7 @@ require (
 	golang.org/x/sync v0.22.0 // indirect
 	golang.org/x/sys v0.47.0 // indirect
 	golang.org/x/term v0.45.0 // indirect
-	golang.org/x/text v0.40.0 // indirect
+	golang.org/x/text v0.41.0 // indirect
 	golang.org/x/time v0.15.0 // indirect
 	google.golang.org/api v0.286.0 // indirect
 	google.golang.org/genproto v0.0.0-20260406210006-6f92a3bedf2d // indirect
