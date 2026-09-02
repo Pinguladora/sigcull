@@ -26,7 +26,7 @@ cocogitto = "7.0.0"
 pinact = "4.1.1"
 go = "1.26.5"
 node = "26.7.0"
-pnpm = "11.24.0"
+pnpm = "11.25.0"
 oxlint = "1.77.0"        # JS/TS linter for the website test toolchain
 oxfmt = "0.65.0"         # JS/TS formatter
 yamlfmt = "0.21.0"       # YAML formatter (hk check-yaml pairs it with yamllint)
@@ -37,7 +37,7 @@ hugo-extended = "0.165.0"
 "conda:verapdf" = "1.31.91"   # PDF/UA-1 validator
 hk = "1.55.0"
 yamllint = "1.38.0"
-"github:mongodb/kingfisher" = "v1.112.0"
+"github:mongodb/kingfisher" = "v1.113.0"
 
 [tasks."secret:scan"]
 run = "kingfisher scan . --no-validate --redact"
