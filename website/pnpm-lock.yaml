@@ -12,11 +12,11 @@ importers:
         specifier: 4.13.0
         version: 4.13.0(playwright-core@1.62.1)
       '@guidepup/guidepup':
-        specifier: 0.33.2
-        version: 0.33.2(supports-color@7.2.0)
+        specifier: 0.34.0
+        version: 0.34.0(supports-color@7.2.0)
       '@guidepup/playwright':
         specifier: 0.19.1
-        version: 0.19.1(@guidepup/guidepup@0.33.2(supports-color@7.2.0))(@playwright/test@1.62.1)
+        version: 0.19.1(@guidepup/guidepup@0.34.0(supports-color@7.2.0))(@playwright/test@1.62.1)
       '@guidepup/virtual-screen-reader':
         specifier: 0.32.1
         version: 0.32.1
@@ -27,8 +27,8 @@ importers:
         specifier: 4.13.0
         version: 4.13.0
       html-validate:
-        specifier: 11.10.0
-        version: 11.10.0
+        specifier: 11.11.0
+        version: 11.11.0
       http-server:
         specifier: 14.1.1
         version: 14.1.1(debug@4.4.3(supports-color@7.2.0))(supports-color@7.2.0)
@@ -55,8 +55,8 @@ packages:
     resolution: {integrity: sha512-Nq8OhGWiZIZGV6hLHoyAKLLcJihP/xFeBMGJoUrxTX2psI8dCifzLhZISFb+VWS3wFMRDmCGw5R+dOySCqPLhw==}
     engines: {node: '>=6.9.0'}
 
-  '@guidepup/guidepup@0.33.2':
-    resolution: {integrity: sha512-aOoZ7Su9sNBm6hjdrgHC1TTAofU0Dz1+uo9uzWuTD7DMIOWGrbbNaFOHoFWHQr8KHw6dV3UwuHIjhKjQlYpxFQ==}
+  '@guidepup/guidepup@0.34.0':
+    resolution: {integrity: sha512-nMLsvHXXNZg+/9okHvSOuMEKMGxs0U8o/sT1pKERh37ETB16X4geomIHjXJ/HRTfpue9gs9yRTLK5azHZV92iw==}
 
   '@guidepup/playwright@0.19.1':
     resolution: {integrity: sha512-d0FMH6LFbRbV71l2NGzv2gqV3vQbHDfTVctXsKm6d1ZahpS2/Ozq1WCEoZ7QTAR6iuNzwy03tZfvyijGH+zUDw==}
@@ -284,8 +284,8 @@ packages:
     resolution: {integrity: sha512-oWv4T4yJ52iKrufjnyZPkrN0CH3QnrUqdB6In1g5Fe1mia8GmF36gnfNySxoZtxD5+NmYw1EElVXiBk93UeskA==}
     engines: {node: '>=12'}
 
-  html-validate@11.10.0:
-    resolution: {integrity: sha512-IqQ8yZl4jzjXrx+M1XXPmpN4DkvKfHHM8pIL3Z3UUpFeckc4YUSrrWEDJ94i19txKtR9NK+g2UZEKeE0TnbNjQ==}
+  html-validate@11.11.0:
+    resolution: {integrity: sha512-ta6WyTPBO6/qj9OdlwW4p9rcArFWaMV4eiiYzfrrypnfSQP+VOHorkJBem1/UBhuahNB4G/YItX9Fkk8eK3rQg==}
     engines: {node: ^22.22.0 || >= 24.8.0}
     hasBin: true
     peerDependencies:
@@ -477,16 +477,16 @@ snapshots:
 
   '@babel/runtime@7.29.7': {}
 
-  '@guidepup/guidepup@0.33.2(supports-color@7.2.0)':
+  '@guidepup/guidepup@0.34.0(supports-color@7.2.0)':
     dependencies:
       debug: 4.4.3(supports-color@7.2.0)
       plist: 4.0.0
     transitivePeerDependencies:
       - supports-color
 
-  '@guidepup/playwright@0.19.1(@guidepup/guidepup@0.33.2(supports-color@7.2.0))(@playwright/test@1.62.1)':
+  '@guidepup/playwright@0.19.1(@guidepup/guidepup@0.34.0(supports-color@7.2.0))(@playwright/test@1.62.1)':
     dependencies:
-      '@guidepup/guidepup': 0.33.2(supports-color@7.2.0)
+      '@guidepup/guidepup': 0.34.0(supports-color@7.2.0)
       '@playwright/test': 1.62.1
 
   '@guidepup/virtual-screen-reader@0.32.1':
@@ -673,7 +673,7 @@ snapshots:
     dependencies:
       whatwg-encoding: 2.0.0
 
-  html-validate@11.10.0:
+  html-validate@11.11.0:
     dependencies:
       '@html-validate/stylish': 6.0.0
       '@sidvind/better-ajv-errors': 7.0.0(ajv@8.20.0)
