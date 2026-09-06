@@ -3111,83 +3111,83 @@ url = "https://github.com/Pagefind/pagefind/releases/download/v1.5.2/pagefind-v1
 url_api = "https://api.github.com/repos/Pagefind/pagefind/releases/assets/394716028"
 
 [[tools."github:mongodb/kingfisher"]]
-version = "1.109.0"
+version = "v1.113.0"
 backend = "github:mongodb/kingfisher"
 
 [tools."github:mongodb/kingfisher"."platforms.linux-arm64"]
-checksum = "sha256:13f98f14cebce1fa96fd987f2123739f8b2cb2aa3d28ce5f6346fe0c88742e8a"
-url = "https://github.com/mongodb/kingfisher/releases/download/v1.109.0/kingfisher-linux-arm64.tgz"
-url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/488852134"
+checksum = "sha256:4d686a2da145234fb1a8b56429da44bb33fc49e4ab4c28a48e705197ae183f16"
+url = "https://github.com/mongodb/kingfisher/releases/download/v1.113.0/kingfisher-linux-arm64.tgz"
+url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/510959049"
 provenance = "github-attestations"
 
 [tools."github:mongodb/kingfisher"."platforms.linux-arm64-musl"]
-checksum = "sha256:13f98f14cebce1fa96fd987f2123739f8b2cb2aa3d28ce5f6346fe0c88742e8a"
-url = "https://github.com/mongodb/kingfisher/releases/download/v1.109.0/kingfisher-linux-arm64.tgz"
-url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/488852134"
+checksum = "sha256:4d686a2da145234fb1a8b56429da44bb33fc49e4ab4c28a48e705197ae183f16"
+url = "https://github.com/mongodb/kingfisher/releases/download/v1.113.0/kingfisher-linux-arm64.tgz"
+url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/510959049"
 provenance = "github-attestations"
 
 [tools."github:mongodb/kingfisher"."platforms.linux-x64"]
-checksum = "sha256:17ab7567c24e10907d1d911152cacf3b0b27ae6041a9e72507ff991bbca8ac95"
-url = "https://github.com/mongodb/kingfisher/releases/download/v1.109.0/kingfisher-linux-x64.tgz"
-url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/488852072"
+checksum = "sha256:798affdc312ca1651623856c0511a884baf399aecdf61cebad4ef73548b6f411"
+url = "https://github.com/mongodb/kingfisher/releases/download/v1.113.0/kingfisher-linux-x64.tgz"
+url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/510959009"
 provenance = "github-attestations"
 provenance_verified = true
 
 [tools."github:mongodb/kingfisher"."platforms.linux-x64-musl"]
-checksum = "sha256:17ab7567c24e10907d1d911152cacf3b0b27ae6041a9e72507ff991bbca8ac95"
-url = "https://github.com/mongodb/kingfisher/releases/download/v1.109.0/kingfisher-linux-x64.tgz"
-url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/488852072"
+checksum = "sha256:798affdc312ca1651623856c0511a884baf399aecdf61cebad4ef73548b6f411"
+url = "https://github.com/mongodb/kingfisher/releases/download/v1.113.0/kingfisher-linux-x64.tgz"
+url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/510959009"
 provenance = "github-attestations"
 
 [tools."github:mongodb/kingfisher"."platforms.macos-arm64"]
-checksum = "sha256:1c7ebc42ce42789234053e399c85d27d1c2fffa6e03e1935d8fbfe28f76b2d32"
-url = "https://github.com/mongodb/kingfisher/releases/download/v1.109.0/kingfisher-darwin-arm64.tgz"
-url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/488852181"
+checksum = "sha256:ee26a4050dfc9d9da223517ea539199a8d97528b7831660ed944c8723807c8ed"
+url = "https://github.com/mongodb/kingfisher/releases/download/v1.113.0/kingfisher-darwin-arm64.tgz"
+url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/510959130"
 provenance = "github-attestations"
 
 [tools."github:mongodb/kingfisher"."platforms.macos-x64"]
-checksum = "sha256:1bd7db43acd8999929c1553d2cf8285869aaae579df01dc05bc7c59b60b54358"
-url = "https://github.com/mongodb/kingfisher/releases/download/v1.109.0/kingfisher-darwin-x64.tgz"
-url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/488852170"
+checksum = "sha256:f627b3ab9fce06b9289808ef4fbe0afcc4887bf2aa42ba6b78f5c5a8cb1891cd"
+url = "https://github.com/mongodb/kingfisher/releases/download/v1.113.0/kingfisher-darwin-x64.tgz"
+url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/510959114"
 provenance = "github-attestations"
 
 [tools."github:mongodb/kingfisher"."platforms.windows-x64"]
-checksum = "sha256:2970475db865eb7fd995792b2d2670316fee27a7cd3b02c289b13125aad5a214"
-url = "https://github.com/mongodb/kingfisher/releases/download/v1.109.0/kingfisher-windows-x64.zip"
-url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/488852040"
+checksum = "sha256:790f318e680bd0b730052f3fb13f55560e265c11ce456e890578243459cf2f61"
+url = "https://github.com/mongodb/kingfisher/releases/download/v1.113.0/kingfisher-windows-x64.zip"
+url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/510958967"
 provenance = "github-attestations"
 
 [[tools.go]]
-version = "1.26.5"
+version = "1.26.6"
 backend = "core:go"
 
 [tools.go."platforms.linux-arm64"]
-checksum = "sha256:fe4789e92b1f33358680864bbe8704289e7bb5fc207d80623c308935bd696d49"
-url = "https://dl.google.com/go/go1.26.5.linux-arm64.tar.gz"
+checksum = "sha256:d0507e9e9d7fe012aae570108cbd76c15de879e17130ab8cb90d4d7445cb1f2e"
+url = "https://dl.google.com/go/go1.26.6.linux-arm64.tar.gz"
 
 [tools.go."platforms.linux-arm64-musl"]
-checksum = "sha256:fe4789e92b1f33358680864bbe8704289e7bb5fc207d80623c308935bd696d49"
-url = "https://dl.google.com/go/go1.26.5.linux-arm64.tar.gz"
+checksum = "sha256:d0507e9e9d7fe012aae570108cbd76c15de879e17130ab8cb90d4d7445cb1f2e"
+url = "https://dl.google.com/go/go1.26.6.linux-arm64.tar.gz"
 
 [tools.go."platforms.linux-x64"]
-checksum = "sha256:5c2c3b16caefa1d968a94c1daca04a7ca301a496d9b086e17ad77bb81393f053"
-url = "https://dl.google.com/go/go1.26.5.linux-amd64.tar.gz"
+checksum = "sha256:708effb774be8237570d0add163225abbdfaf4fca28b2611df167beba4feef89"
+url = "https://dl.google.com/go/go1.26.6.linux-amd64.tar.gz"
 
 [tools.go."platforms.linux-x64-musl"]
-checksum = "sha256:5c2c3b16caefa1d968a94c1daca04a7ca301a496d9b086e17ad77bb81393f053"
-url = "https://dl.google.com/go/go1.26.5.linux-amd64.tar.gz"
+checksum = "sha256:708effb774be8237570d0add163225abbdfaf4fca28b2611df167beba4feef89"
+url = "https://dl.google.com/go/go1.26.6.linux-amd64.tar.gz"
 
 [tools.go."platforms.macos-arm64"]
-checksum = "sha256:efb87ff28af9a188d0536ef5d42e63dd52ba8263cd7344a993cc48dd11dedb6a"
-url = "https://dl.google.com/go/go1.26.5.darwin-arm64.tar.gz"
+checksum = "sha256:2dc95ce4675829f2df0e86b28bcef3283635902062a5f0580ca659bf570f3204"
+url = "https://dl.google.com/go/go1.26.6.darwin-arm64.tar.gz"
 
 [tools.go."platforms.macos-x64"]
-checksum = "sha256:6231d8d3b8f5552ec6cbf6d685bdd5482e1e703214b120e89b3bf0d7bf1ef725"
-url = "https://dl.google.com/go/go1.26.5.darwin-amd64.tar.gz"
+checksum = "sha256:08b65a63f244115121ced6c3b55ad38d801a7442acad5c949a17aad84ae6d684"
+url = "https://dl.google.com/go/go1.26.6.darwin-amd64.tar.gz"
 
 [tools.go."platforms.windows-x64"]
-checksum = "sha256:97e6b2a833b6d89f9ff17d25419ac0a7e3b482a044e9ab18cdef834bd834fd38"
-url = "https://dl.google.com/go/go1.26.5.windows-amd64.zip"
+checksum = "sha256:5b6c5b556525810463b5c897b50dc7a82d6a3dc0bfaf55d990a7e9f31d6b2318"
+url = "https://dl.google.com/go/go1.26.6.windows-amd64.zip"
 
 [[tools.golangci-lint]]
 version = "2.12.2"
@@ -3423,7 +3423,7 @@ version = "4.0.0"
 backend = "npm:sort-package-json"
 
 [[tools.oxfmt]]
-version = "0.63.0"
+version = "0.65.0"
 backend = "npm:oxfmt"
 
 [[tools.oxlint]]
@@ -3466,49 +3466,49 @@ url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.77.0/oxlint-
 url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/500014900"
 
 [[tools.pinact]]
-version = "4.1.0"
+version = "4.1.1"
 backend = "aqua:suzuki-shunsuke/pinact"
 
 [tools.pinact."platforms.linux-arm64"]
-checksum = "sha256:2807669cd423a3572bc12ea4a5eab80cd2f30d5644710e0c97a08a075fdadf10"
-url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.1.0/pinact_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/suzuki-shunsuke/pinact/releases/assets/442249970"
+checksum = "sha256:dd1f29908319ed3e59f9fe6b39196efbb76936357f3bd741cd759a96306ae8d8"
+url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.1.1/pinact_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/suzuki-shunsuke/pinact/releases/assets/494702261"
 provenance = "github-attestations"
 
 [tools.pinact."platforms.linux-arm64-musl"]
-checksum = "sha256:2807669cd423a3572bc12ea4a5eab80cd2f30d5644710e0c97a08a075fdadf10"
-url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.1.0/pinact_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/suzuki-shunsuke/pinact/releases/assets/442249970"
+checksum = "sha256:dd1f29908319ed3e59f9fe6b39196efbb76936357f3bd741cd759a96306ae8d8"
+url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.1.1/pinact_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/suzuki-shunsuke/pinact/releases/assets/494702261"
 provenance = "github-attestations"
 
 [tools.pinact."platforms.linux-x64"]
-checksum = "sha256:8fcbf1b3e95551c82fd995535e3c1defa70e23299ce36eb3afd6c98778de6ca0"
-url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.1.0/pinact_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/suzuki-shunsuke/pinact/releases/assets/442249966"
+checksum = "sha256:d1cffebe5704b74e2e5f8a864efb9f7e54768972dc686188c008033fb1797841"
+url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.1.1/pinact_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/suzuki-shunsuke/pinact/releases/assets/494702259"
 provenance = "github-attestations"
 
 [tools.pinact."platforms.linux-x64-musl"]
-checksum = "sha256:8fcbf1b3e95551c82fd995535e3c1defa70e23299ce36eb3afd6c98778de6ca0"
-url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.1.0/pinact_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/suzuki-shunsuke/pinact/releases/assets/442249966"
+checksum = "sha256:d1cffebe5704b74e2e5f8a864efb9f7e54768972dc686188c008033fb1797841"
+url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.1.1/pinact_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/suzuki-shunsuke/pinact/releases/assets/494702259"
 provenance = "github-attestations"
 
 [tools.pinact."platforms.macos-arm64"]
-checksum = "sha256:b670063ccfa178cdb5c7107d14e3de896f10b93edcc7dbe38b840cb99f2536db"
-url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.1.0/pinact_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/suzuki-shunsuke/pinact/releases/assets/442249963"
+checksum = "sha256:c13998c9f0dd09d8973700938aa5f6ac52a1db4e94d4f578d8cc976cda478614"
+url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.1.1/pinact_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/suzuki-shunsuke/pinact/releases/assets/494702257"
 provenance = "github-attestations"
 
 [tools.pinact."platforms.macos-x64"]
-checksum = "sha256:6338d0220a28093c2c6916a047eea8a17f4ba03a8562010dc8e942b2a2884364"
-url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.1.0/pinact_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/suzuki-shunsuke/pinact/releases/assets/442249961"
+checksum = "sha256:513678fdb0bb59b2742dd06d28f0ee851496a83ba939954009aa6be53f5aec9c"
+url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.1.1/pinact_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/suzuki-shunsuke/pinact/releases/assets/494702250"
 provenance = "github-attestations"
 
 [tools.pinact."platforms.windows-x64"]
-checksum = "sha256:de04e9612a50cb7b0263d162400305ea02fc85410c38887d1be7446a7c5d5dc6"
-url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.1.0/pinact_windows_amd64.zip"
-url_api = "https://api.github.com/repos/suzuki-shunsuke/pinact/releases/assets/442249974"
+checksum = "sha256:88db480a3f8833d7233b482a72c97308df558ebceb0d3214775889239901f6a9"
+url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.1.1/pinact_windows_amd64.zip"
+url_api = "https://api.github.com/repos/suzuki-shunsuke/pinact/releases/assets/494702288"
 provenance = "github-attestations"
 
 [[tools."pipx:Kozea/WeasyPrint"]]
@@ -3516,43 +3516,43 @@ version = "v69.0"
 backend = "pipx:Kozea/WeasyPrint"
 
 [[tools.pnpm]]
-version = "11.21.0"
+version = "11.25.0"
 backend = "aqua:pnpm/pnpm"
 
 [tools.pnpm."platforms.linux-arm64"]
-checksum = "sha256:64eb219b008f7a4c176d81fbce919c20b0b7e093e815cbb669d46e681451f43b"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.21.0/pnpm-linux-arm64.tar.gz"
-url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/507585528"
+checksum = "sha256:6d62b433b7a77b77e814dfaca8032bae57bb79c1a5ad50442e688c4f7fed3c8a"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.25.0/pnpm-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/535298943"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.linux-arm64-musl"]
-checksum = "sha256:43587a1f3d26ee009c640378ef377cac3531990579acf0f35646531b7832831d"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.21.0/pnpm-linux-arm64-musl.tar.gz"
-url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/507585511"
+checksum = "sha256:d826eaa243bb7b9c7bc21df3fae9ade147c3f0b6f035fa9fa92eef5196d1762e"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.25.0/pnpm-linux-arm64-musl.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/535298947"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.linux-x64"]
-checksum = "sha256:aadc489ce4473c2af0fec06a5c19e113b5793d404eac49853c8153bf4b0d8263"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.21.0/pnpm-linux-x64.tar.gz"
-url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/507585503"
+checksum = "sha256:11caeed8b581d460638f836f10f6ead19cbf08d774a5b8e502628b20ebf3ac43"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.25.0/pnpm-linux-x64.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/535298945"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.linux-x64-musl"]
-checksum = "sha256:8cad0a4d20318c0445d992630ace51edc0853fd259573f50ee5d0216dce9b420"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.21.0/pnpm-linux-x64-musl.tar.gz"
-url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/507585524"
+checksum = "sha256:2a25fd5614c89d3e8e7c8cabfe9f5f2aba3c4f997fb69e6934ee257dd8753ca5"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.25.0/pnpm-linux-x64-musl.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/535298949"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.macos-arm64"]
-checksum = "sha256:860a96978a79ca5132bdc247375f94150a3c98edbecbee36e9f8e0c9e2f7f056"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.21.0/pnpm-darwin-arm64.tar.gz"
-url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/507585526"
+checksum = "sha256:cdcf7130ed2e7aa324c7c76ab597de66db0529b6b1e0db9e489bde538fdc0d04"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.25.0/pnpm-darwin-arm64.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/535298948"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.windows-x64"]
-checksum = "sha256:6643043caa3b01c65c431039926a2af954326d5cefbdb4da7baceceb17f5051f"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.21.0/pnpm-win32-x64.zip"
-url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/507585516"
+checksum = "sha256:2d0203af85fc6fbb40f786a2671f175e9119a7c6dfcc4f30b1fa17e0f072c301"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.25.0/pnpm-win32-x64.zip"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/535298950"
 provenance = "github-attestations"
 
 [[tools.prek]]

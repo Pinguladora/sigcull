@@ -51,6 +51,11 @@ type Verifier interface {
 const (
 	ReasonUnsigned     = "no valid Sigstore signature (unsigned or cryptographically invalid)"
 	ReasonParseFailure = "signature verified but the signer identity could not be read (failing closed)"
+	// ReasonNoTransparencyProof is returned when the CMS signature is valid but
+	// carries no embedded Rekor inclusion proof. Verification is strictly offline,
+	// so the online Rekor search is never used and such a signature cannot be
+	// confirmed as logged. Sign with gitsign's offline Rekor mode to embed it.
+	ReasonNoTransparencyProof = "signature has no embedded Rekor transparency proof (sign with gitsign rekorMode=offline)"
 )
 
 // NotAllowlistedReason builds the reason for a valid signature whose identity is
