@@ -1,0 +1,9 @@
+# Allow the build scripts Astro needs (native image + bundler binaries). pnpm 11
+# blocks dependency build scripts by default; these two are required and trusted:
+# esbuild is Astro/Vite's bundler binary, sharp is the image optimizer.
+allowBuilds:
+  esbuild: true
+  sharp: true
+onlyBuiltDependencies:
+  - esbuild
+  - sharp

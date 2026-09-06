@@ -1,0 +1,35 @@
+---
+title: sigcull
+description: Una GitHub App que verifica la firma de cada commit y la convierte en una comprobación obligatoria para poder hacer merge, con cualquier método de firma, en cualquier instancia de Sigstore, válida para repositorios privados.
+template: splash
+hero:
+  tagline: Verifica la firma de cada commit. Cualquier método de firma, cualquier instancia de Sigstore, repositorios privados incluidos.
+  actions:
+    - text: Empezar
+      link: /es/getting-started/
+      icon: right-arrow
+    - text: Ver en GitHub
+      link: https://github.com/Pinguladora/sigcull
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+  <Card title="Cualquier método de firma" icon="approve-check">
+    gitsign *keyless*, GPG, SSH, X.509 o verificado por GitHub. Un *commit* pasa si
+    cualquier autoridad configurada lo acepta.
+  </Card>
+  <Card title="Cualquier instancia de Sigstore" icon="setting">
+    La instancia *public good*, una con tu propio TUF o un Fulcio y Rekor privados.
+  </Card>
+  <Card title="Repositorios privados" icon="seti:lock">
+    Funciona en repositorios privados e informa mediante un *Check Run* estándar que
+    puedes exigir en una regla.
+  </Card>
+  <Card title="Fallo seguro" icon="error">
+    Cualquier ambigüedad es un fallo. La verificación se ejecuta íntegramente en
+    memoria, sin almacenar nada en disco.
+  </Card>
+</CardGrid>

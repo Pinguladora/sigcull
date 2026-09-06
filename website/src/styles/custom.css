@@ -1,0 +1,241 @@
+/*
+  sigcull theme on top of Starlight.
+
+  1. Accent ramp tuned to the brand teal (#0a5b63), so links, active nav, and
+     buttons carry the identity in both light and dark.
+  2. The Antique Denim field: a fixed, full-viewport CSS gradient (base glow,
+     particles, vignette, soft-light noise) behind the whole layout, the site
+     signature. Content sits directly on it (transparent panels, no boxes).
+  3. The logo is a single dark-navy wordmark, so it is flattened to white in dark
+     mode, which keeps every shape and the wax-seal check cutout intact.
+*/
+
+:root {
+  /* Brand teal accent ramp (light theme). */
+  --sl-color-accent-low: #cce8ea;
+  --sl-color-accent: #0a5b63;
+  --sl-color-accent-high: #063c41;
+}
+:root[data-theme='dark'] {
+  --sl-color-accent-low: #052b2f;
+  --sl-color-accent: #4fd1c5;
+  --sl-color-accent-high: #b8efe9;
+}
+
+/*
+  Antique Denim field. A denim gradient (base) with a soft top glow, a faint
+  particle field (reads as polar snow), and a vignette, plus a soft-light noise
+  overlay. Everything is plain CSS gradients on two fixed pseudo-elements: no
+  filter: blur(), no per-layer mix-blend, no will-change, so it composites once
+  and stays cheap on budget devices. Content sits directly on the field
+  (transparent panels, no boxed columns); the palette is held within one
+  lightness range per theme so text keeps contrast across the whole field.
+*/
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    /* soft glow, top-center */
+    radial-gradient(ellipse 100% 60% at 50% -6%, rgba(150, 180, 220, 0.14), transparent 62%),
+    /* base denim: vertical, light at the top settling into a soft denim, so the
+       focus is centered across the width with no left/right skew */
+    linear-gradient(180deg, #f5f8fb 0%, #e4ebf4 30%, #d3deed 64%, #e6ecf4 100%);
+}
+:root[data-theme='dark'] body::before {
+  background:
+    /* particle field (polar snow), scattered evenly */
+    radial-gradient(circle at 76% 89%, rgba(255, 255, 255, 0.18) 0, transparent 2px),
+    radial-gradient(circle at 67% 66%, rgba(212, 220, 226, 0.30) 0, transparent 1px),
+    radial-gradient(circle at 65% 76%, rgba(212, 220, 226, 0.16) 0, transparent 2px),
+    radial-gradient(circle at 77% 33%, rgba(212, 220, 226, 0.20) 0, transparent 3px),
+    radial-gradient(circle at 27% 31%, rgba(255, 255, 255, 0.28) 0, transparent 2px),
+    radial-gradient(circle at 19% 71%, rgba(212, 220, 226, 0.24) 0, transparent 1px),
+    radial-gradient(circle at 16% 42%, rgba(212, 220, 226, 0.28) 0, transparent 2px),
+    radial-gradient(circle at 59% 50%, rgba(255, 255, 255, 0.12) 0, transparent 2px),
+    radial-gradient(circle at 30% 52%, rgba(212, 220, 226, 0.28) 0, transparent 2px),
+    radial-gradient(circle at 88% 53%, rgba(212, 220, 226, 0.24) 0, transparent 3px),
+    radial-gradient(circle at 86% 14%, rgba(255, 255, 255, 0.18) 0, transparent 3px),
+    radial-gradient(circle at 33% 88%, rgba(212, 220, 226, 0.28) 0, transparent 2px),
+    radial-gradient(circle at 61% 26%, rgba(255, 255, 255, 0.26) 0, transparent 2px),
+    radial-gradient(circle at 34% 35%, rgba(212, 220, 226, 0.26) 0, transparent 2px),
+    radial-gradient(circle at 11% 69%, rgba(255, 255, 255, 0.20) 0, transparent 3px),
+    /* soft glow, top-center */
+    radial-gradient(ellipse 100% 60% at 50% -6%, rgba(120, 160, 210, 0.16), transparent 62%),
+    /* base denim: vertical, light at the top settling into near-black. Uniform
+       across the width, so the focus reads centered rather than pulled right. */
+    linear-gradient(180deg, #33506e 0%, #294056 24%, #1c2836 50%, #121824 76%, #070a0f 100%);
+}
+
+/* Soft-light noise overlay: one tiny tiled SVG-noise texture, rasterized once
+   and repeated, no blur, so the budget-device cost is negligible. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: url('/grain.svg');
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  mix-blend-mode: soft-light;
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+/* The main content and the right-hand TOC sit directly on the denim field
+   (transparent, no boxed columns). The top bar and left sidebar keep the theme's
+   default solid surface, like stock Starlight, so that chrome stays crisp and
+   easy to read. Code blocks, asides, and cards keep their own backgrounds. */
+.page,
+.main-frame .main-pane > .sl-container,
+.right-sidebar {
+  background: transparent;
+}
+header.header,
+.sidebar-pane {
+  background: var(--sl-color-bg);
+}
+
+/*
+  The site uses a text wordmark, not a logo image (like Aspire, Lychee, and other
+  Starlight sites). The splash hero title is the brand name, so it is set in the
+  brand font to match the header wordmark. Only the hero h1 (splash template),
+  never doc-page titles, which keep the readable heading font.
+*/
+.hero h1 {
+  font-family: var(--font-brand), sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/*
+  Page-actions under the doc title: a primary "Copy Markdown" button and an
+  "Open in…" dropdown (a native <details> disclosure). Solid, bordered controls so
+  they read as buttons, not tags, over the denim field.
+*/
+.page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.9rem 0 0;
+}
+.pa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.2;
+  border-radius: 8px;
+  border: 1px solid var(--sl-color-gray-5);
+  background: var(--sl-color-bg);
+  color: var(--sl-color-text);
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease, color 0.12s ease;
+}
+.pa-btn:hover {
+  border-color: var(--sl-color-text-accent);
+  color: var(--sl-color-text-accent);
+}
+.pa-btn:focus-visible {
+  outline: 2px solid var(--sl-color-text-accent);
+  outline-offset: 2px;
+}
+
+/* Primary: filled accent so it clearly reads as the main action. --sl-color-bg
+   as the text color inverts with the theme, keeping contrast on the accent fill. */
+.pa-primary {
+  background: var(--sl-color-text-accent);
+  border-color: var(--sl-color-text-accent);
+  color: var(--sl-color-bg);
+  font-weight: 600;
+}
+.pa-primary:hover {
+  color: var(--sl-color-bg);
+  filter: brightness(1.05);
+}
+
+/* "Open in…" dropdown (native <details>/<summary>). */
+.pa-menu-wrap {
+  position: relative;
+}
+.pa-summary {
+  list-style: none;
+}
+.pa-summary::-webkit-details-marker {
+  display: none;
+}
+.pa-caret {
+  font-size: 0.8em;
+  transition: transform 0.15s ease;
+}
+.pa-menu-wrap[open] .pa-caret {
+  transform: rotate(180deg);
+}
+.pa-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  min-width: 14rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0.35rem;
+  background: var(--sl-color-bg);
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 10px;
+  box-shadow: 0 14px 34px -14px rgba(0, 0, 0, 0.5);
+}
+.pa-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--sl-color-text);
+  text-decoration: none;
+}
+.pa-item:hover {
+  background: var(--sl-color-gray-6);
+  color: var(--sl-color-text-accent);
+}
+.pa-item:focus-visible {
+  outline: 2px solid var(--sl-color-text-accent);
+  outline-offset: -2px;
+  color: var(--sl-color-text-accent);
+}
+.pa-ext {
+  font-size: 0.9em;
+  opacity: 0.7;
+}
+
+/*
+  Respect prefers-reduced-motion. Reduce, not remove: collapse transitions and
+  animations to ~instant (0.01ms, never 0, so JS awaiting transitionend still
+  fires) and disable smooth scrolling. Anything with a "spinner" class keeps
+  running because it conveys loading state (WCAG 4.1.3).
+*/
+@media (prefers-reduced-motion: reduce) {
+  *:not([class*='spinner']),
+  *:not([class*='spinner'])::before,
+  *:not([class*='spinner'])::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print: drop the aura, grain, and page-actions so window.print output is clean. */
+@media print {
+  body::before,
+  body::after,
+  .page-actions {
+    display: none;
+  }
+}

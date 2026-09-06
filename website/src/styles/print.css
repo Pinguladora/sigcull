@@ -1,0 +1,180 @@
+/*
+  Print stylesheet for the WeasyPrint PDF/UA-1 + PDF/A-3a build. Semantic and
+  simple so the tagged PDF has a clean structure tree: ordered headings, page
+  breaks between documents, and no site chrome. Inlined into the print route.
+*/
+@page {
+  size: A4;
+  margin: 20mm 18mm;
+  @bottom-center {
+    content: counter(page) ' / ' counter(pages);
+    font-size: 9pt;
+    color: #555;
+  }
+}
+
+html {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 11pt;
+  line-height: 1.5;
+  color: #111;
+}
+body {
+  margin: 0;
+}
+
+h1 {
+  font-size: 20pt;
+  margin: 0 0 0.4em;
+  break-after: avoid;
+}
+h2 {
+  font-size: 15pt;
+  margin: 1.2em 0 0.3em;
+  break-after: avoid;
+}
+h3 {
+  font-size: 12.5pt;
+  margin: 1em 0 0.3em;
+  break-after: avoid;
+}
+p,
+li {
+  orphans: 3;
+  widows: 3;
+}
+ul,
+ol {
+  padding-left: 1.4em;
+}
+
+a {
+  color: #0a5b63;
+  /* Underline links, never color alone, so link text is distinguishable without
+     relying on color (WCAG 1.4.1 Use of Color). */
+  text-decoration: underline;
+}
+
+pre,
+code,
+.ec-flat {
+  font-family: 'DejaVu Sans Mono', 'Courier New', monospace;
+  font-size: 9.5pt;
+}
+pre,
+.ec-flat {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 8pt;
+  white-space: pre-wrap;
+  break-inside: avoid;
+}
+:not(pre) > code {
+  background: #f5f5f5;
+  padding: 0 2pt;
+}
+
+/*
+  Flattened code block (see tools/render-pdf.py). Rendered as a <p> so the PDF
+  tags it as a real /P structural element instead of the /NonStruct a <pre> gets,
+  with white-space: pre-wrap restoring the preformatted layout.
+*/
+.ec-flat {
+  margin: 1em 0;
+}
+
+/*
+  Expressive Code wraps every fenced block in a <figure class="frame"> with a copy
+  button and an aria-live region, and colors each token through CSS custom
+  properties that only resolve once Expressive Code's stylesheet is present. That
+  stylesheet is linked with a site-absolute /_astro/… URL WeasyPrint cannot fetch
+  from disk, so in the PDF the tokens fall back to the body ink (fine) but the copy
+  <button> renders as a bare gray UA control (the stray gray block) and enters the
+  tag tree with no accessible name. Drop the web-only chrome, remove the figure's
+  default 40px indent, and pin code to one high-contrast ink so no residual token
+  color can fall below the WCAG AA ratio.
+*/
+.expressive-code .copy,
+.expressive-code figcaption:empty {
+  display: none;
+}
+.expressive-code figure.frame {
+  margin: 0;
+}
+.expressive-code pre code,
+.expressive-code pre code span {
+  color: #1a1a1a !important;
+  background: transparent !important;
+}
+
+blockquote {
+  border-left: 3pt solid #888;
+  margin: 1em 0;
+  padding: 0.2em 0 0.2em 10pt;
+  color: #333;
+  break-inside: avoid;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  break-inside: avoid;
+}
+th,
+td {
+  /* #767676 clears the 3:1 non-text contrast ratio (WCAG 1.4.11) against white,
+     so the gridlines that delineate cells stay perceivable. */
+  border: 1px solid #767676;
+  padding: 4pt 6pt;
+  text-align: left;
+}
+
+img {
+  max-width: 100%;
+}
+
+/*
+  Drop Starlight's per-heading anchor links: an icon-only <a> that is a web copy
+  affordance, useless in a PDF and untaggable for PDF/UA (icon with no text
+  fails ISO 14289-1 7.18.5). display:none keeps them out of WeasyPrint's tag tree.
+*/
+.sl-anchor-link {
+  display: none;
+}
+
+/* On-screen action for the print view; hidden in the actual print output. */
+.print-cta {
+  position: fixed;
+  top: 12pt;
+  right: 12pt;
+  padding: 6pt 12pt;
+  border: 1px solid #0a5b63;
+  border-radius: 6pt;
+  background: #0a5b63;
+  color: #fff;
+  font-family: system-ui, sans-serif;
+  font-size: 10pt;
+  cursor: pointer;
+}
+@media print {
+  .print-cta {
+    display: none;
+  }
+}
+
+.print-cover {
+  text-align: center;
+  break-after: page;
+  padding-top: 30mm;
+}
+.print-cover h1 {
+  font-size: 30pt;
+}
+.print-cover p {
+  color: #444;
+  font-size: 13pt;
+}
+
+.print-doc {
+  break-before: page;
+}

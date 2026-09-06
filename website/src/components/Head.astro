@@ -1,0 +1,9 @@
+---
+// Extends Starlight's Head to emit the self-hosted brand font's @font-face and
+// preload links (Astro Fonts API). Everything else stays Starlight default.
+import Default from '@astrojs/starlight/components/Head.astro';
+import { Font } from 'astro:assets';
+---
+
+<Default><slot /></Default>
+<Font cssVariable="--font-brand" preload />

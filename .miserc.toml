@@ -1,1 +1,1 @@
-env = ["ci", "development"]
+env = ["dev"]

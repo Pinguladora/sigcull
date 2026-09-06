@@ -1,9 +1,0 @@
-{{- /* Load Pagefind only on the search page, never on content pages. */ -}}
-{{- if .Params.pagefindSearch -}}
-  <script src="/pagefind/pagefind-ui.js"></script>
-  <script>
-    window.addEventListener("DOMContentLoaded", function () {
-      new PagefindUI({ element: "#pagefind-search", showSubResults: false, showImages: false });
-    });
-  </script>
-{{- end -}}

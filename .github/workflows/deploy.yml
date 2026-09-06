@@ -1,0 +1,44 @@
+name: Deploy site
+
+# The site and its PDFs are built and deployed entirely through mise tasks
+# (see mise.ci.toml), so the pipeline is portable across CI systems: any runner
+# installs mise and runs `mise run site:deploy`. CI-only tooling (the Netlify
+# CLI) lives in mise.ci.toml, activated by MISE_ENV=ci.
+on:
+  push:
+    branches: [main, experiment/starlight]
+    paths:
+      - "website/**"
+      - "mise.toml"
+      - "mise.ci.toml"
+      - ".miserc.toml"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+# Per-ref so a new push cancels only the in-flight deploy for the same branch,
+# not deploys of other branches.
+concurrency:
+  group: deploy-site-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      # ci activates mise.ci.toml (netlify-cli, site:deploy) on top of mise.toml.
+      # The dev toolchain lives in mise.dev.toml, which ci does not load, so this
+      # installs only what the deploy needs.
+      MISE_ENV: ci
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      # Production deploy only from main; every other branch gets a preview
+      # deploy (a draft URL) so the pipeline can be tested without touching prod.
+      NETLIFY_DEPLOY_PROD: ${{ github.ref == 'refs/heads/main' }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0 # cog changelog (site:changelog) needs full git history
+
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+
+      - run: mise run site:deploy

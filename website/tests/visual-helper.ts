@@ -19,7 +19,15 @@ export async function visualCheck(
   const baseline = path.join(BASELINE, `${name}.png`);
   const diff = path.join(DIFF, `${name}.png`);
 
-  await page.screenshot({ path: actual, fullPage: true, animations: "disabled" });
+  await page.screenshot({
+    path: actual,
+    fullPage: true,
+    animations: "disabled",
+    // The TOC's current-heading highlight is set by a client IntersectionObserver,
+    // so which item is active is timing-dependent across runs. Mask the right-hand
+    // TOC out of the diff to keep visual regression stable.
+    mask: [page.locator(".right-sidebar")],
+  });
 
   if (!fs.existsSync(baseline)) {
     fs.copyFileSync(actual, baseline);

@@ -1,0 +1,57 @@
+---
+/*
+  Standalone print document (Spanish): the Spanish doc pages plus the ADRs
+  (English, which have no Spanish translation) concatenated with no site chrome.
+  WeasyPrint renders this to a PDF that is both PDF/A-3a and PDF/UA-1.
+*/
+import { getCollection, render } from 'astro:content';
+import printCss from '../../styles/print.css?raw';
+
+const ORDER = [
+  'getting-started',
+  'authorities',
+  'configuration',
+  'trust-sources',
+  'deployment',
+  'security-model',
+];
+
+const all = await getCollection('docs');
+const main = ORDER.map((slug) => all.find((e) => e.id === `es/${slug}`)).filter(Boolean);
+const adr = all
+  .filter((e) => /^adr\/\d/.test(e.id))
+  .sort((a, b) => a.id.localeCompare(b.id));
+const docs = await Promise.all(
+  [...main, ...adr].map(async (e) => ({
+    title: e.data.title,
+    Content: (await render(e)).Content,
+  })),
+);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Documentación de sigcull</title>
+    <style is:inline set:html={printCss}></style>
+  </head>
+  <body>
+    <button type="button" class="print-cta" onclick="window.print()">Guardar como PDF</button>
+    <section class="print-cover">
+      <h1>sigcull</h1>
+      <p>
+        Una GitHub App que verifica la firma de cada commit y la convierte en
+        una comprobación obligatoria para poder fusionar.
+      </p>
+    </section>
+    {
+      docs.map(({ title, Content }) => (
+        <article class="print-doc">
+          <h1>{title}</h1>
+          <Content />
+        </article>
+      ))
+    }
+  </body>
+</html>
