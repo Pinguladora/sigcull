@@ -15,7 +15,7 @@ npm.package_manager = "pnpm"
 
 # CI-only tools, layered onto mise.toml's toolchain when MISE_ENV=ci.
 [tools]
-"npm:netlify-cli" = "27.4.1"
+"npm:netlify-cli" = "27.4.3"
 
 [tasks."ci:git-config"]
 run = """

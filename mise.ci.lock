@@ -3,6 +3,6 @@
 lockfile_version = 1
 
 [[tools."npm:netlify-cli"]]
-version = "27.4.1"
+version = "27.4.3"
 backend = "npm:netlify-cli"
-specifiers = ["27.4.1"]
+specifiers = ["27.4.3"]
