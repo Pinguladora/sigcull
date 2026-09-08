@@ -24,7 +24,7 @@
     "@guidepup/guidepup": "0.34.0",
     "@guidepup/playwright": "0.19.1",
     "@guidepup/virtual-screen-reader": "0.32.1",
-    "@playwright/test": "1.62.1",
+    "@playwright/test": "1.63.0",
     "axe-core": "4.13.0",
     "html-validate": "11.13.0",
     "http-server": "14.1.1",
