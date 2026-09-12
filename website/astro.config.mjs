@@ -101,6 +101,7 @@ export default defineConfig({
         { slug: "security-model" },
         { label: "Decision records", items: [{ autogenerate: { directory: "adr" } }] },
         { slug: "changelog" },
+        { slug: "accessibility" },
       ],
       plugins: [starlightLlmsTxt()],
     }),
