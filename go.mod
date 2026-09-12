@@ -1,6 +1,6 @@
 module github.com/Pinguladora/sigcull
 
-go 1.26.6
+go 1.27.0
 
 require (
 	github.com/ProtonMail/go-crypto v1.4.1
