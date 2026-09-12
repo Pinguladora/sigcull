@@ -22,7 +22,7 @@ task.source_freshness_hash_contents = true
 cocogitto = "7.0.0"
 go = "1.27.0"
 node = "26.7.0"
-pnpm = "11.26.0"
+pnpm = "12.4.0"
 golangci-lint = "2.13.1"
 "conda:WeasyPrint" = "69.0"
 
