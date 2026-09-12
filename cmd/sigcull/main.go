@@ -21,7 +21,7 @@ import (
 	"github.com/Pinguladora/sigcull/internal/ghapp"
 	"github.com/Pinguladora/sigcull/internal/gitfetch"
 	"github.com/Pinguladora/sigcull/internal/verify"
-	"github.com/google/go-github/v89/github"
+	"github.com/google/go-github/v90/github"
 )
 
 const (

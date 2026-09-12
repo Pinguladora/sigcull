@@ -11,7 +11,7 @@ import (
 
 	"github.com/Pinguladora/sigcull/internal/verify"
 	"github.com/ProtonMail/go-crypto/openpgp"
-	"github.com/google/go-github/v89/github"
+	"github.com/google/go-github/v90/github"
 )
 
 // newEntity generates a throwaway OpenPGP key for signing test payloads.

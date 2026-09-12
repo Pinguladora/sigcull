@@ -9,7 +9,7 @@ import (
 
 	"github.com/Pinguladora/sigcull/internal/verify"
 	"github.com/ProtonMail/go-crypto/openpgp"
-	"github.com/google/go-github/v89/github"
+	"github.com/google/go-github/v90/github"
 )
 
 // webFlowKey is GitHub's web-flow commit-signing public key, vendored from
