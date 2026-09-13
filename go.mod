@@ -14,7 +14,7 @@ require (
 	github.com/sigstore/sigstore v1.10.9-0.20260728171319-05a1d9750eaf
 	github.com/sigstore/sigstore-go v1.3.0
 	go.yaml.in/yaml/v4 v4.0.0-rc.6
-	golang.org/x/crypto v0.55.0
+	golang.org/x/crypto v0.56.0
 )
 
 require (
