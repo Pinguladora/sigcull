@@ -12,7 +12,7 @@ HK_MISE = 1
 postinstall = "hk install --mise"
 
 [tools]
-hk = "1.56.1"
+hk = "1.58.1"
 pinact = "4.1.1"
 oxlint = "1.77.0"                  # JS/TS linter for the website test toolchain
 oxfmt = "0.67.0"                   # JS/TS formatter
