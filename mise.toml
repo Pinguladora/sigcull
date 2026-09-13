@@ -20,10 +20,10 @@ task.source_freshness_hash_contents = true
 # so CI never pulls it. go and golangci-lint stay here because both local Go work
 # and the Go release CI need them.
 cocogitto = "7.0.0"
-go = "1.27.0"
-node = "26.7.0"
-pnpm = "12.4.0"
-golangci-lint = "2.13.1"
+go = "1.27.1"
+node = "26.8.1"
+pnpm = "12.4.1"
+golangci-lint = "2.13.2"
 "conda:WeasyPrint" = "69.0"
 
 [tasks."secret:scan"]
