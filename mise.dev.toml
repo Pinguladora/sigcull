@@ -18,5 +18,5 @@ oxlint = "1.77.0"                  # JS/TS linter for the website test toolchain
 oxfmt = "0.67.0"                   # JS/TS formatter
 yamlfmt = "0.21.0"                 # YAML formatter (hk pairs it with yamllint)
 yamllint = "1.38.0"
-"github:mongodb/kingfisher" = "v1.113.0"   # secret scanner (hk + secret:* tasks)
+"github:mongodb/kingfisher" = "v2.2.0"   # secret scanner (hk + secret:* tasks)
 "conda:verapdf" = "1.31.91"        # PDF/UA-1 validator (site:pdf-validate)
