@@ -794,9 +794,9 @@ url = "https://github.com/jdx/hk/releases/download/v2.0.1/hk-x86_64-pc-windows-m
 signer = "sigstore-oidc:https://github.com/jdx/hk/.github/workflows/release.yml"
 
 [[tools.oxfmt]]
-version = "0.67.0"
+version = "0.68.0"
 backend = "npm:oxfmt"
-specifiers = ["0.67.0"]
+specifiers = ["0.68.0"]
 
 [[tools.oxlint]]
 version = "1.82.0"
