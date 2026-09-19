@@ -48,13 +48,14 @@ jobs:
         id: check
         run: |
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-          RANGE="HEAD"
-          if [ -n "$LAST_TAG" ]; then RANGE="${LAST_TAG}..HEAD"; fi
-          if git log "$RANGE" -i --grep='\[security\]' --format='%H' | grep -q .; then
-            echo "Security patch found since ${LAST_TAG:-the start}."
+          if [ -z "$LAST_TAG" ]; then
+            echo "No tags yet; the first release is cut manually. Skipping."
+            echo "release=false" >> "$GITHUB_OUTPUT"
+          elif git log "${LAST_TAG}..HEAD" -i --grep='\[security\]' --format='%H' | grep -q .; then
+            echo "Security patch found since ${LAST_TAG}."
             echo "release=true" >> "$GITHUB_OUTPUT"
           else
-            echo "No security patch since ${LAST_TAG:-the start}."
+            echo "No security patch since ${LAST_TAG}."
             echo "release=false" >> "$GITHUB_OUTPUT"
           fi
 
@@ -65,6 +66,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
+      contents: read # checkout
       id-token: write # octo-sts OIDC exchange
     steps:
       - name: Harden Runner

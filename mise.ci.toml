@@ -133,12 +133,14 @@ run = '''
 #!/usr/bin/env bash
 set -euo pipefail
 LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-RANGE="HEAD"
-if [ -n "$LAST_TAG" ]; then RANGE="${LAST_TAG}..HEAD"; fi
-if git log "$RANGE" -i --grep='\[security\]' --format='%H' | grep -q .; then
-  echo "Security patch found since ${LAST_TAG:-the start}; a release is warranted."
+if [ -z "$LAST_TAG" ]; then
+  echo "No tags yet; the first release is cut manually. Skipping."
+  exit 1
+fi
+if git log "${LAST_TAG}..HEAD" -i --grep='\[security\]' --format='%H' | grep -q .; then
+  echo "Security patch found since ${LAST_TAG}; a release is warranted."
 else
-  echo "No security patch since ${LAST_TAG:-the start}; skipping release."
+  echo "No security patch since ${LAST_TAG}; skipping release."
   exit 1
 fi
 '''
