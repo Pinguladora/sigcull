@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
+      contents: read # checkout
       id-token: write # publish results to the OpenSSF Scorecard API
       security-events: write # upload SARIF to the Security tab
     steps:
