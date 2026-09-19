@@ -16,15 +16,24 @@ task.source_freshness_hash_contents = true
 
 [tools]
 # Tools shared by local dev and CI. Local-only tooling (linters, formatters, git
-# hooks, PDF validation) lives in mise.dev.toml, loaded via .miserc's `dev` env,
-# so CI never pulls it. go and golangci-lint stay here because both local Go work
-# and the Go release CI need them.
+# hooks, PDF validation) lives in mise.dev.toml; the site's WeasyPrint lives in
+# mise.site.toml. Both load via .miserc's `dev`/`site` envs but never in the Go,
+# lint, or release CI jobs (MISE_ENV=ci). A tool sits here when both local work
+# and CI need it: go/golangci-lint (Go work + release CI), goreleaser/syft (local
+# snapshot + release CI), actionlint/zizmor (local hk hooks + the lint:gha CI job).
 cocogitto = "7.0.0"
 go = "1.27.1"
 node = "26.8.2"
 pnpm = "12.4.1"
-golangci-lint = "2.13.2"
-"conda:WeasyPrint" = "69.0"
+# Built from source so it compiles against the pinned go, which lets it lint
+# go1.27 modules. The prebuilt golangci-lint releases are still built with go1.26
+# and panic on a `go 1.27` go.mod ("package requires newer Go version"). Switch
+# back to the plain `golangci-lint` tool once upstream ships a go1.27 build.
+"go:github.com/golangci/golangci-lint/v2/cmd/golangci-lint" = "v2.13.2"
+goreleaser = "2.18.2"
+syft = "1.52.0"
+actionlint = "1.7.12"
+zizmor = "1.30.1"
 
 [tasks."secret:scan"]
 run = "kingfisher scan . --no-validate --redact"
@@ -54,10 +63,31 @@ run = "go test ./..."
 description = "Run all Go tests"
 alias = "t"
 
+[tasks.snapshot]
+run = "goreleaser release --snapshot --clean --skip=sign,sbom,ko"
+description = "Local snapshot build with GoReleaser (skips signing, SBOM, and ko images)"
+alias = "snap"
+
+[tasks."snapshot:container"]
+run = "goreleaser release --snapshot --clean --skip=sign,sbom"
+description = "Local snapshot build including the ko container images (skips signing, SBOM)"
+alias = "snapc"
+
 [tasks."lint:go"]
 run = "golangci-lint run ./... --fix"
 description = "Lint Go code with autofix"
 sources = ["**/*.go"]
+
+[tasks."lint:gha"]
+# actionlint catches workflow syntax and expression errors; zizmor runs the
+# security static analysis. zizmor runs offline without a token (local) and does
+# the online audits when GITHUB_TOKEN is set (the lint-gha CI job passes it).
+run = [
+  "actionlint -color -shellcheck=",
+  "zizmor --config .github/zizmor.yml .github/workflows",
+]
+description = "Lint and security-audit the GitHub Actions workflows (actionlint + zizmor)"
+sources = [".github/workflows/**", ".github/zizmor.yml"]
 
 [tasks.fmt]
 run = "gofmt -w ."

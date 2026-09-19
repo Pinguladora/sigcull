@@ -16,6 +16,7 @@ npm.package_manager = "pnpm"
 # CI-only tools, layered onto mise.toml's toolchain when MISE_ENV=ci.
 [tools]
 "npm:netlify-cli" = "27.5.2"
+"aqua:slsa-verifier" = "2.7.1"     # verifies SLSA provenance in the release verify job
 
 [tasks."ci:git-config"]
 run = """
@@ -70,11 +71,11 @@ depends = [
   "ci:lint",
 ]
 
-# Build the site and its PDFs, then publish dist to Netlify. Netlify itself does
-# not build (see netlify.toml), because WeasyPrint cannot run in its build image,
-# so this task is the single deploy path. NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID
-# come from the environment (CI secrets); --dir is website/dist, which site:build
-# fills with the HTML and the WeasyPrint-rendered PDFs.
+# Build the site and its PDFs, then publish dist to Netlify. Netlify's own build
+# is disabled in the site dashboard (Stop builds), because WeasyPrint cannot run
+# in its build image, so this task is the single deploy path. NETLIFY_AUTH_TOKEN
+# and NETLIFY_SITE_ID come from the environment (CI secrets); --dir is
+# website/dist, which site:build fills with the HTML and the WeasyPrint PDFs.
 [tasks."site:deploy"]
 dir = "website"
 depends = ["site:build"]
@@ -93,3 +94,79 @@ else
 fi
 '''
 description = "Build the site and PDFs, then deploy dist to Netlify (--prod when NETLIFY_DEPLOY_PROD=true)"
+
+# ---------------------------------------------------------------------------
+# Release (GoReleaser) and post-release verification. goreleaser and syft come
+# from mise.toml; cosign is installed by the release/verify workflows.
+# ---------------------------------------------------------------------------
+
+[tasks.release]
+run = "goreleaser release --clean"
+description = "Build, sign, and publish a release with GoReleaser"
+
+[tasks."release:extract-image"]
+description = "Extract a container image reference from the goreleaser artifacts"
+run = '''
+jq -r '
+  [.[] | select(.type=="Docker Manifest") | select(.extra.ID=="{{arg(i=0, name="ko_id")}}")]
+  | first | .name | split("@") | first | split(":") | first
+' dist/artifacts.json
+'''
+
+[tasks."release:extract-digest"]
+description = "Extract a container image digest from the goreleaser artifacts"
+run = '''
+jq -r '
+  [.[] | select(.type=="Docker Manifest") | select(.extra.ID=="{{arg(i=0, name="ko_id")}}")]
+  | first | .extra.Digest
+' dist/artifacts.json
+'''
+
+[tasks."release:security-check"]
+description = "Exit 0 when a commit since the last tag carries a [security] marker"
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+RANGE="HEAD"
+if [ -n "$LAST_TAG" ]; then RANGE="${LAST_TAG}..HEAD"; fi
+if git log "$RANGE" -i --grep='\[security\]' --format='%H' | grep -q .; then
+  echo "Security patch found since ${LAST_TAG:-the start}; a release is warranted."
+else
+  echo "No security patch since ${LAST_TAG:-the start}; skipping release."
+  exit 1
+fi
+'''
+
+[tasks."verify:binary"]
+description = "Verify a binary archive (checksum, cosign signature, SLSA provenance)"
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+ARCHIVE="{{arg(i=0, name="archive")}}"
+sha256sum --check --ignore-missing checksums.txt
+cosign verify-blob \
+  --bundle checksums.txt.sigstore.json \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --certificate-identity-regexp "^https://github.com/Pinguladora/sigcull/" \
+  checksums.txt
+slsa-verifier verify-artifact \
+  --provenance-path provenance-binaries.intoto.jsonl \
+  --source-uri github.com/Pinguladora/sigcull \
+  "${ARCHIVE}"
+'''
+
+[tasks."verify:image"]
+description = "Verify a container image (cosign signature and SLSA provenance)"
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+IMAGE_REF="{{arg(i=0, name="image_ref")}}"
+cosign verify \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --certificate-identity-regexp "^https://github.com/Pinguladora/sigcull/" \
+  "${IMAGE_REF}"
+slsa-verifier verify-image \
+  --source-uri github.com/Pinguladora/sigcull \
+  "${IMAGE_REF}"
+'''
