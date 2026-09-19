@@ -1,5 +1,7 @@
 # sigcull
 
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/Pinguladora/sigcull/badge)](https://scorecard.dev/viewer/?uri=github.com/Pinguladora/sigcull)
+
 A GitHub App that verifies [gitsign](https://github.com/sigstore/gitsign)
 (Sigstore keyless) commit signatures and reports the result as a **Check Run**,
 so it can be made a required status check through Repository Rulesets or branch
