@@ -56,7 +56,12 @@ run = "go test -race -count=1 ./..."
 description = "Run Go tests with the race detector"
 
 [tasks."ci:lint"]
-run = "golangci-lint run ./... --timeout=5m"
+# Depends on ci:build so the Go build cache is warm before golangci-lint loads
+# packages. On a cold cache the full dependency tree (cosign pulls in the cloud
+# KMS SDKs, envoy, and OpenTelemetry) is slow to type-check, which timed the
+# linter out when every ci:check task compiled it in parallel.
+depends = ["ci:build"]
+run = "golangci-lint run ./... --timeout=10m"
 description = "Lint Go code in CI"
 
 # Aggregate gate for CI.
