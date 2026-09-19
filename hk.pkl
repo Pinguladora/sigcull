@@ -1,5 +1,5 @@
-amends "package://github.com/jdx/hk/releases/download/v1.55.0/hk@1.58.1#/Config.pkl"
-import "package://github.com/jdx/hk/releases/download/v1.55.0/hk@1.58.1#/Builtins.pkl"
+amends "package://github.com/jdx/hk/releases/download/v2.0.1/hk@2.0.1#/Config.pkl"
+import "package://github.com/jdx/hk/releases/download/v2.0.1/hk@2.0.1#/Builtins.pkl"
 
 // Fast checks and fixers, run on every commit.
 local pre_commit = new Mapping<String, Step> {
@@ -17,8 +17,9 @@ local pre_commit = new Mapping<String, Step> {
     ["trailing-whitespace"] = (Builtins.trailing_whitespace) { exclude = Regex(#"^\.hk/"#) }
     ["kingfisher"] = (Builtins.kingfisher) { exclude = Regex(#"^\.hk/"#) }
     // Restrict oxfmt to JS/TS. Its default glob also matches html/css/md/yaml/
-    // toml/json, which would reformat Hugo templates (breaking `{{ }}`) and
-    // hand-tuned content/config. oxlint's glob is already JS-family only.
+    // toml/json, so unrestricted it would reformat the site's Astro components
+    // and content and the hand-tuned config (yaml has its own yamlfmt step).
+    // oxlint's glob is already JS-family only.
     ["oxfmt"] = (Builtins.oxfmt) {
         glob = new Listing<String> {
             "**/*.js"; "**/*.mjs"; "**/*.cjs"
@@ -34,7 +35,13 @@ local pre_commit = new Mapping<String, Step> {
 local pre_push = new Mapping<String, Step> {
     ["golangci-lint-config-verify"] { check = "golangci-lint config verify" }
     ["golangci-lint"] = (Builtins.golangci_lint) { exclude = Regex(#"^\.hk/"#) }
-    ["pin-github-actions"] { check = "pinact run" }
+    // GitHub Actions hardening: pin actions to a SHA, lint the workflows, and run
+    // zizmor's security static analysis. zizmor is pinned to offline mode here
+    // (ZIZMOR_OFFLINE) so the pre-push hook stays fast and needs no token; the
+    // lint-gha workflow runs the online audits in CI.
+    ["pinact"] = Builtins.pinact
+    ["actionlint"] = Builtins.actionlint
+    ["zizmor"] = (Builtins.zizmor) { env { ["ZIZMOR_OFFLINE"] = "true" } }
     ["go-mod-download"] { check = "go mod download" }
 }
 

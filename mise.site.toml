@@ -1,0 +1,7 @@
+# Website build tooling, layered on top of mise.toml. Loaded locally via
+# .miserc's `site` env, and in the deploy job via MISE_ENV=ci,site. The Go, lint,
+# and release CI jobs run with MISE_ENV=ci (no site), so they never pull this
+# heavy conda toolchain.
+
+[tools]
+"conda:WeasyPrint" = "69.0"        # renders the docs PDFs (site:pdf)

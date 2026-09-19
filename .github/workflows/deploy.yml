@@ -15,6 +15,8 @@ on:
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
 
+permissions: {}
+
 # Per-ref so a new push cancels only the in-flight deploy for the same branch,
 # not deploys of other branches.
 concurrency:
@@ -24,11 +26,14 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # checkout; the deploy authenticates to Netlify with a token
     env:
-      # ci activates mise.ci.toml (netlify-cli, site:deploy) on top of mise.toml.
-      # The dev toolchain lives in mise.dev.toml, which ci does not load, so this
-      # installs only what the deploy needs.
-      MISE_ENV: ci
+      # ci activates mise.ci.toml (netlify-cli, site:deploy) and site activates
+      # mise.site.toml (WeasyPrint, for the PDFs), both on top of mise.toml. The
+      # dev toolchain lives in mise.dev.toml, which neither loads, so this installs
+      # only what the deploy needs.
+      MISE_ENV: ci,site
       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
       NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       # Production deploy only from main; every other branch gets a preview
@@ -37,6 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           fetch-depth: 0 # cog changelog (site:changelog) needs full git history
 
       - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0

@@ -1,0 +1,54 @@
+name: CI
+
+# The Go gate for every pull request and every push to main. It runs the same
+# checks as the local hk hooks (format, tidy, build, vet, test, lint) through
+# mise, so contributors who do not have the hooks installed still get them
+# enforced. Everything runs via `mise run ci:check` (see mise.ci.toml), keeping
+# the pipeline portable across CI systems.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Go check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read # checkout
+    env:
+      # ci activates mise.ci.toml (the ci:* tasks) on top of mise.toml.
+      MISE_ENV: ci
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: block
+          disable-telemetry: "true"
+          disable-sudo: "true"
+          allowed-endpoints: >
+            github.com:443 api.github.com:443 codeload.github.com:443 objects.githubusercontent.com:443 release-assets.githubusercontent.com:443 raw.githubusercontent.com:443 mise.jdx.dev:443 proxy.golang.org:443 sum.golang.org:443 storage.googleapis.com:443 nodejs.org:443 registry.npmjs.org:443 *.actions.githubusercontent.com:443 *.blob.core.windows.net:443
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up mise
+        uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+      - name: Cache the Go build and module cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: go-${{ runner.os }}-${{ hashFiles('go.sum') }}
+          restore-keys: |
+            go-${{ runner.os }}-
+      - name: Run CI checks
+        run: mise run ci:check

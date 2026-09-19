@@ -1,0 +1,111 @@
+name: Auto release
+
+# Cuts a release automatically when a security patch lands on main. Renovate marks
+# vulnerability fixes with a [security] marker in the commit message (via the
+# shared Pinguteca/renovate-config), so a merge that carries one triggers a bump.
+# Everything else is released manually with `cog bump`.
+#
+# The cheap detect job runs on every push and only queries git, so ordinary merges
+# stay fast; the release job (which installs the toolchain and bumps) runs only
+# when a security patch is present.
+on:
+  push:
+    branches: [main]
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  detect:
+    name: Detect security patch
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read # checkout
+    outputs:
+      release: ${{ steps.check.outputs.release }}
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: block
+          disable-telemetry: "true"
+          disable-sudo: "true"
+          allowed-endpoints: >
+            github.com:443 api.github.com:443 codeload.github.com:443
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          filter: "blob:none"
+      # Mirrors `mise run release:security-check`, inlined so ordinary merges do
+      # not pay for a toolchain install.
+      - name: Check for a security patch since the last tag
+        id: check
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          RANGE="HEAD"
+          if [ -n "$LAST_TAG" ]; then RANGE="${LAST_TAG}..HEAD"; fi
+          if git log "$RANGE" -i --grep='\[security\]' --format='%H' | grep -q .; then
+            echo "Security patch found since ${LAST_TAG:-the start}."
+            echo "release=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No security patch since ${LAST_TAG:-the start}."
+            echo "release=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  release:
+    name: Bump and tag
+    needs: detect
+    if: needs.detect.outputs.release == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      id-token: write # octo-sts OIDC exchange
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: block
+          disable-telemetry: "true"
+          disable-sudo: "true"
+          allowed-endpoints: >
+            github.com:443 api.github.com:443 codeload.github.com:443 objects.githubusercontent.com:443 release-assets.githubusercontent.com:443 raw.githubusercontent.com:443 mise.jdx.dev:443 proxy.golang.org:443 sum.golang.org:443 storage.googleapis.com:443 nodejs.org:443 registry.npmjs.org:443 token.actions.githubusercontent.com:443
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          filter: "blob:none"
+      - name: Obtain release token
+        id: octo-sts
+        uses: octo-sts/action@f603d3be9d8dd9871a265776e625a27b00effe05 # v1.1.1
+        with:
+          scope: Pinguladora/sigcull
+          identity: auto-release
+      - name: Configure git for the tag push
+        env:
+          GH_TOKEN: ${{ steps.octo-sts.outputs.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+      - name: Set up mise
+        uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+        with:
+          install: true
+          cache: false
+        env:
+          GITHUB_TOKEN: ${{ steps.octo-sts.outputs.token }}
+          MISE_ENV: ci
+      # cog bump tags the security commit and pushes the tag (cog.toml post_bump_hook).
+      # The app-token push triggers release.yml; the tag-only bump leaves main
+      # unchanged, so this workflow does not re-trigger.
+      - name: Bump and push the tag
+        run: mise run bump
+        env:
+          GITHUB_TOKEN: ${{ steps.octo-sts.outputs.token }}

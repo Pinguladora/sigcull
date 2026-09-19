@@ -2,8 +2,12 @@ tag_prefix = "v"
 from_latest_tag = true
 ignore_merge_commits = true
 ignore_fixup_commits = true
-disable_changelog = false
-disable_bump_commit = false
+# Tag-only releases: cog bump just creates and pushes the tag, no bump commit and
+# no committed CHANGELOG.md. GoReleaser generates the release notes from git, and
+# the website changelog is generated at build time with `cog changelog`. This
+# keeps main and the tags in sync (no divergence, no branch push).
+disable_changelog = true
+disable_bump_commit = true
 generate_mono_repository_global_tag = true
 generate_mono_repository_package_tags = true
 monorepo_version_separator = "/"

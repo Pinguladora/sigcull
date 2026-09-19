@@ -1,0 +1,53 @@
+name: Lint GitHub Actions
+
+# Security-audit and lint the workflows themselves with zizmor and actionlint,
+# run through mise (`mise run lint:gha`) so the pipeline stays portable. The same
+# tools run locally via the hk pre-push hook, so this is the enforcement path for
+# contributors who do not have the hooks installed.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/zizmor.yml"
+      - ".github/workflows/**.yml"
+      - ".github/workflows/**.yaml"
+  pull_request:
+    paths:
+      - ".github/zizmor.yml"
+      - ".github/workflows/**.yml"
+      - ".github/workflows/**.yaml"
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Analyze actions
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read # checkout; zizmor uses the token for its online audits
+    env:
+      MISE_ENV: ci
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: block
+          disable-telemetry: "true"
+          disable-sudo: "true"
+          allowed-endpoints: >
+            github.com:443 api.github.com:443 codeload.github.com:443 objects.githubusercontent.com:443 release-assets.githubusercontent.com:443 raw.githubusercontent.com:443 mise.jdx.dev:443 proxy.golang.org:443 sum.golang.org:443 storage.googleapis.com:443 nodejs.org:443 registry.npmjs.org:443
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up mise
+        uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+      - name: Lint workflows
+        run: mise run lint:gha
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
