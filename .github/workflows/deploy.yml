@@ -6,12 +6,13 @@ name: Deploy site
 # CLI) lives in mise.ci.toml, activated by MISE_ENV=ci.
 on:
   push:
-    branches: [main, experiment/starlight]
+    branches: [main]
+    # Only redeploy when the site's content, config, or dependencies change (all
+    # under website/), or when this workflow itself changes. A toolchain bump in
+    # mise.* does not change the published output, so it does not redeploy; the
+    # next content change picks up the new toolchain.
     paths:
       - "website/**"
-      - "mise.toml"
-      - "mise.ci.toml"
-      - ".miserc.toml"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
 
