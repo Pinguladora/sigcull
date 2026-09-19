@@ -1,0 +1,6 @@
+issuer: https://token.actions.githubusercontent.com
+subject_pattern: "repo:Pinguladora/sigcull:ref:refs/heads/main"
+claim_pattern:
+  workflow_ref: "Pinguladora/sigcull/\\.github/workflows/auto-release\\.yml@refs/heads/main"
+permissions:
+  contents: write
