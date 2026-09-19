@@ -1,0 +1,11 @@
+# zizmor configuration for the GitHub Actions security audit.
+# https://docs.zizmor.sh/configuration/
+rules:
+  unpinned-uses:
+    config:
+      # Every action must be pinned to a full commit SHA, except the SLSA generator
+      # reusable workflows: they must be referenced by a semver tag, because
+      # slsa-verifier validates that tag and hash-pinning breaks the generator.
+      policies:
+        "slsa-framework/slsa-github-generator/*": ref-pin
+        "*": hash-pin
