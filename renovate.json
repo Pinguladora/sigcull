@@ -5,11 +5,12 @@
       "customType": "regex",
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "jdx/hk",
-      "description": "Track the hk Pkl package version pinned in hk.pkl's amends/import URLs",
+      "description": "Track the hk Pkl package version pinned in hk.pkl's amends/import URLs, both the download-path tag and the hk@ package version, so they stay in sync",
       "managerFilePatterns": [
         "/^hk\\.pkl$/"
       ],
       "matchStrings": [
+        "releases/download/v(?<currentValue>\\d+\\.\\d+\\.\\d+)/hk@",
         "hk@(?<currentValue>\\d+\\.\\d+\\.\\d+)#"
       ]
     }

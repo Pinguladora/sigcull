@@ -1,0 +1,17 @@
+version: 3
+files:
+  - pattern: .github/workflows/*.yml
+  - pattern: .github/workflows/*.yaml
+  - pattern: .github/actions/*/action.yml
+  - pattern: .github/actions/*/action.yaml
+
+ignore_actions:
+  # slsa-framework/slsa-github-generator does not support SHA pinning; it requires
+  # a refs/tags/vX.Y.Z ref (validated by slsa-verifier).
+  # https://github.com/slsa-framework/slsa-github-generator/issues/722
+  - name: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml
+    ref: .*
+  - name: slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml
+    ref: .*
+
+separator: " # "
