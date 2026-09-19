@@ -35,11 +35,12 @@ local pre_push = new Mapping<String, Step> {
     ["golangci-lint-config-verify"] { check = "golangci-lint config verify" }
     ["golangci-lint"] = (Builtins.golangci_lint) { exclude = Regex(#"^\.hk/"#) }
     // GitHub Actions hardening: pin actions to a SHA, lint the workflows, and run
-    // zizmor's security static analysis. zizmor runs offline here (no token), so it
-    // reports the offline audits; the lint-gha workflow runs the online audits in CI.
+    // zizmor's security static analysis. zizmor is pinned to offline mode here
+    // (ZIZMOR_OFFLINE) so the pre-push hook stays fast and needs no token; the
+    // lint-gha workflow runs the online audits in CI.
     ["pinact"] = Builtins.pinact
     ["actionlint"] = Builtins.actionlint
-    ["zizmor"] = Builtins.zizmor
+    ["zizmor"] = (Builtins.zizmor) { env { ["ZIZMOR_OFFLINE"] = "true" } }
     ["go-mod-download"] { check = "go mod download" }
 }
 
