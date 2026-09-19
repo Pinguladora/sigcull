@@ -1,0 +1,264 @@
+version: 2
+
+project_name: sigcull
+
+before:
+  hooks:
+    - go mod download # Ensures dependencies are fetched before build starts
+
+builds:
+  - id: production
+    main: ./cmd/sigcull
+    binary: sigcull
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath # Removes local system paths
+      - -buildvcs=false # Removes dependency on the local .git state
+    ldflags:
+      - -s -w # Strips debug info
+      - -buildid= # Zeroes out the build ID for hash parity
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.CommitDate}} # Use CommitDate, NOT current time
+      - -extldflags="-static"
+    mod_timestamp: "{{ .CommitTimestamp }}"
+    targets:
+      # AMD64 tiers
+      - linux_amd64_v3 # Baseline: AVX2, BMI2 (Haswell+ 2013)
+      - linux_amd64_v4 # Performance: AVX-512 (Ice Lake+)
+      - windows_amd64_v3
+      - windows_amd64_v4
+      - darwin_amd64_v3
+      - darwin_amd64_v4
+      # ARM64 tiers
+      - linux_arm64_v8.0 # Baseline: RPi 3/4/5, Jetson Nano, most IoT SBCs
+      - linux_arm64_v9.0 # Performance: Cortex-X2+, Neoverse V2+
+      - darwin_arm64_v8.0
+      - darwin_arm64_v9.0
+    # only runs on actual tags/releases
+    skip: "{{ .IsSnapshot }}"
+
+  - id: production-fips
+    main: ./cmd/sigcull
+    binary: sigcull-fips
+    env:
+      - CGO_ENABLED=0
+      - GOFIPS140=latest # Go native FIPS 140-3 module; deterministic under the pinned toolchain
+    flags:
+      - -trimpath # Removes local system paths
+      - -buildvcs=false # Removes dependency on the local .git state
+    ldflags:
+      - -s -w # Strips debug info
+      - -buildid= # Zeroes out the build ID for hash parity
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.CommitDate}} # Use CommitDate, NOT current time
+      - -extldflags="-static"
+    mod_timestamp: "{{ .CommitTimestamp }}"
+    targets:
+      # AMD64 tiers
+      - linux_amd64_v3
+      - linux_amd64_v4
+      - windows_amd64_v3
+      - windows_amd64_v4
+      - darwin_amd64_v3
+      - darwin_amd64_v4
+      # ARM64 tiers
+      - linux_arm64_v8.0
+      - linux_arm64_v9.0
+      - darwin_arm64_v8.0
+      - darwin_arm64_v9.0
+    skip: "{{ .IsSnapshot }}"
+
+  - id: dev
+    main: ./cmd/sigcull
+    binary: sigcull
+    env:
+      - CGO_ENABLED=0
+    gcflags:
+      - all=-N -l # Disable optimizations and inlining for better debugging
+    ldflags:
+      - -X main.version={{.Version}}-dev
+      - -extldflags="-static"
+    targets:
+      - linux_amd64_v3
+      - linux_amd64_v4
+      - windows_amd64_v3
+      - windows_amd64_v4
+      - darwin_amd64_v3
+      - darwin_amd64_v4
+      - linux_arm64_v8.0
+      - linux_arm64_v9.0
+      - darwin_arm64_v8.0
+      - darwin_arm64_v9.0
+    # only runs on snapshot builds
+    skip: "{{ not .IsSnapshot }}"
+
+  - id: dev-fips
+    main: ./cmd/sigcull
+    binary: sigcull-fips
+    env:
+      - CGO_ENABLED=0
+      - GOFIPS140=latest
+    gcflags:
+      - all=-N -l # Disable optimizations and inlining for better debugging
+    ldflags:
+      - -X main.version={{.Version}}-dev
+      - -extldflags="-static"
+    targets:
+      - linux_amd64_v3
+      - linux_amd64_v4
+      - windows_amd64_v3
+      - windows_amd64_v4
+      - darwin_amd64_v3
+      - darwin_amd64_v4
+      - linux_arm64_v8.0
+      - linux_arm64_v9.0
+      - darwin_arm64_v8.0
+      - darwin_arm64_v9.0
+    skip: "{{ not .IsSnapshot }}"
+
+report_sizes: true
+
+gomod:
+  proxy: true # Verifiable builds: fetch modules from the proxy
+  mod: readonly # Prevent accidental go.mod/go.sum changes during build
+
+kos:
+  # Production performance tier for container/cluster workloads.
+  - id: sigcull-image
+    build: production
+    base_image: registry.access.redhat.com/hi/static:latest@sha256:f4d5109b57cf7eab0a7adc566f2d78f80fa0c5ec9ccab698c9fb8eb448db6071
+    bare: true
+    repositories:
+      - ghcr.io/pinguladora/sigcull
+    user: "65532:65532"
+    tags:
+      - latest
+      - "{{.Tag}}"
+    platforms:
+      - linux/amd64
+      - linux/arm64
+    sbom: spdx
+    creation_time: "{{.CommitTimestamp}}"
+    ko_data_creation_time: "{{.CommitTimestamp}}"
+
+  # FIPS compliance for container/cluster workloads.
+  - id: sigcull-image-fips
+    build: production-fips
+    base_image: registry.access.redhat.com/hi/static:latest@sha256:f4d5109b57cf7eab0a7adc566f2d78f80fa0c5ec9ccab698c9fb8eb448db6071
+    bare: true
+    repositories:
+      - ghcr.io/pinguladora/sigcull-fips
+    user: "65532:65532"
+    tags:
+      - "{{.Tag}}"
+    platforms:
+      - linux/amd64
+      - linux/arm64
+    sbom: spdx
+    creation_time: "{{.CommitTimestamp}}"
+    ko_data_creation_time: "{{.CommitTimestamp}}"
+
+archives:
+  - id: standard
+    ids: [production, dev]
+    allow_different_binary_count: true
+    formats: [tar.gz]
+    # this name template makes the OS and Arch compatible with `uname`.
+    name_template: >-
+      {{ .ProjectName }}_ {{- title .Os }}_ {{- if eq .Arch "amd64" }}x86_64 {{- else if eq .Arch "arm64" }}aarch64 {{- else }}{{ .Arch }}{{ end }} {{- with .Amd64 }}_{{ . }}{{ end }} {{- with .Arm64 }}_{{ . }}{{ end }}
+    # use zip for windows archives
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+
+  - id: fips
+    ids: [production-fips, dev-fips]
+    allow_different_binary_count: true
+    formats: [tar.gz]
+    name_template: >-
+      {{ .ProjectName }}-fips_ {{- title .Os }}_ {{- if eq .Arch "amd64" }}x86_64 {{- else if eq .Arch "arm64" }}aarch64 {{- else }}{{ .Arch }}{{ end }} {{- with .Amd64 }}_{{ . }}{{ end }} {{- with .Arm64 }}_{{ . }}{{ end }}
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+
+checksum:
+  name_template: "checksums.txt"
+  algorithm: sha256
+
+changelog:
+  use: github
+  sort: asc
+  format: "{{ .Message }}"
+  groups:
+    - title: "Breaking Changes"
+      regexp: '^.*?(\([[:word:]]+\))??!:.+$'
+      order: 0
+    - title: "Features"
+      regexp: '^.*?feat(\([[:word:]]+\))??!?:.+$'
+      order: 100
+    - title: "Bug Fixes"
+      regexp: '^.*?fix(\([[:word:]]+\))??!?:.+$'
+      order: 200
+    - title: "Dependency Updates"
+      regexp: '^.*?(feat|fix|chore)\(deps?.+\)!?:.+$'
+      order: 300
+    - title: "Miscellaneous Work"
+      order: 999
+  filters:
+    exclude:
+      - '^test(\(.+\))?:'
+      - '^refactor(\(.+\))?:'
+      - '^style(\(.+\))?:'
+
+release:
+  prerelease: auto
+  include_meta: true
+  footer: |
+    **Full Changelog**: https://github.com/Pinguladora/sigcull/compare/{{ .PreviousTag }}...{{ .Tag }}
+
+sboms:
+  - id: cyclonedx
+    artifacts: archive
+    cmd: syft
+    args:
+      - "scan"
+      - "$artifact"
+      - "--output"
+      - "cyclonedx-json=$document"
+    documents:
+      - "${artifact}.cdx.json"
+  - id: spdx
+    artifacts: archive
+    cmd: syft
+    args:
+      - "scan"
+      - "$artifact"
+      - "--output"
+      - "spdx-json=$document"
+    documents:
+      - "${artifact}.spdx.json"
+
+signs:
+  - id: keyless-blob-sign
+    artifacts: checksum
+    cmd: cosign
+    signature: "${artifact}.sigstore.json"
+    args:
+      - "sign-blob"
+      - "--bundle=${signature}"
+      - "${artifact}"
+      - "--yes"
+    output: true
+
+docker_signs:
+  - id: keyless-image-sign
+    artifacts: all
+    cmd: cosign
+    args:
+      - "sign"
+      - "${artifact}"
+      - "--yes"
+    output: true
