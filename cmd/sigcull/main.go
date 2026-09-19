@@ -34,6 +34,14 @@ const (
 	readHeaderTimeout = 10 * time.Second
 )
 
+// Build metadata, injected by GoReleaser through -ldflags -X main.*. The defaults
+// apply to a plain `go build` or `go run`.
+var (
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
+)
+
 func main() {
 	// Structured logs go to stdout so a 12-factor platform collects them as the
 	// app's event stream (the server writes no other stdout output). LOG_LEVEL
@@ -64,7 +72,13 @@ func logLevel() slog.Level {
 // an error rather than exiting so main owns the single os.Exit.
 func run(log *slog.Logger) error {
 	configPath := flag.String("config", "config.yaml", "path to the YAML config file")
+	showVersion := flag.Bool("version", false, "print version information and exit")
 	flag.Parse()
+	if *showVersion {
+		fmt.Printf("sigcull %s (commit %s, built %s, %s)\n", version, commit, date, runtime.Version())
+		return nil
+	}
+	log.Info("starting sigcull", "version", version, "commit", commit)
 
 	cfg, err := config.Load(*configPath)
 	if err != nil {
