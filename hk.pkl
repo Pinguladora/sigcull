@@ -17,8 +17,9 @@ local pre_commit = new Mapping<String, Step> {
     ["trailing-whitespace"] = (Builtins.trailing_whitespace) { exclude = Regex(#"^\.hk/"#) }
     ["kingfisher"] = (Builtins.kingfisher) { exclude = Regex(#"^\.hk/"#) }
     // Restrict oxfmt to JS/TS. Its default glob also matches html/css/md/yaml/
-    // toml/json, which would reformat Hugo templates (breaking `{{ }}`) and
-    // hand-tuned content/config. oxlint's glob is already JS-family only.
+    // toml/json, so unrestricted it would reformat the site's Astro components
+    // and content and the hand-tuned config (yaml has its own yamlfmt step).
+    // oxlint's glob is already JS-family only.
     ["oxfmt"] = (Builtins.oxfmt) {
         glob = new Listing<String> {
             "**/*.js"; "**/*.mjs"; "**/*.cjs"

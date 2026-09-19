@@ -27,9 +27,8 @@ function codeBlockKeyboardScroll() {
 // pages by slug so each entry localizes to the current language automatically.
 export default defineConfig({
   site: "https://sigcull.dev",
-  // Responsive images: emit a populated srcset + sizes for content images (the
-  // parity for the Hugo render hook's multi-width <picture>), instead of a lone
-  // empty srcset.
+  // Responsive images: emit a populated srcset + sizes for content images
+  // (multi-width responsive <img>), instead of a lone empty srcset.
   image: { layout: "constrained" },
   // Self-hosted brand font for the header wordmark. Astro downloads it at build
   // and serves it from our own origin (vendored, no runtime CDN), so it adds no

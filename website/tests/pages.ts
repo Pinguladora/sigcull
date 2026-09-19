@@ -1,7 +1,7 @@
 // Representative routes covering every page template, in both languages. The
 // a11y sweep runs all of these; the visual sweep uses the smaller VISUAL subset.
 // Starlight has a built-in search overlay (no /search/ page) and no taxonomy
-// (no /tags/ page), so those Hugo routes are gone.
+// (no /tags/ page), so neither of those routes exists here.
 export const ROUTES = [
   { path: "/", name: "home" },
   { path: "/overview/", name: "overview" },
