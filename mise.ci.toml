@@ -16,7 +16,7 @@ npm.package_manager = "pnpm"
 # CI-only tools, layered onto mise.toml's toolchain when MISE_ENV=ci.
 [tools]
 "npm:netlify-cli" = "27.8.0"
-"aqua:slsa-verifier" = "2.7.1"     # verifies SLSA provenance in the release verify job
+slsa-verifier = "2.7.1"
 
 [tasks."ci:git-config"]
 run = """
