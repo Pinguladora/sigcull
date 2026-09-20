@@ -20,6 +20,7 @@
     "starlight-llms-txt": "0.12.0"
   },
   "devDependencies": {
+    "@astrojs/check": "0.9.10",
     "@axe-core/playwright": "4.13.0",
     "@guidepup/guidepup": "0.34.0",
     "@guidepup/playwright": "0.19.1",
@@ -28,6 +29,7 @@
     "axe-core": "4.13.0",
     "html-validate": "11.16.0",
     "http-server": "14.1.1",
-    "odiff-bin": "4.5.0"
+    "odiff-bin": "4.5.0",
+    "typescript": "6.0.3"
   }
 }

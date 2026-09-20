@@ -17,7 +17,9 @@ const ORDER = [
 ];
 
 const all = await getCollection('docs');
-const main = ORDER.map((slug) => all.find((e) => e.id === `es/${slug}`)).filter(Boolean);
+const main = ORDER.map((slug) => all.find((e) => e.id === `es/${slug}`)).filter(
+  (e): e is NonNullable<typeof e> => e !== undefined,
+);
 const adr = all
   .filter((e) => /^adr\/\d/.test(e.id))
   .sort((a, b) => a.id.localeCompare(b.id));

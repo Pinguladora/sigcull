@@ -7,7 +7,12 @@ import starlightLlmsTxt from "starlight-llms-txt";
 // with no tabindex, so a keyboard-only user cannot scroll a wide block
 // (axe scrollable-region-focusable, WCAG 2.1.1). Give every code <pre>
 // tabindex="0" so it is reachable and scrollable from the keyboard.
+/**
+ * A minimal hast node shape covering only what this keyboard-scroll walk reads.
+ * @typedef {{ type?: string; tagName?: string; properties?: Record<string, unknown>; children?: HastNode[] }} HastNode
+ */
 function codeBlockKeyboardScroll() {
+  /** @param {HastNode} node */
   const setTabindex = (node) => {
     if (node.type === "element" && node.tagName === "pre") {
       node.properties = node.properties || {};
@@ -18,7 +23,8 @@ function codeBlockKeyboardScroll() {
   return {
     name: "code-block-keyboard-scroll",
     hooks: {
-      postprocessRenderedBlock: ({ renderData }) => setTabindex(renderData.blockAst),
+      postprocessRenderedBlock: (/** @type {{ renderData: { blockAst: HastNode } }} */ ctx) =>
+        setTabindex(ctx.renderData.blockAst),
     },
   };
 }

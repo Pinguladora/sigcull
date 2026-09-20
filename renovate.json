@@ -1,31 +1,15 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "customManagers": [
-    {
-      "customType": "regex",
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "jdx/hk",
-      "description": "Track the hk Pkl package version pinned in hk.pkl's amends/import URLs, both the download-path tag and the hk@ package version, so they stay in sync",
-      "managerFilePatterns": [
-        "/^hk\\.pkl$/"
-      ],
-      "matchStrings": [
-        "releases/download/v(?<currentValue>\\d+\\.\\d+\\.\\d+)/hk@",
-        "hk@(?<currentValue>\\d+\\.\\d+\\.\\d+)#"
-      ]
-    }
-  ],
   "extends": [
     "github>Pinguteca/renovate-config"
   ],
   "packageRules": [
     {
-      "description": "Bump the hk tool and the hk.pkl Pkl package in one PR so they stay in sync",
-      "groupName": "hk",
+      "description": "Hold typescript on 6.x: astro check (via @astrojs/language-server) does not yet support the TypeScript 7 native compiler API",
       "matchDepNames": [
-        "jdx/hk",
-        "hk"
-      ]
+        "typescript"
+      ],
+      "allowedVersions": "<7"
     }
   ]
 }

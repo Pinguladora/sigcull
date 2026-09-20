@@ -43,6 +43,18 @@ local pre_push = new Mapping<String, Step> {
     ["actionlint"] = Builtins.actionlint
     ["zizmor"] = (Builtins.zizmor) { env { ["ZIZMOR_OFFLINE"] = "true" } }
     ["go-mod-download"] { check = "go mod download" }
+    // Type-check the Astro components and config with astro check. astro is a
+    // pnpm dependency in the website workspace so run it there. It checks the
+    // whole project so it takes no file arguments; the glob only decides when
+    // the step runs.
+    ["astro"] = (Builtins.astro) {
+        // dir makes both the working directory and the glob relative to website.
+        dir = "website"
+        glob = new Listing<String> {
+            "**/*.astro"; "**/*.ts"; "**/*.mjs"; "tsconfig.json"
+        }
+        check = "pnpm exec astro check"
+    }
 }
 
 hooks {
