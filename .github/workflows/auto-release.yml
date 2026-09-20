@@ -1,16 +1,21 @@
-name: Auto release
+name: Bump release
 
-# Cuts a release automatically when a security patch lands on main. Renovate marks
-# vulnerability fixes with a [security] marker in the commit message (via the
-# shared Pinguteca/renovate-config), so a merge that carries one triggers a bump.
-# Everything else is released manually with `cog bump`.
-#
-# The cheap detect job runs on every push and only queries git, so ordinary merges
-# stay fast; the release job (which installs the toolchain and bumps) runs only
-# when a security patch is present.
+# Creates and pushes a release tag which then triggers release.yml. Two triggers:
+# a manual run for ordinary releases and an automatic run when a security patch
+# lands on main. Renovate marks vulnerability fixes with a [security] marker via
+# the shared Pinguteca/renovate-config so a merge that carries one auto-bumps.
+# The cheap detect job runs on every push and only queries git so ordinary merges
+# stay fast. The release job installs the toolchain and bumps only when a release
+# is warranted.
 on:
   push:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Exact version to release like 1.2.3. Leave empty to calculate it from the commits."
+        required: false
+        type: string
 
 permissions: {}
 
@@ -42,11 +47,19 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
           filter: "blob:none"
-      # Mirrors `mise run release:security-check`, inlined so ordinary merges do
-      # not pay for a toolchain install.
-      - name: Check for a security patch since the last tag
+      # A manual run always releases. Otherwise mirror `mise run
+      # release:security-check` inlined so ordinary merges do not pay for a
+      # toolchain install.
+      - name: Decide whether to release
         id: check
+        env:
+          EVENT: ${{ github.event_name }}
         run: |
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            echo "Manual release requested."
+            echo "release=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
           if [ -z "$LAST_TAG" ]; then
             echo "No tags yet; the first release is cut manually. Skipping."
@@ -104,10 +117,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.octo-sts.outputs.token }}
           MISE_ENV: ci
-      # cog bump tags the security commit and pushes the tag (cog.toml post_bump_hook).
-      # The app-token push triggers release.yml; the tag-only bump leaves main
-      # unchanged, so this workflow does not re-trigger.
+      # cog bump tags HEAD and pushes the tag via the cog.toml post_bump_hook. The
+      # app-token push triggers release.yml and the tag-only bump leaves main
+      # unchanged so this workflow does not re-trigger. A manual run can override
+      # the computed version with the workflow input.
       - name: Bump and push the tag
-        run: mise run bump
         env:
           GITHUB_TOKEN: ${{ steps.octo-sts.outputs.token }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          if [ -n "$VERSION" ]; then
+            mise exec -- cog bump --version "$VERSION"
+          else
+            mise run bump
+          fi
