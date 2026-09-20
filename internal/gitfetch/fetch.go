@@ -98,11 +98,15 @@ func resolveRange(
 ) ([]plumbing.Hash, bool) {
 	if rng.Base != "" && rng.Base != zeroSHA {
 		if err := fetchSHA(ctx, r, auth, rng.Base); err == nil {
-			if order, complete := commitsBetween(r, rng.Base, rng.Head); complete {
-				return order, false
-			}
+			// commitsBetween excludes base's fetched ancestry from head's window,
+			// so use its result even when the shallow window did not fully reach
+			// base: the commits it drops are the ones already on base, and any
+			// genuinely new commit is never a base ancestor. Only an unreachable
+			// base (force-push) falls back to the unfiltered window.
+			order, complete := commitsBetween(r, rng.Base, rng.Head)
+			return order, !complete
 		}
-		// Base unreachable (force-push) or range deeper than the window.
+		// Base unreachable (force-push): no exclusion possible, use head's window.
 		window := headWindow(r, rng.Head)
 		return window, true
 	}
@@ -182,11 +186,12 @@ func commitsBetween(r *gogit.Repository, base, head string) (order []plumbing.Ha
 	exclude := map[plumbing.Hash]struct{}{}
 	collectAncestors(r, plumbing.NewHash(base), exclude)
 
+	// Even when the shallow window did not fully reach base, order already
+	// excludes the ancestors we could fetch, so return it rather than discarding
+	// the exclusion. A boundary means the set may still include a few base
+	// ancestors beyond the window, which we flag to the caller as incomplete.
 	order, boundary := topoOrder(r, plumbing.NewHash(head), exclude)
-	if boundary {
-		return nil, false
-	}
-	return order, true
+	return order, !boundary
 }
 
 // headWindow returns every commit reachable from head within the shallow window,
