@@ -259,6 +259,9 @@ docker_signs:
     cmd: cosign
     args:
       - "sign"
-      - "${artifact}"
+      # Sign by digest not tag: the FIPS image has no latest tag so a bare
+      # reference resolves to a missing tag and signing by digest is also the
+      # correct non-racy way to pin exactly what was pushed.
+      - "${artifact}@${digest}"
       - "--yes"
     output: true
