@@ -30,6 +30,7 @@
     "html-validate": "11.16.0",
     "http-server": "14.1.1",
     "odiff-bin": "4.5.0",
+    "starlight-links-validator": "0.26.0",
     "typescript": "6.0.3"
   }
 }

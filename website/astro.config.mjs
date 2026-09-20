@@ -2,6 +2,7 @@
 import { defineConfig, fontProviders } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightLlmsTxt from "starlight-llms-txt";
+import starlightLinksValidator from "starlight-links-validator";
 
 // Expressive Code renders each code block as a horizontally scrollable <pre>
 // with no tabindex, so a keyboard-only user cannot scroll a wide block
@@ -108,7 +109,10 @@ export default defineConfig({
         { slug: "changelog" },
         { slug: "accessibility" },
       ],
-      plugins: [starlightLlmsTxt()],
+      // Fail the build on a broken internal link or missing heading anchor.
+      // Build-time only and understands Starlight routing so slug links and
+      // hashes validate without the false positives a generic link checker hits.
+      plugins: [starlightLlmsTxt(), starlightLinksValidator()],
     }),
   ],
 });
