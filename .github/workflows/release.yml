@@ -24,6 +24,10 @@ jobs:
       image-fips: ${{ steps.digests.outputs.image-fips }}
       digest: ${{ steps.digests.outputs.digest }}
       digest-fips: ${{ steps.digests.outputs.digest-fips }}
+    env:
+      # The release and verify tasks live in mise.ci.toml which loads only when
+      # MISE_ENV=ci so set it for the whole job not just the mise-action step.
+      MISE_ENV: ci
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
@@ -56,7 +60,6 @@ jobs:
           cache: false
         env:
           GITHUB_TOKEN: ${{ steps.octo-sts.outputs.token }}
-          MISE_ENV: ci
       - name: Install cosign
         uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
       - name: Login to GHCR
@@ -146,6 +149,8 @@ jobs:
       contents: read # checkout
       id-token: write # octo-sts OIDC exchange
       actions: read # Download provenance workflow artifacts
+    env:
+      MISE_ENV: ci
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
@@ -172,7 +177,6 @@ jobs:
           cache: false
         env:
           GITHUB_TOKEN: ${{ steps.octo-sts.outputs.token }}
-          MISE_ENV: ci
       - name: Install cosign
         uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
       - name: Download release artifacts for verification
