@@ -16,7 +16,9 @@ npm.package_manager = "pnpm"
 # CI-only tools, layered onto mise.toml's toolchain when MISE_ENV=ci.
 [tools]
 "npm:netlify-cli" = "27.8.0"
-slsa-verifier = "2.7.1"
+# Full aqua path (not the short alias) so mise resolves it with the default
+# registry disabled and Renovate can track slsa-framework/slsa-verifier releases.
+"aqua:slsa-framework/slsa-verifier" = "2.7.1"
 
 [tasks."ci:git-config"]
 run = """
