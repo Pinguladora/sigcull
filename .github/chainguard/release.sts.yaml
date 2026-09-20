@@ -4,4 +4,3 @@ claim_pattern:
   workflow_ref: "Pinguladora/sigcull/\\.github/workflows/release\\.yml@refs/tags/v.*"
 permissions:
   contents: write
-  packages: write
