@@ -37,22 +37,26 @@ export default defineConfig({
   // Responsive images: emit a populated srcset + sizes for content images
   // (multi-width responsive <img>), instead of a lone empty srcset.
   image: { layout: "constrained" },
-  // Self-hosted brand font for the header wordmark. Astro downloads it at build
-  // and serves it from our own origin (vendored, no runtime CDN), so it adds no
-  // dependency. Exposed as var(--font-brand); rendered via <Font> in Head.astro.
-  // Self-hosted brand font for the header wordmark. Astro downloads it at build
-  // and serves it from our own origin (vendored, no runtime CDN), so it adds no
-  // dependency. Climate Crisis is an eroded display face (its glyphs melt with a
-  // YEAR axis), a fitting nod to poles and ice. Exposed as var(--font-brand);
-  // rendered via <Font> in Head.astro.
+  // Self-hosted brand font for the header wordmark. The woff2 is committed under
+  // src/assets/fonts and served from our own origin, so the build has no network
+  // font dependency and there is no runtime CDN. Climate Crisis is an eroded
+  // display face (its glyphs melt with a YEAR axis), a fitting nod to poles and
+  // ice. Exposed as var(--font-brand) and rendered via <Font> in Head.astro.
   fonts: [
     {
-      provider: fontProviders.google(),
+      provider: fontProviders.local(),
       name: "Climate Crisis",
       cssVariable: "--font-brand",
-      weights: [400],
-      subsets: ["latin"],
       fallbacks: ["sans-serif"],
+      options: {
+        variants: [
+          {
+            src: ["./src/assets/fonts/climate-crisis-latin-400.woff2"],
+            weight: 400,
+            style: "normal",
+          },
+        ],
+      },
     },
   ],
   integrations: [
