@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/Pinguladora/sigcull/internal/verify"
-	"github.com/google/go-github/v91/github"
+	"github.com/google/go-github/v92/github"
 )
 
 // checkRunName is the Check Run name operators pin as a required status check in
