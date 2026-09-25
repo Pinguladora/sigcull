@@ -63,67 +63,6 @@ url_api = "https://api.github.com/repos/slsa-framework/slsa-verifier/releases/as
 [tools."aqua:slsa-framework/slsa-verifier"."platforms.windows-x64".provenance.slsa]
 url = "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.1/slsa-verifier-windows-amd64.exe.intoto.jsonl"
 
-[[tools."aqua:slsa-verifier"]]
-version = "2.7.1"
-backend = "aqua:slsa-verifier"
-specifiers = ["2.7.1"]
-
-[tools."aqua:slsa-verifier"."platforms.linux-arm64"]
-checksum = "sha256:5d3b2349ede7bfec19e7a21569f18b9f7410145ad12e9584b175370669e14061"
-url = "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.1/slsa-verifier-linux-arm64"
-url_api = "https://api.github.com/repos/slsa-framework/slsa-verifier/releases/assets/267893626"
-
-[tools."aqua:slsa-verifier"."platforms.linux-arm64".provenance.slsa]
-url = "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.1/slsa-verifier-linux-arm64.intoto.jsonl"
-
-[tools."aqua:slsa-verifier"."platforms.linux-arm64-musl"]
-checksum = "sha256:5d3b2349ede7bfec19e7a21569f18b9f7410145ad12e9584b175370669e14061"
-url = "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.1/slsa-verifier-linux-arm64"
-url_api = "https://api.github.com/repos/slsa-framework/slsa-verifier/releases/assets/267893626"
-
-[tools."aqua:slsa-verifier"."platforms.linux-arm64-musl".provenance.slsa]
-url = "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.1/slsa-verifier-linux-arm64.intoto.jsonl"
-
-[tools."aqua:slsa-verifier"."platforms.linux-x64"]
-checksum = "sha256:946dbec729094195e88ef78e1734324a27869f03e2c6bd2f61cbc06bd5350339"
-url = "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.1/slsa-verifier-linux-amd64"
-url_api = "https://api.github.com/repos/slsa-framework/slsa-verifier/releases/assets/267893649"
-
-[tools."aqua:slsa-verifier"."platforms.linux-x64".provenance.slsa]
-url = "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.1/slsa-verifier-linux-amd64.intoto.jsonl"
-
-[tools."aqua:slsa-verifier"."platforms.linux-x64-musl"]
-checksum = "sha256:946dbec729094195e88ef78e1734324a27869f03e2c6bd2f61cbc06bd5350339"
-url = "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.1/slsa-verifier-linux-amd64"
-url_api = "https://api.github.com/repos/slsa-framework/slsa-verifier/releases/assets/267893649"
-
-[tools."aqua:slsa-verifier"."platforms.linux-x64-musl".provenance.slsa]
-url = "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.1/slsa-verifier-linux-amd64.intoto.jsonl"
-
-[tools."aqua:slsa-verifier"."platforms.macos-arm64"]
-checksum = "sha256:39abfcf5f1d690c3e889ce3d2d6a8b87711424d83368511868d414e8f8bcb05c"
-url = "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.1/slsa-verifier-darwin-arm64"
-url_api = "https://api.github.com/repos/slsa-framework/slsa-verifier/releases/assets/267893639"
-
-[tools."aqua:slsa-verifier"."platforms.macos-arm64".provenance.slsa]
-url = "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.1/slsa-verifier-darwin-arm64.intoto.jsonl"
-
-[tools."aqua:slsa-verifier"."platforms.macos-x64"]
-checksum = "sha256:4baf25415727821f847a38bccedc86c3e5b17cbfc2eb534cd554feb6c856d6f1"
-url = "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.1/slsa-verifier-darwin-amd64"
-url_api = "https://api.github.com/repos/slsa-framework/slsa-verifier/releases/assets/267893631"
-
-[tools."aqua:slsa-verifier"."platforms.macos-x64".provenance.slsa]
-url = "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.1/slsa-verifier-darwin-amd64.intoto.jsonl"
-
-[tools."aqua:slsa-verifier"."platforms.windows-x64"]
-checksum = "sha256:1d8f61ad747ecc3d375d2a563cebf2991748b7da1a9bda9a500804c3c499e3c0"
-url = "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.1/slsa-verifier-windows-amd64.exe"
-url_api = "https://api.github.com/repos/slsa-framework/slsa-verifier/releases/assets/267893644"
-
-[tools."aqua:slsa-verifier"."platforms.windows-x64".provenance.slsa]
-url = "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.1/slsa-verifier-windows-amd64.exe.intoto.jsonl"
-
 [[tools."npm:netlify-cli"]]
 version = "27.8.0"
 backend = "npm:netlify-cli"
