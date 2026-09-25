@@ -23,8 +23,8 @@ task.source_freshness_hash_contents = true
 # snapshot + release CI), actionlint/zizmor (local hk hooks + the lint:gha CI job).
 cocogitto = "7.0.0"
 go = "1.27.1"
-node = "26.8.2"
-pnpm = "12.4.2"
+node = "26.9.0"
+pnpm = "12.6.0"
 # Built from source so it compiles against the pinned go, which lets it lint
 # go1.27 modules. The prebuilt golangci-lint releases are still built with go1.26
 # and panic on a `go 1.27` go.mod ("package requires newer Go version"). Switch

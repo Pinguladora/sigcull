@@ -125,6 +125,6 @@ url_api = "https://api.github.com/repos/slsa-framework/slsa-verifier/releases/as
 url = "https://github.com/slsa-framework/slsa-verifier/releases/download/v2.7.1/slsa-verifier-windows-amd64.exe.intoto.jsonl"
 
 [[tools."npm:netlify-cli"]]
-version = "27.8.0"
+version = "27.8.1"
 backend = "npm:netlify-cli"
-specifiers = ["27.8.0"]
+specifiers = ["27.8.1"]
