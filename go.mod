@@ -3,7 +3,7 @@ module github.com/Pinguladora/sigcull
 go 1.27.0
 
 require (
-	github.com/ProtonMail/go-crypto v1.4.1
+	github.com/ProtonMail/go-crypto v1.5.1
 	github.com/bradleyfalzon/ghinstallation/v2 v2.19.0
 	github.com/digitorus/pkcs7 v0.0.0-20260914070511-d678ea5ea03f
 	github.com/go-git/go-billy/v5 v5.9.1
