@@ -21,4 +21,7 @@ oxfmt = "0.71.0"                   # JS/TS formatter
 yamlfmt = "0.21.0"                 # YAML formatter (hk pairs it with yamllint)
 yamllint = "1.38.0"
 "github:mongodb/kingfisher" = "v2.7.0"   # secret scanner (hk + secret:* tasks)
-"conda:verapdf" = "1.31.91"        # PDF/UA-1 validator (site:pdf-validate)
+# Explicit channel so Renovate's conda datasource can look it up. A bare conda
+# name has no channel and 404s at the anaconda API. mise already defaults to
+# conda-forge so resolution and the lockfile are unchanged.
+"conda:verapdf" = { version = "1.31.91", channel = "conda-forge" } # PDF/UA-1 validator (site:pdf-validate)
