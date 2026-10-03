@@ -14,7 +14,7 @@ postinstall = "hk install --mise"
 [tools]
 # actionlint and zizmor live in mise.toml (shared): the hk pre-push hook uses them
 # locally and the lint:gha CI job uses them too.
-hk = "2.2.0"
+hk = "2.3.0"
 pinact = "5.0.0"                   # pin GitHub Actions to a SHA (hk pre-push)
 oxlint = "1.82.0"                  # JS/TS linter for the website test toolchain
 oxfmt = "0.71.0"                   # JS/TS formatter
