@@ -9,6 +9,11 @@ locked = false
 prefer_offline = true
 disable_default_registry = true
 disable_backends = ["asdf", "vfox", "ubi"]
+# Lock only x64 platforms. conda:verapdf (the PDF/UA validator) has no arm64 build
+# on conda-forge, so locking arm64 makes lock-file maintenance fail to resolve it.
+# mise has no per-tool platform scoping so this is global. arm64 dev still works
+# through live resolution (locked = false), just unlocked. Revisit for arm64 later.
+lockfile_platforms = ["linux-x64", "linux-x64-musl", "macos-x64", "windows-x64"]
 # Decide task freshness by hashing source contents, not mtimes. A fresh checkout
 # resets mtimes, so mtime comparison would rebuild needlessly, while content
 # hashing skips when the bytes are equal.
