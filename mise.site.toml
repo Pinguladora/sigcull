@@ -4,4 +4,7 @@
 # heavy conda toolchain.
 
 [tools]
-"conda:WeasyPrint" = "69.0"        # renders the docs PDFs (site:pdf)
+# Explicit channel so Renovate's conda datasource can look it up. A bare conda
+# name has no channel and 404s at the anaconda API. mise already defaults to
+# conda-forge so resolution and the lockfile are unchanged.
+"conda:WeasyPrint" = { version = "69.0", channel = "conda-forge" } # renders the docs PDFs (site:pdf)
