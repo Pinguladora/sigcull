@@ -46,6 +46,6 @@ jobs:
           persist-credentials: false
           fetch-depth: 0 # cog changelog (site:changelog) needs full git history
 
-      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+      - uses: jdx/mise-action@94c60b39bc2d90ab2f9bab27f38d3cc4812c1834 # v5.1.0
 
       - run: mise run site:deploy
