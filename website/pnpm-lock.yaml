@@ -52,8 +52,8 @@ importers:
         specifier: 4.5.0
         version: 4.5.0
       starlight-links-validator:
-        specifier: 0.26.0
-        version: 0.26.0(@astrojs/starlight@0.42.6(astro@7.3.8(@types/node@24.13.3)(esbuild@0.28.2)(yaml@2.9.1))(supports-color@10.2.2)(typescript@6.0.3))(astro@7.3.8(@types/node@24.13.3)(esbuild@0.28.2)(yaml@2.9.1))(supports-color@10.2.2)
+        specifier: 0.27.0
+        version: 0.27.0(@astrojs/starlight@0.42.6(astro@7.3.8(@types/node@24.13.3)(esbuild@0.28.2)(yaml@2.9.1))(supports-color@10.2.2)(typescript@6.0.3))(astro@7.3.8(@types/node@24.13.3)(esbuild@0.28.2)(yaml@2.9.1))(supports-color@10.2.2)
       typescript:
         specifier: 6.0.3
         version: 6.0.3
@@ -158,9 +158,6 @@ packages:
         optional: true
       prettier-plugin-astro:
         optional: true
-
-  '@astrojs/markdown-satteri@0.4.1':
-    resolution: {integrity: sha512-EniHbFNa6SQHDih7JnpPos3NWXO6hdt4raBcOosfGmlfc3gP9CI/sESA3VOf1PgJZ7SFfewlZW9Livn0JugEZg==}
 
   '@astrojs/markdown-satteri@0.4.3':
     resolution: {integrity: sha512-PFbEHPnwUlLvpXd7RXrrKM+j12akF4bG+DSuNuoN+3eiwjOwp4HaPi+QQdbkBV7QEYXmzyKca50OJsmGxhNIUA==}
@@ -965,9 +962,6 @@ packages:
 
   '@types/node@24.13.3':
     resolution: {integrity: sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q==}
-
-  '@types/picomatch@4.0.3':
-    resolution: {integrity: sha512-iG0T6+nYJ9FAPmx9SsUlnwcq1ZVRuCXcVEvWnntoPlrOpwtSTKNDC9uVAxTsC3PUvJ+99n4RpAcNgBbHX3JSnQ==}
 
   '@types/sax@1.2.7':
     resolution: {integrity: sha512-rO73L89PJxeYM3s3pPPjiPgVVcymqU490g0YO5n5By0k2Erzj6tay/4lr1CHAAU4JyOWd1rpQ8bCf6cZfHU96A==}
@@ -2043,9 +2037,8 @@ packages:
   space-separated-tokens@2.0.2:
     resolution: {integrity: sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q==}
 
-  starlight-links-validator@0.26.0:
-    resolution: {integrity: sha512-b3JlzP5bczSDMQp10ST/Gldd6RNzcwpWfTrszzGPcqnuav2W31+MjyX92IXH+VCcG2pG9G1qyDcEcNuMRYi2ig==}
-    engines: {node: '>=22.12.0'}
+  starlight-links-validator@0.27.0:
+    resolution: {integrity: sha512-UvPl8L9hfWR+yWbLOEtljLmpJCGcM6AVseVy5IO9dmqdOjW4R+Y8FaYyVA5axCC8RvxM5xU7M1WTerpwU8rYbw==}
     peerDependencies:
       '@astrojs/starlight': '>=0.42.0'
       astro: '>=7.2.10'
@@ -2582,13 +2575,6 @@ snapshots:
     transitivePeerDependencies:
       - '@emnapi/runtime'
       - typescript
-
-  '@astrojs/markdown-satteri@0.4.1':
-    dependencies:
-      '@astrojs/internal-helpers': 0.11.0
-      '@astrojs/prism': 4.0.2
-      github-slugger: 2.0.0
-      satteri: 0.10.5
 
   '@astrojs/markdown-satteri@0.4.3':
     dependencies:
@@ -3230,8 +3216,6 @@ snapshots:
   '@types/node@24.13.3':
     dependencies:
       undici-types: 7.18.2
-
-  '@types/picomatch@4.0.3': {}
 
   '@types/sax@1.2.7':
     dependencies:
@@ -4670,11 +4654,10 @@ snapshots:
 
   space-separated-tokens@2.0.2: {}
 
-  starlight-links-validator@0.26.0(@astrojs/starlight@0.42.6(astro@7.3.8(@types/node@24.13.3)(esbuild@0.28.2)(yaml@2.9.1))(supports-color@10.2.2)(typescript@6.0.3))(astro@7.3.8(@types/node@24.13.3)(esbuild@0.28.2)(yaml@2.9.1))(supports-color@10.2.2):
+  starlight-links-validator@0.27.0(@astrojs/starlight@0.42.6(astro@7.3.8(@types/node@24.13.3)(esbuild@0.28.2)(yaml@2.9.1))(supports-color@10.2.2)(typescript@6.0.3))(astro@7.3.8(@types/node@24.13.3)(esbuild@0.28.2)(yaml@2.9.1))(supports-color@10.2.2):
     dependencies:
-      '@astrojs/markdown-satteri': 0.4.1
+      '@astrojs/markdown-satteri': 0.4.3
       '@astrojs/starlight': 0.42.6(astro@7.3.8(@types/node@24.13.3)(esbuild@0.28.2)(yaml@2.9.1))(supports-color@10.2.2)(typescript@6.0.3)
-      '@types/picomatch': 4.0.3
       astro: 7.3.8(@types/node@24.13.3)(esbuild@0.28.2)(yaml@2.9.1)
       github-slugger: 2.0.0
       hast-util-from-html: 2.0.3
