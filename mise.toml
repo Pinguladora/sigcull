@@ -27,7 +27,7 @@ task.source_freshness_hash_contents = true
 # and CI need it: go/golangci-lint (Go work + release CI), goreleaser/syft (local
 # snapshot + release CI), actionlint/zizmor (local hk hooks + the lint:gha CI job).
 cocogitto = "7.0.0"
-go = "1.27.1"
+go = "1.27.2"
 node = "26.11.1"
 pnpm = "12.11.2"
 # Built from source so it compiles against the pinned go, which lets it lint
