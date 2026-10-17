@@ -29,19 +29,19 @@ importers:
         version: 0.9.10(@emnapi/runtime@1.11.3)(prettier@3.9.8)(typescript@6.0.3)
       '@axe-core/playwright':
         specifier: 4.13.0
-        version: 4.13.0(playwright-core@1.64.0)
+        version: 4.13.0(playwright-core@1.64.1)
       '@guidepup/guidepup':
-        specifier: 0.36.0
-        version: 0.36.0(supports-color@10.2.2)
+        specifier: 0.36.2
+        version: 0.36.2(supports-color@10.2.2)
       '@guidepup/playwright':
         specifier: 0.19.1
-        version: 0.19.1(@guidepup/guidepup@0.36.0(supports-color@10.2.2))(@playwright/test@1.64.0)
+        version: 0.19.1(@guidepup/guidepup@0.36.2(supports-color@10.2.2))(@playwright/test@1.64.1)
       '@guidepup/virtual-screen-reader':
         specifier: 0.33.0
         version: 0.33.0
       '@playwright/test':
-        specifier: 1.64.0
-        version: 1.64.0
+        specifier: 1.64.1
+        version: 1.64.1
       axe-core:
         specifier: 4.14.0
         version: 4.14.0
@@ -498,8 +498,8 @@ packages:
   '@expressive-code/plugin-text-markers@0.44.2':
     resolution: {integrity: sha512-SNI7EgUSiADqbqUzzMbj1ZeC/r2pa5eg3KyFOGAd3a7EsIA4qzjXQLp+ODWQtHVDKFCdGs4J3ovSJUqvKIK96g==}
 
-  '@guidepup/guidepup@0.36.0':
-    resolution: {integrity: sha512-pCkxqDr7TApqHqQvgRltdSOIYqgLZKHdDLy07MsQCddTEi8Xmt13QAjdL4SeQUwddGPD1/gOBu9WnmKhhhbW8g==}
+  '@guidepup/guidepup@0.36.2':
+    resolution: {integrity: sha512-dfzCVPGaNqmwo1OhffV4YtOCmfKYx0nOW66+XJu99NhKWc9BT+XXxs0dUu1doD2d5FjavZQ8g1/DjiS+eLC1uw==}
 
   '@guidepup/playwright@0.19.1':
     resolution: {integrity: sha512-d0FMH6LFbRbV71l2NGzv2gqV3vQbHDfTVctXsKm6d1ZahpS2/Ozq1WCEoZ7QTAR6iuNzwy03tZfvyijGH+zUDw==}
@@ -773,8 +773,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@playwright/test@1.64.0':
-    resolution: {integrity: sha512-oTN9FNYuN6bqQMwiho6jJKLCG2/QOYCixGXuCjRmzOq23eODeukuY2XiAVoVpAECbuezMt1MHQjAiQxK8F+Y+g==}
+  '@playwright/test@1.64.1':
+    resolution: {integrity: sha512-IaYGml/nSOiZWROfPtuIL7neuu9qDOZ3TNvNljUIrhDMxiGTgPjzj/g9p9RxpS2tSepPDRY+UwAaEeiKtUvIAg==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -1874,13 +1874,13 @@ packages:
     resolution: {integrity: sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==}
     engines: {node: '>=12'}
 
-  playwright-core@1.64.0:
-    resolution: {integrity: sha512-T9r+MZkTECl2+oUcZ26YgZzTrYidTsIhYYkJix+6iDOymOb1FB2RLLSOxRGnZGv5DStt+aduIVbt+E8WygXYpg==}
+  playwright-core@1.64.1:
+    resolution: {integrity: sha512-BC4s8y6SEVA6Q1rSxZTto8hI1KUI3xXlHGZgvGqP4IqPdI/a6FX9H29IDNz7vKo9l21b6LfYosScPL6M3xxyDQ==}
     engines: {node: '>=20'}
     hasBin: true
 
-  playwright@1.64.0:
-    resolution: {integrity: sha512-kVzTnYFYEyQ9RGzBjNCd2+yEqWmVbxl3AHPynv3qQ6JTjv4a+kwRcnqQwIpuP3NnrnIrE/Q6wWAIAvMfIE2/Yg==}
+  playwright@1.64.1:
+    resolution: {integrity: sha512-HCrVhHr5QQuwYoswEUGTb7gGp522yflbv/ST8nF4sFWGuLjQCt17Q/EubpGGSNKYn1tsTCPZxqHhHCfVURu7UA==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -2658,10 +2658,10 @@ snapshots:
     dependencies:
       yaml: 2.9.1
 
-  '@axe-core/playwright@4.13.0(playwright-core@1.64.0)':
+  '@axe-core/playwright@4.13.0(playwright-core@1.64.1)':
     dependencies:
       axe-core: 4.13.0
-      playwright-core: 1.64.0
+      playwright-core: 1.64.1
 
   '@babel/code-frame@7.29.7':
     dependencies:
@@ -2888,7 +2888,7 @@ snapshots:
     dependencies:
       '@expressive-code/core': 0.44.2
 
-  '@guidepup/guidepup@0.36.0(supports-color@10.2.2)':
+  '@guidepup/guidepup@0.36.2(supports-color@10.2.2)':
     dependencies:
       dbus-native: 0.15.2
       debug: 4.4.3(supports-color@10.2.2)
@@ -2896,10 +2896,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@guidepup/playwright@0.19.1(@guidepup/guidepup@0.36.0(supports-color@10.2.2))(@playwright/test@1.64.0)':
+  '@guidepup/playwright@0.19.1(@guidepup/guidepup@0.36.2(supports-color@10.2.2))(@playwright/test@1.64.1)':
     dependencies:
-      '@guidepup/guidepup': 0.36.0(supports-color@10.2.2)
-      '@playwright/test': 1.64.0
+      '@guidepup/guidepup': 0.36.2(supports-color@10.2.2)
+      '@playwright/test': 1.64.1
 
   '@guidepup/virtual-screen-reader@0.33.0':
     dependencies:
@@ -3079,9 +3079,9 @@ snapshots:
   '@pagefind/windows-x64@1.5.2':
     optional: true
 
-  '@playwright/test@1.64.0':
+  '@playwright/test@1.64.1':
     dependencies:
-      playwright: 1.64.0
+      playwright: 1.64.1
 
   '@rolldown/binding-android-arm-eabi@1.2.13':
     optional: true
@@ -4433,11 +4433,11 @@ snapshots:
 
   picomatch@4.0.7: {}
 
-  playwright-core@1.64.0: {}
+  playwright-core@1.64.1: {}
 
-  playwright@1.64.0:
+  playwright@1.64.1:
     dependencies:
-      playwright-core: 1.64.0
+      playwright-core: 1.64.1
 
   plist@4.0.0:
     dependencies:
