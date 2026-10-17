@@ -31,11 +31,11 @@ importers:
         specifier: 4.13.0
         version: 4.13.0(playwright-core@1.64.0)
       '@guidepup/guidepup':
-        specifier: 0.35.0
-        version: 0.35.0(supports-color@10.2.2)
+        specifier: 0.36.0
+        version: 0.36.0(supports-color@10.2.2)
       '@guidepup/playwright':
         specifier: 0.19.1
-        version: 0.19.1(@guidepup/guidepup@0.35.0(supports-color@10.2.2))(@playwright/test@1.64.0)
+        version: 0.19.1(@guidepup/guidepup@0.36.0(supports-color@10.2.2))(@playwright/test@1.64.0)
       '@guidepup/virtual-screen-reader':
         specifier: 0.33.0
         version: 0.33.0
@@ -498,8 +498,8 @@ packages:
   '@expressive-code/plugin-text-markers@0.44.2':
     resolution: {integrity: sha512-SNI7EgUSiADqbqUzzMbj1ZeC/r2pa5eg3KyFOGAd3a7EsIA4qzjXQLp+ODWQtHVDKFCdGs4J3ovSJUqvKIK96g==}
 
-  '@guidepup/guidepup@0.35.0':
-    resolution: {integrity: sha512-US64a++RucCtLfoq/DqnjzaHYpKzERVYmhtsWViz38MyklICICDpb50AKLn9sbxUwTceK2rS0fjDy7fYpWK/QA==}
+  '@guidepup/guidepup@0.36.0':
+    resolution: {integrity: sha512-pCkxqDr7TApqHqQvgRltdSOIYqgLZKHdDLy07MsQCddTEi8Xmt13QAjdL4SeQUwddGPD1/gOBu9WnmKhhhbW8g==}
 
   '@guidepup/playwright@0.19.1':
     resolution: {integrity: sha512-d0FMH6LFbRbV71l2NGzv2gqV3vQbHDfTVctXsKm6d1ZahpS2/Ozq1WCEoZ7QTAR6iuNzwy03tZfvyijGH+zUDw==}
@@ -1203,6 +1203,11 @@ packages:
   csso@5.0.5:
     resolution: {integrity: sha512-0LrrStPOdJj+SPCCrGhzryycLjwcgUSHBtxNA8aIDxf0GLsRh1cKYhB00Gd1lDOS4yGH69+SNn13+TWbVHETFQ==}
     engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0, npm: '>=7.0.0'}
+
+  dbus-native@0.15.2:
+    resolution: {integrity: sha512-J1IBi4LmbqrFhroN66Dj1tCCTP6TVbZgUKhWQZf3uS6t93yRWEcRRDjOZV9N6boGRhOp/BOjLliFm9vWu1QZOA==}
+    engines: {node: '>=22.12.0'}
+    hasBin: true
 
   debug@4.4.3:
     resolution: {integrity: sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==}
@@ -2414,6 +2419,14 @@ packages:
     resolution: {integrity: sha512-42AtmgqjV+X1VpdOfyTGOYRi0/zsoLqtXQckTmqTeybT+BDIbM/Guxo7x3pE2vtpr1ok6xRqM9OpBe+Jyoqyww==}
     engines: {node: '>=18'}
 
+  xml2js@0.6.2:
+    resolution: {integrity: sha512-T4rieHaC1EXcES0Kxxj4JWgaUQHDk+qwHcYOCFHfiwKz7tOVPLq7Hjq9dM1WCMhylqMEfP7hMcOIChvotiZegA==}
+    engines: {node: '>=4.0.0'}
+
+  xmlbuilder@11.0.1:
+    resolution: {integrity: sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA==}
+    engines: {node: '>=4.0'}
+
   xmlbuilder@15.1.1:
     resolution: {integrity: sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==}
     engines: {node: '>=8.0'}
@@ -2875,16 +2888,17 @@ snapshots:
     dependencies:
       '@expressive-code/core': 0.44.2
 
-  '@guidepup/guidepup@0.35.0(supports-color@10.2.2)':
+  '@guidepup/guidepup@0.36.0(supports-color@10.2.2)':
     dependencies:
+      dbus-native: 0.15.2
       debug: 4.4.3(supports-color@10.2.2)
       plist: 4.0.0
     transitivePeerDependencies:
       - supports-color
 
-  '@guidepup/playwright@0.19.1(@guidepup/guidepup@0.35.0(supports-color@10.2.2))(@playwright/test@1.64.0)':
+  '@guidepup/playwright@0.19.1(@guidepup/guidepup@0.36.0(supports-color@10.2.2))(@playwright/test@1.64.0)':
     dependencies:
-      '@guidepup/guidepup': 0.35.0(supports-color@10.2.2)
+      '@guidepup/guidepup': 0.36.0(supports-color@10.2.2)
       '@playwright/test': 1.64.0
 
   '@guidepup/virtual-screen-reader@0.33.0':
@@ -3517,6 +3531,10 @@ snapshots:
   csso@5.0.5:
     dependencies:
       css-tree: 2.2.1
+
+  dbus-native@0.15.2:
+    dependencies:
+      xml2js: 0.6.2
 
   debug@4.4.3(supports-color@10.2.2):
     dependencies:
@@ -4990,6 +5008,13 @@ snapshots:
       ansi-styles: 6.2.3
       string-width: 7.2.0
       strip-ansi: 7.2.0
+
+  xml2js@0.6.2:
+    dependencies:
+      sax: 1.6.1
+      xmlbuilder: 11.0.1
+
+  xmlbuilder@11.0.1: {}
 
   xmlbuilder@15.1.1: {}
 
