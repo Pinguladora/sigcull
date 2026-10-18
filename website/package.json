@@ -15,14 +15,14 @@
   "dependencies": {
     "@astrojs/starlight": "0.42.6",
     "@pagefind/default-ui": "1.5.2",
-    "astro": "7.3.8",
+    "astro": "7.4.0",
     "sharp": "0.35.5",
     "starlight-llms-txt": "0.12.0"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
-    "@axe-core/playwright": "4.13.0",
-    "@guidepup/guidepup": "0.36.2",
+    "@axe-core/playwright": "4.14.0",
+    "@guidepup/guidepup": "0.36.3",
     "@guidepup/playwright": "0.20.0",
     "@guidepup/virtual-screen-reader": "0.33.0",
     "@playwright/test": "1.64.1",
