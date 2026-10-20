@@ -31,11 +31,11 @@ importers:
         specifier: 4.14.0
         version: 4.14.0(playwright-core@1.64.1)
       '@guidepup/guidepup':
-        specifier: 0.36.3
-        version: 0.36.3(supports-color@10.2.2)
+        specifier: 0.36.4
+        version: 0.36.4(supports-color@10.2.2)
       '@guidepup/playwright':
         specifier: 0.20.0
-        version: 0.20.0(@guidepup/guidepup@0.36.3(supports-color@10.2.2))(@playwright/test@1.64.1)
+        version: 0.20.0(@guidepup/guidepup@0.36.4(supports-color@10.2.2))(@playwright/test@1.64.1)
       '@guidepup/virtual-screen-reader':
         specifier: 0.33.0
         version: 0.33.0
@@ -46,8 +46,8 @@ importers:
         specifier: 4.14.0
         version: 4.14.0
       html-validate:
-        specifier: 11.16.2
-        version: 11.16.2
+        specifier: 11.16.3
+        version: 11.16.3
       odiff-bin:
         specifier: 4.5.0
         version: 4.5.0
@@ -509,8 +509,8 @@ packages:
   '@expressive-code/plugin-text-markers@0.44.2':
     resolution: {integrity: sha512-SNI7EgUSiADqbqUzzMbj1ZeC/r2pa5eg3KyFOGAd3a7EsIA4qzjXQLp+ODWQtHVDKFCdGs4J3ovSJUqvKIK96g==}
 
-  '@guidepup/guidepup@0.36.3':
-    resolution: {integrity: sha512-AurkfbuskRejL/VOvILt3KsITGFfsJfqDvDO0psCzCbfMOAr9A5GYPmeYX0/6+nlddpA7D4H9raUCloKZHxs/g==}
+  '@guidepup/guidepup@0.36.4':
+    resolution: {integrity: sha512-LgF945tl7dYQmUwD8wRgBcUM0sM5SWJd2M4Mmefq6ly7nXwopHre1Xd82DL8luWninvuTHQLrW97viOzgM5ovg==}
 
   '@guidepup/playwright@0.20.0':
     resolution: {integrity: sha512-F1tIzewyVwUjLR+GHcgQAjbkruS40Uqvzax69VcQBvAT82g+5DZD+vXSYSP3MVgt6eJ03pDrPgeniHkx5gdHxA==}
@@ -1480,8 +1480,8 @@ packages:
   html-escaper@3.0.3:
     resolution: {integrity: sha512-RuMffC89BOWQoY0WKGpIhn5gX3iI54O6nRA0yC124NYVtzjmFWBIiFd8M0x+ZdX0P9R4lADg1mgP8C7PxGOWuQ==}
 
-  html-validate@11.16.2:
-    resolution: {integrity: sha512-oci8F4t1AQdAwkOK895hOOrMTSY0zZ6fk4p2LCvGKQDjL/CYDTGyIoVTzZWII0DfwA7gpq7+qJxAKubUofgo1Q==}
+  html-validate@11.16.3:
+    resolution: {integrity: sha512-EmtDPu3EoDZ7rdhJgQ60JumdN84HGt0/LeVf+1dCAww2oHLbizJKbri5keT5/1Nu5zFaQ3T/IMqHdKYso8TqIw==}
     engines: {node: ^22.22.0 || >= 24.8.0}
     hasBin: true
     peerDependencies:
@@ -2966,7 +2966,7 @@ snapshots:
     dependencies:
       '@expressive-code/core': 0.44.2
 
-  '@guidepup/guidepup@0.36.3(supports-color@10.2.2)':
+  '@guidepup/guidepup@0.36.4(supports-color@10.2.2)':
     dependencies:
       dbus-native: 0.15.2
       debug: 4.4.3(supports-color@10.2.2)
@@ -2974,9 +2974,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@guidepup/playwright@0.20.0(@guidepup/guidepup@0.36.3(supports-color@10.2.2))(@playwright/test@1.64.1)':
+  '@guidepup/playwright@0.20.0(@guidepup/guidepup@0.36.4(supports-color@10.2.2))(@playwright/test@1.64.1)':
     dependencies:
-      '@guidepup/guidepup': 0.36.3(supports-color@10.2.2)
+      '@guidepup/guidepup': 0.36.4(supports-color@10.2.2)
       '@playwright/test': 1.64.1
 
   '@guidepup/virtual-screen-reader@0.33.0':
@@ -3968,7 +3968,7 @@ snapshots:
 
   html-escaper@3.0.3: {}
 
-  html-validate@11.16.2:
+  html-validate@11.16.3:
     dependencies:
       '@html-validate/stylish': 6.0.0
       '@sidvind/better-ajv-errors': 7.0.0(ajv@8.20.0)

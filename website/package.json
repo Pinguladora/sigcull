@@ -22,12 +22,12 @@
   "devDependencies": {
     "@astrojs/check": "0.9.10",
     "@axe-core/playwright": "4.14.0",
-    "@guidepup/guidepup": "0.36.3",
+    "@guidepup/guidepup": "0.36.4",
     "@guidepup/playwright": "0.20.0",
     "@guidepup/virtual-screen-reader": "0.33.0",
     "@playwright/test": "1.64.1",
     "axe-core": "4.14.0",
-    "html-validate": "11.16.2",
+    "html-validate": "11.16.3",
     "odiff-bin": "4.5.0",
     "starlight-links-validator": "0.27.0",
     "typescript": "6.0.3"
