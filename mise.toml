@@ -34,7 +34,7 @@ pnpm = "12.14.0"
 # go1.27 modules. The prebuilt golangci-lint releases are still built with go1.26
 # and panic on a `go 1.27` go.mod ("package requires newer Go version"). Switch
 # back to the plain `golangci-lint` tool once upstream ships a go1.27 build.
-"go:github.com/golangci/golangci-lint/v2/cmd/golangci-lint" = "v2.14.0"
+"go:github.com/golangci/golangci-lint/v2/cmd/golangci-lint" = "v2.15.0"
 goreleaser = "2.18.3"
 syft = "1.54.1"
 actionlint = "1.7.12"
