@@ -27,7 +27,7 @@
     "@guidepup/virtual-screen-reader": "0.33.0",
     "@playwright/test": "1.64.1",
     "axe-core": "4.14.0",
-    "html-validate": "11.16.4",
+    "html-validate": "11.17.0",
     "odiff-bin": "4.5.0",
     "starlight-links-validator": "0.27.0",
     "typescript": "6.0.3"
