@@ -46,8 +46,8 @@ importers:
         specifier: 4.14.0
         version: 4.14.0
       html-validate:
-        specifier: 11.16.4
-        version: 11.16.4
+        specifier: 11.17.0
+        version: 11.17.0
       odiff-bin:
         specifier: 4.5.0
         version: 4.5.0
@@ -1476,8 +1476,8 @@ packages:
   html-escaper@3.0.3:
     resolution: {integrity: sha512-RuMffC89BOWQoY0WKGpIhn5gX3iI54O6nRA0yC124NYVtzjmFWBIiFd8M0x+ZdX0P9R4lADg1mgP8C7PxGOWuQ==}
 
-  html-validate@11.16.4:
-    resolution: {integrity: sha512-jsfJZGe5EvSkYZfuCQpeuBlZgotxfnVeKZKlyuw81ApC8iIDZml1Qa4jVcUyr055+m0Yvao9cVuvrtEkcNcrWQ==}
+  html-validate@11.17.0:
+    resolution: {integrity: sha512-DTUTxSFbiYnFOMsjsMaW5X4tT4a/k/bG3P7W9vdyxGC6L1LGtXCnL1e3pc9QMIEVkD9kk9AQIMjyJTs+2Yu0Kw==}
     engines: {node: ^22.22.0 || >= 24.8.0}
     hasBin: true
     peerDependencies:
@@ -3956,7 +3956,7 @@ snapshots:
 
   html-escaper@3.0.3: {}
 
-  html-validate@11.16.4:
+  html-validate@11.17.0:
     dependencies:
       '@html-validate/stylish': 6.0.0
       '@sidvind/better-ajv-errors': 7.0.0(ajv@8.20.0)
