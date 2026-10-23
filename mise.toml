@@ -38,7 +38,7 @@ pnpm = "12.14.0"
 goreleaser = "2.18.3"
 syft = "1.54.1"
 actionlint = "1.7.12"
-zizmor = "1.30.1"
+zizmor = "1.31.1"
 
 [tasks."secret:scan"]
 run = "kingfisher scan . --no-validate --redact"
