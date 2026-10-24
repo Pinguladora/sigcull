@@ -55,7 +55,7 @@ jobs:
           scope: Pinguladora/sigcull
           identity: release
       - name: Set up mise
-        uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+        uses: jdx/mise-action@9b200bcecbfd6303e69a4a261b2e09e3757440a7 # v5.2.0
         with:
           install: true
           cache: false
@@ -176,7 +176,7 @@ jobs:
           scope: Pinguladora/sigcull
           identity: verify
       - name: Set up mise
-        uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+        uses: jdx/mise-action@9b200bcecbfd6303e69a4a261b2e09e3757440a7 # v5.2.0
         with:
           install: true
           cache: false
