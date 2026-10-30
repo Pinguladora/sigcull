@@ -15,12 +15,12 @@ postinstall = "hk install --mise"
 # actionlint and zizmor live in mise.toml (shared): the hk pre-push hook uses them
 # locally and the lint:gha CI job uses them too.
 hk = "2.7.1"
-pinact = "5.0.0"                   # pin GitHub Actions to a SHA (hk pre-push)
+pinact = "5.0.1"                   # pin GitHub Actions to a SHA (hk pre-push)
 oxlint = "1.82.0"                  # JS/TS linter for the website test toolchain
-oxfmt = "0.74.0"                   # JS/TS formatter
+oxfmt = "0.75.0"                   # JS/TS formatter
 yamlfmt = "0.21.0"                 # YAML formatter (hk pairs it with yamllint)
 yamllint = "1.38.0"
-"github:mongodb/kingfisher" = "v2.13.0"   # secret scanner (hk + secret:* tasks)
+"github:mongodb/kingfisher" = "v2.14.0"   # secret scanner (hk + secret:* tasks)
 # Explicit channel so Renovate's conda datasource can look it up. A bare conda
 # name has no channel and 404s at the anaconda API. mise already defaults to
 # conda-forge so resolution and the lockfile are unchanged.
