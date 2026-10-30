@@ -8,7 +8,7 @@ require (
 	github.com/digitorus/pkcs7 v0.0.0-20260914070511-d678ea5ea03f
 	github.com/go-git/go-billy/v5 v5.9.2
 	github.com/go-git/go-git/v5 v5.19.3
-	github.com/google/go-github/v92 v92.0.0
+	github.com/google/go-github/v93 v93.0.0
 	github.com/sigstore/cosign/v3 v3.1.4
 	github.com/sigstore/gitsign v0.18.0
 	github.com/sigstore/sigstore v1.11.1
