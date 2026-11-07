@@ -13,7 +13,7 @@
     "htmlvalidate": "html-validate 'dist/**/*.html'"
   },
   "dependencies": {
-    "@astrojs/starlight": "0.42.8",
+    "@astrojs/starlight": "0.42.9",
     "@pagefind/default-ui": "1.6.0",
     "astro": "7.4.5",
     "sharp": "0.35.5",
