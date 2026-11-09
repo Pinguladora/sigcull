@@ -21,7 +21,7 @@ task.source_freshness_hash_contents = true
 
 [tools]
 # Tools shared by local dev and CI. Local-only tooling (linters, formatters, git
-# hooks, PDF validation) lives in mise.dev.toml; the site's WeasyPrint lives in
+# hooks, PDF validation) lives in mise.dev.toml; the site's Typst lives in
 # mise.site.toml. Both load via .miserc's `dev`/`site` envs but never in the Go,
 # lint, or release CI jobs (MISE_ENV=ci). A tool sits here when both local work
 # and CI need it: go/golangci-lint (Go work + release CI), goreleaser/syft (local
@@ -161,7 +161,7 @@ outputs = ["node_modules/.modules.yaml"]
 dir = "website"
 depends = ["site:install", "site:changelog"]
 run = "pnpm build"
-description = "Build the website (HTML, Pagefind, llms.txt, print pages)"
+description = "Build the website (HTML, Pagefind, llms.txt, Typst PDF sources)"
 sources = [
   "astro.config.mjs",
   "src/**/*",
@@ -174,37 +174,39 @@ outputs = ["dist/**/*.html"]
 [tasks."site:pdf"]
 dir = "website"
 depends = ["site:build-html"]
-# Render the full handbook per language as PDF/A-3a, then the finisher hook stamps
-# the PDF/UA-1 identifier into the same XMP, so each PDF is both archival and
-# accessible.
+# Compile every Typst source the Astro build wrote to dist/typst/ (the handbook
+# per language at dist/[es/]sigcull-docs.pdf, plus one PDF per page at
+# dist/<slug>.pdf, the Download-PDF action target). Typst claims and enforces
+# both standards itself, so each PDF is archival (PDF/A-3a) and accessible
+# (PDF/UA-1) with no post-processing. --ignore-system-fonts sticks to Typst's
+# bundled fonts and SOURCE_DATE_EPOCH (the last commit) pins the embedded dates,
+# so the same sources build the same PDFs on any machine. --root . lets each
+# source import pdf/template.typ.
 run = '''
-PY="$(mise where conda:WeasyPrint)/bin/python"
-export PY
-# Full-language handbooks (backgrounded).
-"$PY" tools/render-pdf.py dist/print/index.html dist/sigcull-docs.pdf &
-"$PY" tools/render-pdf.py dist/es/print/index.html dist/es/sigcull-docs.pdf &
-# One PDF per page at dist/<slug>.pdf (the Download-PDF action target), with
-# limited concurrency so a large doc set does not spawn too many WeasyPrint runs.
-find dist/print -mindepth 2 -name index.html -print0 \
-  | xargs -0 -P 4 -I {} bash -c 'f="$1"; s="${f#dist/print/}"; s="${s%/index.html}"; "$PY" tools/render-pdf.py "$f" "dist/${s}.pdf"' _ {}
-wait
+# The pipeline's status is xargs', which is 0 on empty input, so fail here
+# instead of "succeeding" with no PDFs when the sources are missing.
+test -d dist/typst || { echo "site:pdf: dist/typst missing, run site:build-html first" >&2; exit 1; }
+SOURCE_DATE_EPOCH="$(git log -1 --format=%ct 2>/dev/null || date +%s)"
+export SOURCE_DATE_EPOCH
+find dist/typst -name '*.typ' -print0 \
+  | xargs -0 -P 4 -I {} sh -c 'f="$1"; out="dist/${f#dist/typst/}"; typst compile --root . --ignore-system-fonts --pdf-standard a-3a,ua-1 "$f" "${out%.typ}.pdf"' _ {}
 '''
-description = "Render PDF/A-3a + PDF/UA-1 handbooks and per-page PDFs with WeasyPrint"
-sources = ["dist/print/**/*.html", "dist/es/print/*.html", "tools/render-pdf.py"]
+description = "Compile the PDF/A-3a + PDF/UA-1 handbooks and per-page PDFs with Typst"
+sources = ["dist/typst/**/*.typ", "pdf/template.typ"]
 outputs = ["dist/**/*.pdf"]
 
 [tasks."site:pdf-validate"]
 dir = "website"
 depends = ["site:pdf"]
-# veraPDF exits non-zero on non-compliance, failing the task if either claim is not met.
+# Check every PDF (both handbooks and each per-page PDF) against both claims.
+# veraPDF exits non-zero on non-compliance, failing the task if either claim is
+# not met by any file.
 run = [
-  "verapdf --flavour ua1 dist/sigcull-docs.pdf",
-  "verapdf --flavour 3a dist/sigcull-docs.pdf",
-  "verapdf --flavour ua1 dist/es/sigcull-docs.pdf",
-  "verapdf --flavour 3a dist/es/sigcull-docs.pdf",
+  "verapdf --flavour ua1 --recurse dist",
+  "verapdf --flavour 3a --recurse dist",
 ]
-description = "Validate the PDFs are both PDF/UA-1 and PDF/A-3a with veraPDF"
-sources = ["dist/sigcull-docs.pdf", "dist/es/sigcull-docs.pdf"]
+description = "Validate every PDF is both PDF/UA-1 and PDF/A-3a with veraPDF"
+sources = ["dist/**/*.pdf"]
 
 [tasks."site:build"]
 depends = ["site:build-html", "site:pdf"]

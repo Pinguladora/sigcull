@@ -1,5 +1,5 @@
 # Default active mise environments for local work: `dev` layers on the local-only
-# tooling (mise.dev.toml) and `site` layers on the website's WeasyPrint
+# tooling (mise.dev.toml) and `site` layers on the website's Typst
 # (mise.site.toml). CI overrides this with MISE_ENV (e.g. `ci`, or `ci,site` for
 # the deploy job).
 env = ["dev", "site"]

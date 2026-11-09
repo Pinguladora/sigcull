@@ -31,7 +31,7 @@ jobs:
       contents: read # checkout; the deploy authenticates to Netlify with a token
     env:
       # ci activates mise.ci.toml (netlify-cli, site:deploy) and site activates
-      # mise.site.toml (WeasyPrint, for the PDFs), both on top of mise.toml. The
+      # mise.site.toml (Typst, for the PDFs), both on top of mise.toml. The
       # dev toolchain lives in mise.dev.toml, which neither loads, so this installs
       # only what the deploy needs.
       MISE_ENV: ci,site

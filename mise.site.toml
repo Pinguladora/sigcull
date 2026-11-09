@@ -1,10 +1,6 @@
 # Website build tooling, layered on top of mise.toml. Loaded locally via
 # .miserc's `site` env, and in the deploy job via MISE_ENV=ci,site. The Go, lint,
-# and release CI jobs run with MISE_ENV=ci (no site), so they never pull this
-# heavy conda toolchain.
+# and release CI jobs run with MISE_ENV=ci (no site), so they never pull it.
 
 [tools]
-# Explicit channel so Renovate's conda datasource can look it up. A bare conda
-# name has no channel and 404s at the anaconda API. mise already defaults to
-# conda-forge so resolution and the lockfile are unchanged.
-"conda:WeasyPrint" = { version = "69.0", channel = "conda-forge" } # renders the docs PDFs (site:pdf)
+typst = "0.15.1" # compiles the docs PDFs as PDF/A-3a + PDF/UA-1 (site:pdf)
