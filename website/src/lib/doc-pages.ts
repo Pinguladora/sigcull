@@ -8,7 +8,7 @@
 //     `es.pdf`), and
 //   - the changelog, authored as MDX (JSX, not clean markdown), matched by id.
 //
-// One predicate keeps the per-page endpoints, the print route, and PageActions in
+// One predicate keeps the per-page endpoints, the PDF sources, and PageActions in
 // agreement, so a page can never get a button that points at a missing file.
 const NON_ARTICLE_IDS = new Set(["changelog", "es/changelog"]);
 
