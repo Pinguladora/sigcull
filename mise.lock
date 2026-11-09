@@ -181,31 +181,31 @@ url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/711505547"
 provenance = "github-attestations"
 
 [[tools.syft]]
-version = "1.55.0"
+version = "1.56.0"
 backend = "aqua:anchore/syft"
 
 [tools.syft."platforms.linux-x64"]
-checksum = "sha256:bb65249542db5fedeeb4d3f9b018b75e7264dbfbbb10486f044581a92f90490d"
-url = "https://github.com/anchore/syft/releases/download/v1.55.0/syft_1.55.0_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/anchore/syft/releases/assets/657153873"
+checksum = "sha256:1c2493cfcf52d3367d6cb25780d9190c111c2219c34c820574c43e8bae15c528"
+url = "https://github.com/anchore/syft/releases/download/v1.56.0/syft_1.56.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/anchore/syft/releases/assets/702477601"
 provenance = "cosign"
 
 [tools.syft."platforms.linux-x64-musl"]
-checksum = "sha256:bb65249542db5fedeeb4d3f9b018b75e7264dbfbbb10486f044581a92f90490d"
-url = "https://github.com/anchore/syft/releases/download/v1.55.0/syft_1.55.0_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/anchore/syft/releases/assets/657153873"
+checksum = "sha256:1c2493cfcf52d3367d6cb25780d9190c111c2219c34c820574c43e8bae15c528"
+url = "https://github.com/anchore/syft/releases/download/v1.56.0/syft_1.56.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/anchore/syft/releases/assets/702477601"
 provenance = "cosign"
 
 [tools.syft."platforms.macos-x64"]
-checksum = "sha256:e2e5831cbabaec9a36fe65c34755c1113982c842a685edce3ce0b54a0ded8003"
-url = "https://github.com/anchore/syft/releases/download/v1.55.0/syft_1.55.0_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/anchore/syft/releases/assets/657153867"
+checksum = "sha256:ff37fb20e8d072e193cb659ecb932994ba2add772cbf86909c368fb95a630c50"
+url = "https://github.com/anchore/syft/releases/download/v1.56.0/syft_1.56.0_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/anchore/syft/releases/assets/702477611"
 provenance = "cosign"
 
 [tools.syft."platforms.windows-x64"]
-checksum = "sha256:ada4c9b93af575f479ce80fce6629897272a2d41f300a14bc49bace020767ca2"
-url = "https://github.com/anchore/syft/releases/download/v1.55.0/syft_1.55.0_windows_amd64.zip"
-url_api = "https://api.github.com/repos/anchore/syft/releases/assets/657153857"
+checksum = "sha256:c4cd2846dc0128e29a947bc6f56e1e5ef01707275b0e58590fbe48105198661d"
+url = "https://github.com/anchore/syft/releases/download/v1.56.0/syft_1.56.0_windows_amd64.zip"
+url_api = "https://api.github.com/repos/anchore/syft/releases/assets/702477600"
 provenance = "cosign"
 
 [[tools.zizmor]]
