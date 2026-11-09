@@ -183,6 +183,9 @@ depends = ["site:build-html"]
 # so the same sources build the same PDFs on any machine. --root . lets each
 # source import pdf/template.typ.
 run = '''
+# The pipeline's status is xargs', which is 0 on empty input, so fail here
+# instead of "succeeding" with no PDFs when the sources are missing.
+test -d dist/typst || { echo "site:pdf: dist/typst missing, run site:build-html first" >&2; exit 1; }
 SOURCE_DATE_EPOCH="$(git log -1 --format=%ct 2>/dev/null || date +%s)"
 export SOURCE_DATE_EPOCH
 find dist/typst -name '*.typ' -print0 \

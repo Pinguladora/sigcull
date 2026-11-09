@@ -9,7 +9,15 @@
 // the expression. Plain text is escaped character by character. Any markdown
 // construct this module does not know throws, which fails the build instead of
 // silently dropping content from the PDF.
-import type { Nodes, Parents, PhrasingContent, Root, RootContent } from "mdast";
+import type {
+  Link,
+  LinkReference,
+  Nodes,
+  Parents,
+  PhrasingContent,
+  Root,
+  RootContent,
+} from "mdast";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { directiveFromMarkdown } from "mdast-util-directive";
 import { gfmFromMarkdown } from "mdast-util-gfm";
@@ -159,20 +167,25 @@ class Emitter {
       case "break":
         return "#linebreak();";
       case "link":
-        return this.link(node.url, node.children);
+        return this.link(node, node.url);
       case "linkReference": {
         const url = this.definitions.get(node.identifier);
         if (url === undefined) return unsupported(node, `undefined link reference [${node.label}]`);
-        return this.link(url, node.children);
+        return this.link(node, url);
       }
       default:
         return unsupported(node);
     }
   }
 
-  private link(url: string, children: PhrasingContent[]): string {
-    const href = new URL(url, this.options.pageUrl).href;
-    return `#link(${typstString(href)})[${this.inline(children)}];`;
+  private link(node: Link | LinkReference, url: string): string {
+    let href: string;
+    try {
+      href = new URL(url, this.options.pageUrl).href;
+    } catch {
+      return unsupported(node, `invalid link URL "${url}"`);
+    }
+    return `#link(${typstString(href)})[${this.inline(node.children)}];`;
   }
 }
 
