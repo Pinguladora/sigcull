@@ -11,7 +11,7 @@ require (
 	github.com/google/go-github/v93 v93.0.0
 	github.com/sigstore/cosign/v3 v3.1.4
 	github.com/sigstore/gitsign v0.18.0
-	github.com/sigstore/sigstore v1.11.2
+	github.com/sigstore/sigstore v1.11.3
 	github.com/sigstore/sigstore-go v1.4.0
 	go.yaml.in/yaml/v4 v4.0.0-rc.9
 	golang.org/x/crypto v0.58.0
