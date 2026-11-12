@@ -15,7 +15,7 @@
   "dependencies": {
     "@astrojs/starlight": "0.42.10",
     "@pagefind/default-ui": "1.6.0",
-    "astro": "7.4.7",
+    "astro": "7.4.8",
     "mdast-util-directive": "3.2.0",
     "mdast-util-from-markdown": "2.1.0",
     "mdast-util-gfm": "3.1.0",
@@ -33,7 +33,7 @@
     "@playwright/test": "1.65.0",
     "@types/mdast": "4.0.4",
     "axe-core": "4.14.0",
-    "html-validate": "11.19.0",
+    "html-validate": "11.21.0",
     "odiff-bin": "4.5.0",
     "starlight-links-validator": "0.27.0",
     "typescript": "6.0.3"
