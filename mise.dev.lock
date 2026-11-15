@@ -714,34 +714,38 @@ url = "https://github.com/jdx/hk/releases/download/v2.11.1/hk-x86_64-pc-windows-
 signer = "sigstore-oidc:https://github.com/jdx/hk/.github/workflows/release.yml"
 
 [[tools.oxfmt]]
-version = "0.75.0"
+version = "0.77.0"
 backend = "npm:oxfmt"
-specifiers = ["0.75.0"]
+specifiers = ["0.77.0"]
 
 [[tools.oxlint]]
-version = "1.82.0"
+version = "1.92.0"
 backend = "aqua:oxc-project/oxc/oxlint"
-specifiers = ["1.82.0"]
+specifiers = ["1.92.0"]
 
 [tools.oxlint."platforms.linux-x64"]
-checksum = "sha256:2284a516360c42166b9f0b1c1aa6920322d3385d93a7ff7061d2d8ed77ec1e35"
-url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.82.0/oxlint-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/548949584"
+checksum = "sha256:ba3a4d581ff73af83b2e11432fa4abeff1c6c3fc24c3ddca9990246cee8b9a92"
+checksum_source = "mise-versions"
+url = "https://github.com/oxc-project/oxc/releases/download/oxlint_v1.92.0/oxlint-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/717101135"
 
 [tools.oxlint."platforms.linux-x64-musl"]
-checksum = "sha256:20f1b45176de30e49c983ff4a701383901ba24564239925bc7a0d0ae871c3187"
-url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.82.0/oxlint-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/548949592"
+checksum = "sha256:34c028fa6071f10520cc5420bc8d22298328826dbb0e5cbbb982bdd0aa09b686"
+checksum_source = "mise-versions"
+url = "https://github.com/oxc-project/oxc/releases/download/oxlint_v1.92.0/oxlint-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/717101159"
 
 [tools.oxlint."platforms.macos-x64"]
-checksum = "sha256:42206a631be5a65e4f32de5983e9e8991197ef2756870c257a5db2e6f493a86f"
-url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.82.0/oxlint-x86_64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/548949578"
+checksum = "sha256:343fc9f9785684f8f5d9d283fe28cbbf5514f3aa95e0d35eb051e9a70d5ccc2c"
+checksum_source = "mise-versions"
+url = "https://github.com/oxc-project/oxc/releases/download/oxlint_v1.92.0/oxlint-x86_64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/717101126"
 
 [tools.oxlint."platforms.windows-x64"]
-checksum = "sha256:9b4a908929e005c5c63e9773267867a945d7812d9e3175e864b75a6f22426e47"
-url = "https://github.com/oxc-project/oxc/releases/download/apps_v1.82.0/oxlint-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/548949580"
+checksum = "sha256:eb821008cc1f593c27215088f926966ac5356ff621e612cdd0744cd19a410722"
+checksum_source = "mise-versions"
+url = "https://github.com/oxc-project/oxc/releases/download/oxlint_v1.92.0/oxlint-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/717101127"
 
 [[tools.pinact]]
 version = "5.0.2"
