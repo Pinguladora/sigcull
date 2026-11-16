@@ -13,7 +13,7 @@
     "htmlvalidate": "html-validate 'dist/**/*.html'"
   },
   "dependencies": {
-    "@astrojs/starlight": "0.42.10",
+    "@astrojs/starlight": "0.42.11",
     "@pagefind/default-ui": "1.6.0",
     "astro": "7.4.11",
     "mdast-util-directive": "3.2.0",
@@ -33,7 +33,7 @@
     "@playwright/test": "1.65.0",
     "@types/mdast": "4.0.4",
     "axe-core": "4.14.0",
-    "html-validate": "11.21.0",
+    "html-validate": "11.21.1",
     "odiff-bin": "4.5.0",
     "starlight-links-validator": "0.27.0",
     "typescript": "6.0.3"
