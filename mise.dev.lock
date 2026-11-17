@@ -665,32 +665,32 @@ conda_deps = [
 ]
 
 [[tools."github:mongodb/kingfisher"]]
-version = "2.17.0"
+version = "v2.18.1"
 backend = "github:mongodb/kingfisher"
-specifiers = ["v2.17.0"]
+specifiers = ["v2.18.1"]
 
 [tools."github:mongodb/kingfisher"."platforms.linux-x64"]
-checksum = "sha256:8798879183d74f9e1379af3071f296853e4027a21bfde5d13d9b064fa1bf1eb3"
-url = "https://github.com/mongodb/kingfisher/releases/download/v2.17.0/kingfisher-linux-x64.tgz"
-url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/715173472"
+checksum = "sha256:8f29b5ba1818f13bccd0b079c798659cfd2eccf21998003c8aaf75f8a3794529"
+url = "https://github.com/mongodb/kingfisher/releases/download/v2.18.1/kingfisher-linux-x64.tgz"
+url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/728535321"
 provenance = "github-attestations"
 
 [tools."github:mongodb/kingfisher"."platforms.linux-x64-musl"]
-checksum = "sha256:8798879183d74f9e1379af3071f296853e4027a21bfde5d13d9b064fa1bf1eb3"
-url = "https://github.com/mongodb/kingfisher/releases/download/v2.17.0/kingfisher-linux-x64.tgz"
-url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/715173472"
+checksum = "sha256:8f29b5ba1818f13bccd0b079c798659cfd2eccf21998003c8aaf75f8a3794529"
+url = "https://github.com/mongodb/kingfisher/releases/download/v2.18.1/kingfisher-linux-x64.tgz"
+url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/728535321"
 provenance = "github-attestations"
 
 [tools."github:mongodb/kingfisher"."platforms.macos-x64"]
-checksum = "sha256:1f28177c3058b6e381d9feec10ad4d0681b41d3c153613a4ba79d806a23d6953"
-url = "https://github.com/mongodb/kingfisher/releases/download/v2.17.0/kingfisher-darwin-x64.tgz"
-url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/715173914"
+checksum = "sha256:45e3056073438ccf6d10be9ad87aadeb00a72692a23009fdefe86e2dd2d3cd74"
+url = "https://github.com/mongodb/kingfisher/releases/download/v2.18.1/kingfisher-darwin-x64.tgz"
+url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/728535900"
 provenance = "github-attestations"
 
 [tools."github:mongodb/kingfisher"."platforms.windows-x64"]
-checksum = "sha256:541df38ed22f20b6c50ea8a7ec6ec714664d51ffb562f37bc73d770b88fc7456"
-url = "https://github.com/mongodb/kingfisher/releases/download/v2.17.0/kingfisher-windows-x64.zip"
-url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/715173316"
+checksum = "sha256:2fefde1cf03070323a539f01b2be5e2ae3e8399328dc6de5f8eae629f1eb9557"
+url = "https://github.com/mongodb/kingfisher/releases/download/v2.18.1/kingfisher-windows-x64.zip"
+url_api = "https://api.github.com/repos/mongodb/kingfisher/releases/assets/728535098"
 provenance = "github-attestations"
 
 [[tools.hk]]
@@ -714,38 +714,38 @@ url = "https://github.com/jdx/hk/releases/download/v2.12.0/hk-x86_64-pc-windows-
 signer = "sigstore-oidc:https://github.com/jdx/hk/.github/workflows/release.yml"
 
 [[tools.oxfmt]]
-version = "0.77.0"
+version = "0.78.0"
 backend = "npm:oxfmt"
-specifiers = ["0.77.0"]
+specifiers = ["0.78.0"]
 
 [[tools.oxlint]]
-version = "1.92.0"
+version = "1.93.0"
 backend = "aqua:oxc-project/oxc/oxlint"
-specifiers = ["1.92.0"]
+specifiers = ["1.93.0"]
 
 [tools.oxlint."platforms.linux-x64"]
-checksum = "sha256:ba3a4d581ff73af83b2e11432fa4abeff1c6c3fc24c3ddca9990246cee8b9a92"
+checksum = "sha256:6d0d37cb51d01449714f04e2dff0d87dca66c39a72544f667b29808899d2db39"
 checksum_source = "mise-versions"
-url = "https://github.com/oxc-project/oxc/releases/download/oxlint_v1.92.0/oxlint-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/717101135"
+url = "https://github.com/oxc-project/oxc/releases/download/oxlint_v1.93.0/oxlint-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/727292090"
 
 [tools.oxlint."platforms.linux-x64-musl"]
-checksum = "sha256:34c028fa6071f10520cc5420bc8d22298328826dbb0e5cbbb982bdd0aa09b686"
+checksum = "sha256:9c8b7ebee3b3fd8b069e3e9b66d59b294ead4d306863600babfbc7bb1bd566ec"
 checksum_source = "mise-versions"
-url = "https://github.com/oxc-project/oxc/releases/download/oxlint_v1.92.0/oxlint-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/717101159"
+url = "https://github.com/oxc-project/oxc/releases/download/oxlint_v1.93.0/oxlint-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/727292120"
 
 [tools.oxlint."platforms.macos-x64"]
-checksum = "sha256:343fc9f9785684f8f5d9d283fe28cbbf5514f3aa95e0d35eb051e9a70d5ccc2c"
+checksum = "sha256:227d828a94c9ad831c4bc627fdb636a026a695f3adf2118d134c240308ee11c5"
 checksum_source = "mise-versions"
-url = "https://github.com/oxc-project/oxc/releases/download/oxlint_v1.92.0/oxlint-x86_64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/717101126"
+url = "https://github.com/oxc-project/oxc/releases/download/oxlint_v1.93.0/oxlint-x86_64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/727292069"
 
 [tools.oxlint."platforms.windows-x64"]
-checksum = "sha256:eb821008cc1f593c27215088f926966ac5356ff621e612cdd0744cd19a410722"
+checksum = "sha256:075ce1f3baae778da2a37a0bae8c31040f31f9ca3e1b89c60775f82f09661724"
 checksum_source = "mise-versions"
-url = "https://github.com/oxc-project/oxc/releases/download/oxlint_v1.92.0/oxlint-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/717101127"
+url = "https://github.com/oxc-project/oxc/releases/download/oxlint_v1.93.0/oxlint-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/oxc-project/oxc/releases/assets/727292073"
 
 [[tools.pinact]]
 version = "5.0.2"
