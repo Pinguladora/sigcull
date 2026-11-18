@@ -13,9 +13,9 @@
     "htmlvalidate": "html-validate 'dist/**/*.html'"
   },
   "dependencies": {
-    "@astrojs/starlight": "0.42.11",
+    "@astrojs/starlight": "0.43.1",
     "@pagefind/default-ui": "1.6.0",
-    "astro": "7.4.11",
+    "astro": "7.4.12",
     "mdast-util-directive": "3.2.0",
     "mdast-util-from-markdown": "2.1.0",
     "mdast-util-gfm": "3.1.0",
@@ -30,7 +30,7 @@
     "@guidepup/guidepup": "0.40.0",
     "@guidepup/playwright": "0.21.0",
     "@guidepup/virtual-screen-reader": "0.33.0",
-    "@playwright/test": "1.65.0",
+    "@playwright/test": "1.65.1",
     "@types/mdast": "4.0.4",
     "axe-core": "4.14.0",
     "html-validate": "11.21.1",
