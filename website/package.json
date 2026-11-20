@@ -32,7 +32,7 @@
     "@guidepup/virtual-screen-reader": "0.33.0",
     "@playwright/test": "1.65.1",
     "@types/mdast": "4.0.4",
-    "axe-core": "4.14.0",
+    "axe-core": "4.14.1",
     "html-validate": "11.21.1",
     "odiff-bin": "4.5.0",
     "starlight-links-validator": "0.27.0",
