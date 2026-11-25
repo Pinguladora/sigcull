@@ -665,7 +665,7 @@ conda_deps = [
 ]
 
 [[tools."github:mongodb/kingfisher"]]
-version = "v2.19.1"
+version = "2.19.1"
 backend = "github:mongodb/kingfisher"
 specifiers = ["v2.19.1"]
 
