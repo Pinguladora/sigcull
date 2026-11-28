@@ -43,8 +43,8 @@ importers:
         specifier: 0.9.12
         version: 0.9.12(prettier@3.10.1)(typescript@6.0.3)
       '@axe-core/playwright':
-        specifier: 4.14.0
-        version: 4.14.0(playwright-core@1.65.1)
+        specifier: 4.14.1
+        version: 4.14.1(playwright-core@1.65.1)
       '@guidepup/guidepup':
         specifier: 0.40.0
         version: 0.40.0(supports-color@10.2.2)
@@ -64,8 +64,8 @@ importers:
         specifier: 4.14.1
         version: 4.14.1
       html-validate:
-        specifier: 11.21.1
-        version: 11.21.1
+        specifier: 11.22.1
+        version: 11.22.1
       odiff-bin:
         specifier: 4.5.0
         version: 4.5.0
@@ -219,8 +219,8 @@ packages:
   '@astrojs/yaml2ts@0.2.4':
     resolution: {integrity: sha512-8oddpOae35pJsXPQXhTkM0ypfKPskVsh2bCxRtbf7e+/Epw2nReakFYpLKjZMEr75CsoF203PMnCocpfz0s69A==}
 
-  '@axe-core/playwright@4.14.0':
-    resolution: {integrity: sha512-SGUhG5PIHd2eMdpgBF2PyQLOhX+qyDR2PT4cmoS4Qk2ak+jX/rrSvst9l0PGv5WTHolKpUMvVmoHpr4cZgf1RQ==}
+  '@axe-core/playwright@4.14.1':
+    resolution: {integrity: sha512-cSN1ijrWLnlOof22sPN4RtWGSoPpt7GzOVyOKomyhnPsy1fPNoRdBiJAUziuCRs8KoK50kKufiMUFt7itAuwOg==}
     engines: {node: '>=22.12.0'}
     peerDependencies:
       playwright-core: '>= 1.0.0'
@@ -1466,8 +1466,8 @@ packages:
   html-escaper@3.0.3:
     resolution: {integrity: sha512-RuMffC89BOWQoY0WKGpIhn5gX3iI54O6nRA0yC124NYVtzjmFWBIiFd8M0x+ZdX0P9R4lADg1mgP8C7PxGOWuQ==}
 
-  html-validate@11.21.1:
-    resolution: {integrity: sha512-wop9wWStH8hgsDVv7zTZPF3i2qAVLe1eVGrSVE72A8QURM6En1JytTtSMTj7H0URi2aeSCuXdA/+p+0DbwMrMQ==}
+  html-validate@11.22.1:
+    resolution: {integrity: sha512-LGA6txEv+LvFQ9/BGSLDXikoilm+ptHaWaD6QM9ZzfGGTKTbYZfJI4or7cCH+zfW/uO0SvNuKR/hfUJLeNbPtA==}
     engines: {node: ^22.22.0 || >= 24.8.0}
     hasBin: true
     peerDependencies:
@@ -2692,7 +2692,7 @@ snapshots:
     dependencies:
       yaml: 2.9.1
 
-  '@axe-core/playwright@4.14.0(playwright-core@1.65.1)':
+  '@axe-core/playwright@4.14.1(playwright-core@1.65.1)':
     dependencies:
       axe-core: 4.14.1
       playwright-core: 1.65.1
@@ -3892,7 +3892,7 @@ snapshots:
 
   html-escaper@3.0.3: {}
 
-  html-validate@11.21.1:
+  html-validate@11.22.1:
     dependencies:
       '@html-validate/stylish': 6.1.0
       '@sidvind/better-ajv-errors': 7.0.0(ajv@8.20.0)
